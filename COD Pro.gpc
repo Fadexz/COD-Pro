@@ -1,0 +1,3387 @@
+/*
+
+
+
+
+
+    █████   ███─  ████─     ████─ ████─    ███──
+    █─     █─  █  █   █─    █  █  █   █   █─  █
+    █      █   █  █─  █     ████  █████─  █   █
+    █      █   █  █   █     █──   █── █   █   █─
+    █████─  ███   ████──    █     █   ██   ███
+
+
+    v5.0.0 - Jan 2023
+
+    By Fadexz
+
+
+
+
+    Features:
+    █ Rumble "Influnced" Anti-Recoil (compensates recoil while using rumble/vibration to increase the amount on shots)
+    █ Polar Aim Assist Abuse (aim assist slowdown also when not looking around)
+    █ Steady Aim (reduce aim angles)
+    █ Reload Cancel (cancel reload on aim and shoot)
+    █ Auto Reload (reload after shooting)
+    █ Jump Shot (jump when pressing 'AIM' + 'SHOOT' at similar times, or has aim based modes)
+    █ Rapid Fire (turbo for non-auto weapons)
+    █ Auto Focus (automatically focuses / holds breath while aiming)
+    █ Auto Ping (ping when firing, on a specified time of no firing cooldown)
+    █ Aim Assist Snap On Abuse (for ZM/CP aka PvE modes, don't use on PvP modes)
+    █ Quick Scoper (instantly unscopes and removes shot recoil to make quick scoping easier, requires a throwing knife)
+    █ Turbo Jump (spam on hold)
+    █ Turbo Melee (spam on hold)
+    █ Auto Sprint (has press, toggle, and hold options) + Boosted Auto Sprint Mode (exploit for Black Ops Cold War) (these make the walk area larger by making the sprint area a little tighter than in-game Auto Sprint, requires auto sprint in-game disabled and preferably use hold mode to allow the script to stop the sprinting)
+    █ Slide Cancel (Quickly cancels your slide midway and stands immediately)
+    █ Pickup Cancel (Cancels out the animation of picking up a weapon to almost instantly start being able to use it)
+    █ Swap Cancel (Cancels out the animation of swapping a weapon as soon as the weapon has been swapped, best when both weapons have similar swap times)
+    █ Dropshot (automatically drops to prone when firing then immediately stands afterwards)
+    █ Crouch Shot (automatically crouches when firing)
+    █ YY Cancel (fun feature, cancel the swap animation constantly to jitter the animation for a visual effect, may cause delayed aim)
+    █ MWII Backwards Dive (allows you to dive moving backwards on the press of a button)
+    █ Money Dupe (makes it easier to duplicate money on "MT. ZAYA" COOPERATIVE which allows you to buy everything you need, check below for more info)
+    █ Hair Triggers (removed trigger deadzone — any press is 100% input)
+    █ Crossover Mapping (remapping for PS4 Controllers and Console)
+    █ Block Vibration (stop vibration to the controller but allow rumble-based features to still work)
+    █ Rainbow LED (customised smoothly cycling through all colours on the LED)
+    █ Game Button Layout Customisation (map the script to your in-game button layout)
+    █ All other features with combos have the "Custom Input Update Interval" and "Dynamic VM Timing" to ensure you get faster combos with no added "input delay" (aka normally running at 100hz or 10ms intervals, currently always ensures a 125hz/8ms polling rate regardless of input interval used)
+
+
+
+    █████████████████████████████████████████████████████████████████████████████████████████████████████──
+    ███ Script Controls █████████████████████████████████████████████████████████████████████████████████─
+    █████████████████████████████████████████████████████████████████████████████████████████████████████
+    █                                                                                                   █──
+    █  Enter Menu                >  Fully Hold 'AIM' & Press 'OPTIONS' (Default: LT/L2 & MENU/OPTIONS)  █─
+    █                                                                                                   █
+    █  Exit Menu                 >  Press 'OPTIONS' (Default: MENU/OPTIONS) (won't save to memory)      █─
+    █                                                                                                   █
+    █  Enter Mod/Edit Menu       >  Press A/CROSS (on a editable mod selection)                         █
+    █                                                                                                   █──
+    █  Exit Current Menu         >  Press B/CIRCLE (saves values to memory when exiting the main menu)  █
+    █                                                                                                   █─
+    █  Change Selected Option    >  Press LEFT (previous) or Press RIGHT (next)                         █──
+    █                                                                                                   █
+    █  Change Selected Value     >  Press UP (increase) or Press DOWN (decrease)                        █─
+    █                                                                                                   █
+    █████████████████████████████████████████████████████████████████████████████████████████████████████─
+    █                                                                                                   █
+    █  Toggle Rapid Fire         >  Hold 'SCOREBOARD' & Press 'STREAK' (Default: VIEW/TOUCH & RIGHT)    █──
+    █                                                                                                   █─
+    █  Disable Turbo features    >  Hold 'UNUSED' (Default: DOWN) (active while holding)                █
+    █                                                                                                   █─
+    █  Backwards Dive (when on)  >  Press 'UNUSED' (Default: DOWN)                                      █
+    █                                                                                                   █─
+    █████████████████████████████████████████████████████████████████████████████████████████████████████
+
+
+
+    Notes:
+    █ [ Money Dupe (MWII) ]
+    █ This can be used in COOPERATIVE on the 'MT. ZAYA' level which uses cash (doesn't work on other modes).
+    █ First make sure 'Prioritize Interact' or 'Tap to Interact' is selected in the Controller settings menu. Then enable
+    █ the Money Dupe feature and drop money on the ground. To dupe the most you should look away from the money first as
+    █ the turbo (spam) of your INTERACT button won't start until you start holding it. Once you have held it long enough
+    █ to be a hold (not a quick press) then look at all the money and it will be picked up multiple times instead of just
+    █ once which will duplicate the money. You can then repeat the process of dropping and picking it up. The max money you
+    █ can hold is 65,535. It will dupe faster with higher fps (and based on your "Input Interval" selected in the script).
+    █ I recommend purchasing as many reinforcements as possible (the Turbo Jump feature will make this faster by holding
+    █ your JUMP button which also selects the item). You can also purchase one Juggnaut outfit and 3 sentry guns and any
+    █ armour plates you need to make this level easier. Tip: Hold your STREAK button to select a specific one
+    █
+    █ [ Swap Cancel ]
+    █ This feature doesn't won't benefit weapons that are brought out faster than cancelling the animation would be. For
+    █ this feature, I recommend both weapons being around the same time to swap to or both being not slow as you will need
+    █ to use a speed for the slowest one
+    █
+    █ [ Pickup Cancel ]
+    █ With this feature on you may have issues with hold interacting with things, you should not use this feature in modes
+    █ that you need to hold to interact in or if you intend on using them while you play
+    █
+    █ [ Conflicts ]
+    █ Currently mostly shot mods that activate when you fire may conflict as it is possible to enable multiple at once,
+    █ Just keep in mind that if they sound like they might interfere with each other they probably will
+    █ (i.e Dropshot, Crouch Shot, Jump Shot, etc.)
+    █ 
+    █ [ LED Brightness ]
+    █ I suggest you lower the brightness level of "Dual Shock 4 Light Bar Brightness" in the Device tab of Zen Studio so
+    █ you don't have to be blind by the Zen's LED (I use 25%), otherwise you can change it further through the menu just
+    █ for this script
+    █
+    █ [ Defaults ]
+    █ The features selected below under this large comment are what will be enabled or disabled by default, you can change
+    █ them there if you wish, otherwise you can change them later through the mod menu on the Zen's Screen which will be
+    █ saved to the memory for later use
+    █
+    █ [ > 60fps ]
+    █ Mainly if on PC and you understand this then be sure to adjust in the menu (under 'Hair Triggers') to whatever your
+    █ max frametime is plus one (e.g (1000ms/100fps) = 10ms, rounded up to even), your frame time or frame rate should not
+    █ drop past this number ever, mainly intended to be changed for higher framerates for faster completion of combo inputs
+    █ If you decide to use this on Modern Warfare / Warzone make sure you use 'PS Remote Play' mode in the Device tab to
+    █ allow for minimum delay between inputs, this will allow you to use 14ms input interval minimum instead of roughly
+    █ 18ms or 20ms that Xbox will allow without inputs being missed
+    █ You may test it to see how low you can get it but the game is strangely inconsistent or slower with some buttons
+    █ (just don't use faster than the game is running at)
+    █ Important: If you experience missed inputs from combos (automated inputs) you should increase this number until it
+    █ stops missing them (like keeping it at 18ms)
+    █
+    █ [ Cold War ]
+    █ Boosted Auto Sprint is ~3.5% faster than normal sprinting, however I haven't tested in normal gameplay if it still
+    █ has as much of a worthy benefit or if it can be better (might be more of an annoyance than useful)
+
+
+
+    Congrats, you now know everything you would want to know about the script, have fun! 😜
+
+
+
+    —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —   —
+
+
+
+    Donate:
+    █ If you want to support me for the large amount of time I put into the script it does help me out and makes my day 😊
+    █ https://www.buymeacoffee.com/Fadexz
+    █ https://paypal.me/Fadexz
+
+
+
+    Additonal Notes:
+    █ Please ignore any compile 'empty case' or 'switch' warnings, they are intended
+    █ This script will eventually come to a "complete" state with time, so expect constant updates 😎
+    █ Please report any issues or suggestions to me, I rarely get any but it would help me improve
+    █ the script with things I couldn't think of!
+
+
+
+    Contact me:
+    █ discord.com/users/291872132898619392        (Fadexz#0001)
+    █ forums.cronusmax.com/members/fadexz.356349  (Fadexz)
+
+
+
+    Additional Credits:
+    █ Batts          >  Base display functions
+    █ DoNotAtMe      >  Aim Assist "Slowdown" Abuse + Steady Aim
+    █ Swizzy         >  Bit-packed spvar saving
+    █ Taylordrift21  >  Base menu functionality + Improved Noozbar's Rumble "Influenced" Anti-Recoil
+
+
+
+    To Do (for me):
+    █ Make sub-menus in menu
+    █ Alternating scroll text
+    █ Vibration + LED menu only options FX Toggle
+    █ Auto Sprint for Sprint Cancels Reload
+    █ Ez Equipment Cancel??
+    █ Block all output in menu option
+    █ Ez Cook Frag (Tap & Tap To Release) + Suicide Prevention (Throw | Swap)
+    █ Stance Detection
+    █ Notify quick toggle states on screen
+    █ Polar AA disable on fire option
+    █ Akimbo Sync + Akimbo Rapid Fire
+    █ Burst Fire
+    █ Anti-AFK Kick
+    █ Strafe AA
+    █ Quick Reload
+    █ Mod record mode
+    █ "Faster" Rapid Fire
+    █ Slot number on start
+    █ Button swap
+    █ Diamond and Star Shape "Aim Assist Abuse"
+    █ Display battery level
+    █ Weapon Pickup Mode
+    █ Mouse & Keyboard Menu Support
+    █ Preset Value Loadouts
+
+
+
+
+*/
+
+
+
+// -- Declear constants
+// -- You can find more advanced settings here if you need to change them although these are not necessary to change
+
+define
+
+// YY Cancel
+YY_Wait_Delay = 100,  // Should be longer than the "Cancel Delay"
+YY_Cancel_Delay = 50,
+
+// Input Interval
+// -- (ADVANCED!)
+II_Min_Runtime_Interval_Step = 2,  // -- [ 1ms | 2ms | 4ms ] Minimum allowed and step value used for input interval, changing this may in some cases affect CPU usage
+
+// Required Hold Time
+// -- Minimum standard time that is counted as a hold in-game, for feature activations
+HT_Min_Standard_Game_Hold_Time = 450,
+HT_Min_Short_Game_Hold_Time = 150,
+
+// Display
+// -- Wouldn't recommend lower than '5000' (5 secs) and higher than '120000' (2 mins) to prevent screen burn-in
+DP_Screen_Sleep_Time = 60000,
+// -- < 1023ms or > 32767ms not recommended (Default: 1<<14 - 1 = 15-bit unsigned max)
+DP_Max_Large_Time_Based_Value = 16383,
+// -- < 511ms or > 16383ms not recommended (Default: 1<<11 - 1 = 12-bit unsigned max)
+DP_Max_Small_Time_Based_Value = 2047,
+// -- Vibration and LED effect activation time
+DP_FX_Time = 100,
+
+// Game Button Layout
+// -- Stick to Xbox One Button Identifiers (constants) for layout consistency and to not mess up the crossover support (some buttons are not actual equivalents in other layouts)
+// -- You should mostly only change the stick axes here if needed
+SCOREBOARD = XB1_VIEW,
+OPTIONS    = XB1_MENU,
+MOVEX      = XB1_LX,
+MOVEY      = XB1_LY,
+LOOKX      = XB1_RX,
+LOOKY      = XB1_RY,
+UNUSED     = XB1_DOWN;  // -- Used for temporarily disabling turbo features (hold to disable them to allow holding of those buttons)
+
+
+
+// -- Declear integer variables
+// -- You can change "any" of the default values below if you wish the script to start with these values before saving (you can leave them and use the menu instead to save changes to the device)
+
+int
+
+// -- Set Initial State for Feature Toggles
+// -- [ 0 = Off | 1 = On ]
+ar_anti_recoil_toggle                = 0,
+rc_reload_cancel_toggle              = 1,
+aa_polar_aim_assist_abuse_toggle     = 0,
+sa_steady_aim_toggle                 = 0,
+rf_rapid_fire_toggle                 = 0,
+js_jump_shot_toggle                  = 0,
+as_precise_auto_sprint_toggle        = 0,
+ap_auto_ping_toggle                  = 0,
+ar2_auto_reload_toggle               = 0,
+qs_quick_scoper_toggle               = 0,
+tj_turbo_jump_toggle                 = 1,
+tm_turbo_melee_toggle                = 1,
+sc_slide_cancel_toggle               = 0,
+pac_pickup_cancel_toggle             = 0,
+aaso_aim_assist_snap_on_abuse_toggle = 0,
+af_auto_focus_toggle                 = 0,
+ht_hair_triggers_toggle              = 1,
+cf_crossover_fix_toggle              = 1,
+br_block_rumble_toggle               = 0,
+rl_rainbow_led_toggle                = 1,
+sc2_swap_cancel_toggle               = 0,
+ds_dropshot_toggle                   = 0,
+cs_crouch_shot_toggle                = 0,
+md_money_dupe_toggle                 = 0,
+yyc_yy_cancel_toggle                 = 0,
+bd_backwards_dive_toggle             = 0,
+// ---
+// -- Note: When changing these make sure to keep them the same format (only Xbox One buttons)
+// -- Buttons: LB, RB, LT, RT, LS, RS, UP, DOWN, LEFT, RIGHT, A, B, X, Y
+tb_tactical_button_toggle            = BTI_LB,
+lb_lethal_button_toggle              = BTI_RB,
+ab_aim_button_toggle                 = BTI_LT,
+fb_fire_button_toggle                = BTI_RT,
+sfb_sprint_focus_button_toggle       = BTI_LS,
+mb_melee_button_toggle               = BTI_RS,
+pb_ping_button_toggle                = BTI_UP,
+sb_streak_button_toggle              = BTI_RIGHT,
+jmb_jump_mantle_button_toggle        = BTI_A,
+ssdb_stance_slide_dive_button_toggle = BTI_B,
+rib_reload_interact_button_toggle    = BTI_X,
+sab_swap_armour_button_toggle        = BTI_Y,
+
+// Fully Aiming Check
+fac_ads_time = 349,  // -- Some weapons can be up to ~450ms
+
+// Reload Cancel
+// -- [ 0 = On Release Aim | 1 = On Release Aim & Fire ]
+rc_release_activation_type    = 0,
+rc_max_reload_time_for_cancel = 1199,  // -- Feel free to set this to ~6000ms for even LMGs, but can't guarantee it won't cause issues with shorter reloads (at max should be a quick YY before aiming or shooting)
+//rc_cancel_method_edit_toggle  = 0,
+
+// Polar Aim Assist Slowdown Abuse
+// -- [ 0 = Aim & Fire | 1 = 'Aim | Fire' | 2 = Aim | 3 = Fire | 4 = None ]
+aa_activation_type  = 0,
+aa_radius           = 20,  // -- Circle Strength (outer)
+aa_rotate_by_angles = 18,  // -- Circle Speed (amount of angles/values skipped through each "vm interval")
+aa_release_point    = 18,
+
+// Anti-Recoil
+ar_vert_value = 16,
+ar_hori_value = 0,
+ar_deadzone   = 18,
+ar_rumble_influence = TRUE,
+ar_boost_time = 80,
+
+// Steady Aim
+sa_angles_divided = 4, // -- Reduce to amount of aim angles (divided) [Range: 2~17]
+
+// Auto Reload
+// -- [ 0 = On Release Fire | 1 = On Release Fire or Aim ]
+ar2_release_activation_type = 1,
+ar2_shoot_time = 2999,
+
+// Jump Shot
+// -- [ 0 = On Press (Aim) | 1 = On Hold (Aim) | 2 = Panic (Aim & Fire) ]
+js_activation_type = 2,
+// -- Max time between AIM and FIRE presses to activate
+js_press_variance_time = 24,
+
+// Turbo Jump
+tj_jump_wait_time = 0,
+
+// Slide Cancel
+// -- [ 0 = Jump Sprint_Stand Cancel | 1 = Jump | 2 = Sprint_Stand | 3 = MWII Cancel ]
+sc_type = 3,
+sc_cancel_delay_time = 150,
+
+// Swap Cancel
+sc2_cancel_delay_time = 701,
+
+// Auto Sprint
+// -- [ 0 = Turbo (Press Mode) | 1 = Hold (Hold Mode) | 2 = Press (Toggle/Press Mode) | 3 = BOCW Boosted (Press/Toggle Mode) ]
+as_type = 0,
+// -- Time to disable Auto Sprint after pressing 'STANCE_SLIDE_DIVE' button
+as_crouch_prone_delay_time = 0,
+
+// Auto Ping
+// -- [ 0 = Fully Aiming | 1 = Aiming | 2 = Ignore Aim ]
+ap_activation_type = 1,
+// -- Minimum time (seconds) of not firing for Auto Ping to activate
+ap_min_release_activation_time = 18,
+// -- [ 0 = Off | 1 = Release Fire | 2 = Release AIM or FIRE ]
+ap_unping_type = 0,
+
+// Dropshot
+// -- [ 0 = On Fire | 1 = Panic (Aim & Fire) ]
+ds_activation_type = 1,
+// -- Max time between AIM and FIRE presses to activate
+ds_press_variance_time = 130,
+ds_stand_on_release = TRUE,
+// -- [ 0 = Sprint (Fast) | 1 = Stand ]
+ds_stand_type = 0,
+
+// Crouch Shot
+// -- [ 0 = On AIM | 1 = On FIRE | 2 = On AIM & FIRE ]
+cs_activation_type = 0,
+cs_loop = TRUE,
+cs_delay_time = 200,
+cs_once_release_stand = TRUE,
+
+// Aim Assist Snap On Abuse
+aaso_aim_hold_time = 1490,
+
+// Auto Focus
+// -- [ 0 = Hold | 1 = MWII Quick Gasp ]
+af_type = 1,
+
+// Rapid Fire
+// -- [ 0 = On Fire | 1 = On Aim + Fire ]
+rf_activation_type  = 0,
+rf_single_shot_time = 100,
+rf_shot_wait_time   = 0,
+
+// Rainbow LED
+rl_delay_interval      = 190,
+rl_saturation          = 100,
+rl_brightness          = 90,
+rl_fx_brightness       = 100,
+rl_mod_menu_brightness = 80,
+rl_hue                 = 120,
+
+// Input Update Interval
+// -- Setting this correctly (mostly for PC) will result in faster input of combos (setting this up incorrectly can cause
+// -- missed inputs from the script)
+// -- Input Wait Interval Calculation Examples: (1000ms ÷ 60fps) = 18ms (rounded up to even) | (1000/120) = 10ms (rounded
+// -- up to even)
+// -- If you don't want to calculate, simply use '36' for 29+fps, '18' for 57+fps, '12' for 85+fps, '10' for 101+fps, or
+// -- '8' for 126+fps (ensure the game fps is *always* above this minimum fps listed for inputs to not be missed)
+// -- Note: 1ms vm time shouldn't be used otherwise it'll add 1ms to the end of combos (last "action" will be 2ms long)
+// -- which will slightly slow them down (if the combo only has "two actions" it will take longer 1+1+(1-1)=3, 0 wait time
+// -- rounds to 1 which results in the last/second action being repeated twice as long, check combos to understand)
+// -- If you wish to use 1ms intervals through the menu then change 'II_Min_Runtime_Interval_Step' above to '1', this will
+// -- mean the device will update every 1ms on odd numbers and could be more unstable with higher CPU Usage but this is
+// -- done to not add "input delay" as 1 is the only number that is divisible (of 1, 2, 4, or 8)
+// -- I personally use '10' for this, I play with 144fps however it is not 100% stable (> 125fps always) so I just need
+// -- above 100fps (aka < 10ms frame times) at all times
+// -- Note: Changing this could mess up the initial value rounding to this interval
+ii_input_interval = 20,
+ii_max_controller_polling_rate = 1,  // -- (don't change)
+ii_vm_cycle_time,
+ii_calc_timing,
+
+// Display
+dp_title = TRUE,
+dp_screen_sleep_timer,
+dp_display_menu,
+dp_menu,
+dp_block_options,
+dp_main_title_idx,
+dp_mod_title_idx,
+dp_edit_title_idx,
+dp_main_idx,
+dp_val_str,
+dp_digit_idx,
+dp_digits_val,
+dp_digit_count_idx,
+dp_string_length,
+dp_step_timer,
+dp_hori_pos,
+dp_blackout_shift_random,
+dp_blackout_random,
+dp_blackout_shift,
+dp_shift,
+dp_title_display_interval,
+dp_input_interval_fps,
+dp_input_interval_fps_digit_idx,
+
+// Fully Aiming Check
+fac_ads_timer,
+
+// Anti-Recoil
+ar_smart_rumble,
+ar_strength,
+ar_boost_timer,
+
+// Auto Reload
+ar2_shoot_timer,
+
+// Polar Aim Assist Abuse
+aa_angle,
+aa_cos_angle,
+aa_sin_angle,
+//aa_current_magnitude,
+//aa_max_magnitude,
+
+// Steady Aim
+sa_angles,
+sa_direction,
+sa_angle_out,
+sa_cos_angle,
+sa_sin_angle,
+
+// Reload Cancel
+rc_reloading,
+rc_reloading_time,
+rc_ar2_did_shoot_before_reload,
+
+// Slide Cancel
+sc_stand_btn,
+
+// Dropshot
+ds_did_dropshot,
+
+// Crouch Shot
+cs_crouched,
+
+// YY Cancel
+yyc_sprinting,
+
+// Rainbow LED
+rl_timer,
+
+// Crossover Mapping
+cf_swap_xb1_share_sync,
+
+// Persistent Variables
+pv_check_spvar_idx,
+pv_current_bit,
+pv_current_slot,
+pv_current_value,
+pv_temp,
+pv_bits,
+
+// Button Mappings
+TACTICAL,
+LETHAL,
+AIM,
+FIRE,
+SPRINT_FOCUS,
+MELEE,
+PING,
+STREAK,
+JUMP_MANTLE,
+STANCE_SLIDE_DIVE,
+RELOAD_INTERACT,
+SWAP_ARMOUR;
+
+
+
+// -- Initialise values
+
+init {
+
+
+  // -- If any Spvar contains a value then load from Spvars (yes this is a lot of bytecode but it prevents using one extra bit in Pvars lol)
+  // -- Note: Has one each loop to indicate it reached the end without any values
+  for(pv_check_spvar_idx = 63; pv_check_spvar_idx; pv_check_spvar_idx --) {
+    if(get_pvar(SPVAR_64 - pv_check_spvar_idx,-214783648,214783647,0)) {
+      reset_spvar();
+      ar_anti_recoil_toggle                = read_spvar(FALSE                         ,TRUE);
+      aa_polar_aim_assist_abuse_toggle     = read_spvar(FALSE                         ,TRUE);
+      sa_steady_aim_toggle                 = read_spvar(FALSE                         ,TRUE);
+      rc_reload_cancel_toggle              = read_spvar(FALSE                         ,TRUE);
+      ar2_auto_reload_toggle               = read_spvar(FALSE                         ,TRUE);
+      qs_quick_scoper_toggle               = read_spvar(FALSE                         ,TRUE);
+      js_jump_shot_toggle                  = read_spvar(FALSE                         ,TRUE);
+      rf_rapid_fire_toggle                 = read_spvar(FALSE                         ,TRUE);
+      af_auto_focus_toggle                 = read_spvar(FALSE                         ,TRUE);
+      ap_auto_ping_toggle                  = read_spvar(FALSE                         ,TRUE);
+      aaso_aim_assist_snap_on_abuse_toggle = read_spvar(FALSE                         ,TRUE);
+      tj_turbo_jump_toggle                 = read_spvar(FALSE                         ,TRUE);
+      tm_turbo_melee_toggle                = read_spvar(FALSE                         ,TRUE);
+      as_precise_auto_sprint_toggle        = read_spvar(FALSE                         ,TRUE);
+      sc_slide_cancel_toggle               = read_spvar(FALSE                         ,TRUE);
+      pac_pickup_cancel_toggle             = read_spvar(FALSE                         ,TRUE);
+      sc2_swap_cancel_toggle               = read_spvar(FALSE                         ,TRUE);
+      ds_dropshot_toggle                   = read_spvar(FALSE                         ,TRUE);
+      cs_crouch_shot_toggle                = read_spvar(FALSE                         ,TRUE);
+      md_money_dupe_toggle                 = read_spvar(FALSE                         ,TRUE);
+      yyc_yy_cancel_toggle                 = read_spvar(FALSE                         ,TRUE);
+      bd_backwards_dive_toggle             = read_spvar(FALSE                         ,TRUE);
+      ht_hair_triggers_toggle              = read_spvar(FALSE                         ,TRUE);
+      cf_crossover_fix_toggle              = read_spvar(FALSE                         ,TRUE);
+      br_block_rumble_toggle               = read_spvar(FALSE                         ,TRUE);
+      rl_rainbow_led_toggle                = read_spvar(FALSE                         ,TRUE);
+      tb_tactical_button_toggle            = read_spvar(0                             ,13);
+      lb_lethal_button_toggle              = read_spvar(0                             ,13);
+      ab_aim_button_toggle                 = read_spvar(0                             ,13);
+      fb_fire_button_toggle                = read_spvar(0                             ,13);
+      sfb_sprint_focus_button_toggle       = read_spvar(0                             ,13);
+      mb_melee_button_toggle               = read_spvar(0                             ,13);
+      pb_ping_button_toggle                = read_spvar(0                             ,13);
+      sb_streak_button_toggle              = read_spvar(0                             ,13);
+      jmb_jump_mantle_button_toggle        = read_spvar(0                             ,13);
+      ssdb_stance_slide_dive_button_toggle = read_spvar(0                             ,13);
+      rib_reload_interact_button_toggle    = read_spvar(0                             ,13);
+      sab_swap_armour_button_toggle        = read_spvar(0                             ,13);
+      // ---
+      ar_rumble_influence                  = read_spvar(FALSE                         ,TRUE);
+      aa_activation_type                   = read_spvar(0                             ,4);
+      rc_release_activation_type           = read_spvar(0                             ,1);
+      //rc_cancel_method_edit_toggle         = read_spvar(0                             ,4);
+      ar2_release_activation_type          = read_spvar(0                             ,1);
+      rf_activation_type                   = read_spvar(0                             ,1);
+      as_type                              = read_spvar(0                             ,3);
+      js_activation_type                   = read_spvar(0                             ,2);
+      ap_activation_type                   = read_spvar(0                             ,1);
+      sc_type                              = read_spvar(0                             ,3);
+      af_type                              = read_spvar(0                             ,1);
+      ds_activation_type                   = read_spvar(0                             ,1);
+      ds_stand_on_release                  = read_spvar(FALSE                         ,TRUE);
+      ds_stand_type                        = read_spvar(0                             ,1);
+      cs_activation_type                   = read_spvar(0                             ,2);
+      cs_loop                              = read_spvar(FALSE                         ,TRUE);
+      cs_once_release_stand                = read_spvar(FALSE                         ,TRUE);
+      // ---
+      ar_vert_value                        = read_spvar(-60                           ,60);
+      ar_hori_value                        = read_spvar(-60                           ,60);
+      ar_deadzone                          = read_spvar(0                             ,75);
+      aa_radius                            = read_spvar(1                             ,60);
+      aa_rotate_by_angles                  = read_spvar(1                             ,45);
+      aa_release_point                     = read_spvar(1                             ,60);
+      sa_angles_divided                    = read_spvar(2                             ,2 + 15);
+      rl_brightness                        = read_spvar(1                             ,100);
+      rl_fx_brightness                     = read_spvar(1                             ,100);
+      rl_mod_menu_brightness               = read_spvar(1                             ,100);
+      rl_saturation                        = read_spvar(1                             ,100);
+      // ---
+      ar_boost_time                        = read_spvar(0                             ,DP_Max_Small_Time_Based_Value);
+      rc_max_reload_time_for_cancel        = read_spvar(HT_Min_Standard_Game_Hold_Time,HT_Min_Standard_Game_Hold_Time + DP_Max_Large_Time_Based_Value);
+      js_press_variance_time               = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      rf_shot_wait_time                    = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      rf_single_shot_time                  = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      fac_ads_time                         = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      ap_min_release_activation_time       = read_spvar(0                             ,126);
+      aaso_aim_hold_time                   = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      tj_jump_wait_time                    = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      as_crouch_prone_delay_time           = read_spvar(1                             ,DP_Max_Large_Time_Based_Value);
+      sc_cancel_delay_time                 = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      sc2_cancel_delay_time                = read_spvar(100                           ,100 + DP_Max_Small_Time_Based_Value);
+      ds_press_variance_time               = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      cs_delay_time                        = read_spvar(1                             ,DP_Max_Small_Time_Based_Value);
+      ii_input_interval                    = read_spvar(1                             ,50);
+      rl_delay_interval                    = read_spvar(8                             ,DP_Max_Small_Time_Based_Value);
+      reset_screen_sleep_timer();
+      // -- [DEBUG] Spvars used
+      set_val(TRACE_4,(pv_current_slot - SPVAR_1) + pv_current_bit > 0);
+      set_val(TRACE_5,((pv_current_slot - SPVAR_1) * 32) + pv_current_bit);
+      set_val(TRACE_6,pv_current_bit);
+      break;
+    }
+  }
+  // -- If it made it to the end (nothing saved), run the initial splash screen
+  if(!pv_check_spvar_idx)
+    combo_run(Display_Splash);
+
+  // Update max polling rate for current controller
+  update_max_polling_rate();
+  // -- Get VM Interval Time for timing calculations
+  ii_vm_cycle_time = greatest_common_divisor_vm_timing();
+  // -- Set VM Interval Time
+  vm_tctrl(ii_vm_cycle_time - 10);
+  // -- Round initial time-based values
+  round_time_based_values();
+  // -- Initialise other values
+  Apply_Button_Layout();
+  sa_angles = 360 / sa_angles_divided;
+  // -- Start LED on console/output based hue
+  switch(get_console()) {
+    case PIO_PS3: {}
+    case PIO_PS4: {
+      rl_hue = 240;
+      break;
+    }
+    case PIO_SWITCH: {
+      rl_hue = 0;
+    }
+  }
+
+
+}
+
+
+
+main {
+
+
+  // -- Adjust for PS4 Controller Max Polling Rate (4ms/250hz)
+  update_max_polling_rate();
+
+
+  // Display + Persistent Variables
+
+  // -- Not on Title Screen
+  if(!dp_title) {
+
+    // Higher VM Timing in Mod Menu
+    vm_tctrl(8 - 10);
+
+    // -- On Main Menu
+    if(!dp_menu) {
+
+      // -- Main Menu Navigation
+      dp_main_title_idx = menu_navigation(dp_main_title_idx,0,4);
+
+      // -- Exit Menu
+      if(event_press(XB1_B)) {
+        dp_title = TRUE;
+        ii_vm_cycle_time = greatest_common_divisor_vm_timing();
+        vm_tctrl(ii_vm_cycle_time - 10);
+        // -- Save all user preferanced variables to the persistent memory for later
+        reset_spvar();
+        save_spvar(ar_anti_recoil_toggle               ,FALSE                         ,TRUE);
+        save_spvar(aa_polar_aim_assist_abuse_toggle    ,FALSE                         ,TRUE);
+        save_spvar(sa_steady_aim_toggle                ,FALSE                         ,TRUE);
+        save_spvar(rc_reload_cancel_toggle             ,FALSE                         ,TRUE);
+        save_spvar(ar2_auto_reload_toggle              ,FALSE                         ,TRUE);
+        save_spvar(qs_quick_scoper_toggle              ,FALSE                         ,TRUE);
+        save_spvar(js_jump_shot_toggle                 ,FALSE                         ,TRUE);
+        save_spvar(rf_rapid_fire_toggle                ,FALSE                         ,TRUE);
+        save_spvar(af_auto_focus_toggle                ,FALSE                         ,TRUE);
+        save_spvar(ap_auto_ping_toggle                 ,FALSE                         ,TRUE);
+        save_spvar(aaso_aim_assist_snap_on_abuse_toggle,FALSE                         ,TRUE);
+        save_spvar(tj_turbo_jump_toggle                ,FALSE                         ,TRUE);
+        save_spvar(tm_turbo_melee_toggle               ,FALSE                         ,TRUE);
+        save_spvar(as_precise_auto_sprint_toggle       ,FALSE                         ,TRUE);
+        save_spvar(sc_slide_cancel_toggle              ,FALSE                         ,TRUE);
+        save_spvar(pac_pickup_cancel_toggle            ,FALSE                         ,TRUE);
+        save_spvar(sc2_swap_cancel_toggle              ,FALSE                         ,TRUE);
+        save_spvar(ds_dropshot_toggle                  ,FALSE                         ,TRUE);
+        save_spvar(cs_crouch_shot_toggle               ,FALSE                         ,TRUE);
+        save_spvar(md_money_dupe_toggle                ,FALSE                         ,TRUE);
+        save_spvar(yyc_yy_cancel_toggle                ,FALSE                         ,TRUE);
+        save_spvar(bd_backwards_dive_toggle            ,FALSE                         ,TRUE);
+        save_spvar(ht_hair_triggers_toggle             ,FALSE                         ,TRUE);
+        save_spvar(cf_crossover_fix_toggle             ,FALSE                         ,TRUE);
+        save_spvar(br_block_rumble_toggle              ,FALSE                         ,TRUE);
+        save_spvar(rl_rainbow_led_toggle               ,FALSE                         ,TRUE);
+        save_spvar(tb_tactical_button_toggle           ,0                             ,13);
+        save_spvar(lb_lethal_button_toggle             ,0                             ,13);
+        save_spvar(ab_aim_button_toggle                ,0                             ,13);
+        save_spvar(fb_fire_button_toggle               ,0                             ,13);
+        save_spvar(sfb_sprint_focus_button_toggle      ,0                             ,13);
+        save_spvar(mb_melee_button_toggle              ,0                             ,13);
+        save_spvar(pb_ping_button_toggle               ,0                             ,13);
+        save_spvar(sb_streak_button_toggle             ,0                             ,13);
+        save_spvar(jmb_jump_mantle_button_toggle       ,0                             ,13);
+        save_spvar(ssdb_stance_slide_dive_button_toggle,0                             ,13);
+        save_spvar(rib_reload_interact_button_toggle   ,0                             ,13);
+        save_spvar(sab_swap_armour_button_toggle       ,0                             ,13);
+        // ---
+        save_spvar(ar_rumble_influence                 ,FALSE                         ,TRUE);
+        save_spvar(aa_activation_type                  ,0                             ,4);
+        save_spvar(rc_release_activation_type          ,0                             ,1);
+        //save_spvar(rc_cancel_method_edit_toggle        ,0                             ,4);
+        save_spvar(ar2_release_activation_type         ,0                             ,1);
+        save_spvar(rf_activation_type                  ,0                             ,1);
+        save_spvar(as_type                             ,0                             ,3);
+        save_spvar(js_activation_type                  ,0                             ,2);
+        save_spvar(ap_activation_type                  ,0                             ,1);
+        save_spvar(sc_type                             ,0                             ,3);
+        save_spvar(af_type                             ,0                             ,1);
+        save_spvar(ds_activation_type                  ,0                             ,1);
+        save_spvar(ds_stand_on_release                 ,FALSE                         ,TRUE);
+        save_spvar(ds_stand_type                       ,0                             ,1);
+        save_spvar(cs_activation_type                  ,0                             ,2);
+        save_spvar(cs_loop                             ,FALSE                         ,TRUE);
+        save_spvar(cs_once_release_stand               ,FALSE                         ,TRUE);
+        // ---
+        save_spvar(ar_vert_value                       ,-60                           ,60);
+        save_spvar(ar_hori_value                       ,-60                           ,60);
+        save_spvar(ar_deadzone                         ,0                             ,75);
+        save_spvar(aa_radius                           ,1                             ,60);
+        save_spvar(aa_rotate_by_angles                 ,1                             ,45);
+        save_spvar(aa_release_point                    ,1                             ,60);
+        save_spvar(sa_angles_divided                   ,2                             ,2 + 15);
+        save_spvar(rl_brightness                       ,1                             ,100);
+        save_spvar(rl_fx_brightness                    ,1                             ,100);
+        save_spvar(rl_mod_menu_brightness              ,1                             ,100);
+        save_spvar(rl_saturation                       ,1                             ,100);
+        // ---
+        save_spvar(ar_boost_time                       ,0                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(rc_max_reload_time_for_cancel       ,HT_Min_Standard_Game_Hold_Time,HT_Min_Standard_Game_Hold_Time + DP_Max_Large_Time_Based_Value);
+        save_spvar(js_press_variance_time              ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(rf_shot_wait_time                   ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(rf_single_shot_time                 ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(fac_ads_time                        ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(ap_min_release_activation_time      ,0                             ,126);
+        save_spvar(aaso_aim_hold_time                  ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(tj_jump_wait_time                   ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(as_crouch_prone_delay_time          ,1                             ,DP_Max_Large_Time_Based_Value);
+        save_spvar(sc_cancel_delay_time                ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(sc2_cancel_delay_time               ,100                           ,100 + DP_Max_Small_Time_Based_Value);
+        save_spvar(ds_press_variance_time              ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(cs_delay_time                       ,1                             ,DP_Max_Small_Time_Based_Value);
+        save_spvar(ii_input_interval                   ,1                             ,50);
+        save_spvar(rl_delay_interval                   ,8                             ,DP_Max_Small_Time_Based_Value);
+        reset_screen_sleep_timer();
+        combo_run(Menu_Toggle_FX);
+      }
+
+    }
+
+    // -- Note: Use switch here once confirmed fixed
+
+    // -- On Mod Menu
+    if(dp_menu == 1) {
+
+      // -- Mod Navigation
+      dp_mod_title_idx = menu_navigation(dp_mod_title_idx,Main_Menu_Mod_Ranges[dp_main_title_idx][0],Main_Menu_Mod_Ranges[dp_main_title_idx][1]);
+
+      // -- Display Mods
+      ar_anti_recoil_toggle                = toggle_switch(AR_Anti_Recoil_Toggle_Idx               ,ar_anti_recoil_toggle               ,1);
+      aa_polar_aim_assist_abuse_toggle     = toggle_switch(AA_Polar_Aim_Assist_Abuse_Toggle_Idx    ,aa_polar_aim_assist_abuse_toggle    ,1);
+      sa_steady_aim_toggle                 = toggle_switch(SA_Steady_Aim_Toggle_Idx                ,sa_steady_aim_toggle                ,1);
+      rc_reload_cancel_toggle              = toggle_switch(RC_Reload_Cancel_Toggle_Idx             ,rc_reload_cancel_toggle             ,1);
+      ar2_auto_reload_toggle               = toggle_switch(AR2_Auto_Reload_Toggle_Idx              ,ar2_auto_reload_toggle              ,1);
+      qs_quick_scoper_toggle               = toggle_switch(QS_Quick_Scoper_Toggle_Idx              ,qs_quick_scoper_toggle              ,1);
+      js_jump_shot_toggle                  = toggle_switch(JS_Jump_Shot_Toggle_Idx                 ,js_jump_shot_toggle                 ,1);
+      rf_rapid_fire_toggle                 = toggle_switch(RF_Rapid_Fire_Toggle_Idx                ,rf_rapid_fire_toggle                ,1);
+      af_auto_focus_toggle                 = toggle_switch(AF_Auto_Focus_Toggle_Idx                ,af_auto_focus_toggle                ,1);
+      ap_auto_ping_toggle                  = toggle_switch(AP_Auto_Ping_Toggle_Idx                 ,ap_auto_ping_toggle                 ,1);
+      aaso_aim_assist_snap_on_abuse_toggle = toggle_switch(AASO_Aim_Assist_Snap_On_Abuse_Toggle_Idx,aaso_aim_assist_snap_on_abuse_toggle,1);
+      tj_turbo_jump_toggle                 = toggle_switch(TJ_Turbo_Jump_Toggle_Idx                ,tj_turbo_jump_toggle                ,1);
+      tm_turbo_melee_toggle                = toggle_switch(TM_Turbo_Melee_Toggle_Idx               ,tm_turbo_melee_toggle               ,1);
+      as_precise_auto_sprint_toggle        = toggle_switch(AS_Precise_Auto_Sprint_Toggle_Idx       ,as_precise_auto_sprint_toggle       ,1);
+      sc_slide_cancel_toggle               = toggle_switch(SC_Slide_Cancel_Toggle_Idx              ,sc_slide_cancel_toggle              ,1);
+      pac_pickup_cancel_toggle             = toggle_switch(PAC_Pickup_Cancel_Toggle_Idx            ,pac_pickup_cancel_toggle            ,1);
+      sc2_swap_cancel_toggle               = toggle_switch(SC2_Swap_Cancel_Toggle_Idx              ,sc2_swap_cancel_toggle              ,1);
+      ds_dropshot_toggle                   = toggle_switch(DS_Dropshot_Toggle_Idx                  ,ds_dropshot_toggle                  ,1);
+      cs_crouch_shot_toggle                = toggle_switch(CS_Crouch_Shot_Toggle_Idx               ,cs_crouch_shot_toggle               ,1);
+      md_money_dupe_toggle                 = toggle_switch(MD_Money_Dupe_Toggle_Idx                ,md_money_dupe_toggle                ,1);
+      yyc_yy_cancel_toggle                 = toggle_switch(YYC_YY_Cancel_Toggle_Idx                ,yyc_yy_cancel_toggle                ,1);
+      bd_backwards_dive_toggle             = toggle_switch(BD_Backwards_Dive_Toggle_Idx            ,bd_backwards_dive_toggle            ,1);
+      ht_hair_triggers_toggle              = toggle_switch(HT_Hair_Triggers_Toggle_Idx             ,ht_hair_triggers_toggle             ,1);
+      cf_crossover_fix_toggle              = toggle_switch(CF_Crossover_Fix_Toggle_Idx             ,cf_crossover_fix_toggle             ,1);
+      br_block_rumble_toggle               = toggle_switch(BR_Block_Rumble_Toggle_Idx              ,br_block_rumble_toggle              ,1);
+      rl_rainbow_led_toggle                = toggle_switch(RL_Rainbow_Led_Toggle_Idx               ,rl_rainbow_led_toggle               ,1);
+      // ---
+      tb_tactical_button_toggle            = toggle_switch(TB_Tactical_Button_Toggle_Idx           ,tb_tactical_button_toggle           ,13);
+      lb_lethal_button_toggle              = toggle_switch(LB_Lethal_Button_Toggle_Idx             ,lb_lethal_button_toggle             ,13);
+      ab_aim_button_toggle                 = toggle_switch(AB_Aim_Button_Toggle_Idx                ,ab_aim_button_toggle                ,13);
+      fb_fire_button_toggle                = toggle_switch(FB_Fire_Button_Toggle_Idx               ,fb_fire_button_toggle               ,13);
+      sfb_sprint_focus_button_toggle       = toggle_switch(sfb_sprint_focus_button_toggle_Idx      ,sfb_sprint_focus_button_toggle      ,13);
+      mb_melee_button_toggle               = toggle_switch(MB_Melee_Button_Toggle_Idx              ,mb_melee_button_toggle              ,13);
+      pb_ping_button_toggle                = toggle_switch(PB_Ping_Button_Toggle_Idx               ,pb_ping_button_toggle               ,13);
+      sb_streak_button_toggle              = toggle_switch(SB_Streak_Button_Toggle_Idx             ,sb_streak_button_toggle             ,13);
+      jmb_jump_mantle_button_toggle        = toggle_switch(JB_Jump_Button_Toggle_Idx               ,jmb_jump_mantle_button_toggle       ,13);
+      ssdb_stance_slide_dive_button_toggle = toggle_switch(SSDB_Stance_Slide_Dive_Button_Toggle_Idx,ssdb_stance_slide_dive_button_toggle,13);
+      rib_reload_interact_button_toggle    = toggle_switch(RIB_Reload_Interact_Button_Toggle_Idx   ,rib_reload_interact_button_toggle   ,13);
+      sab_swap_armour_button_toggle        = toggle_switch(SB2_Swap_Button_Toggle_Idx              ,sab_swap_armour_button_toggle       ,13);
+
+    }
+
+    // -- On Edit Menu
+    if(dp_menu == 2) {
+
+      // -- Edit Mod Navigation
+      dp_edit_title_idx = menu_navigation(dp_edit_title_idx,Edit_Value_Range[dp_mod_title_idx][0],Edit_Value_Range[dp_mod_title_idx][1]);
+
+      // -- Edit Menu - Edit Values
+      // -- Note: Optimise - Remove first arg and move into indexs below
+      ar_vert_value                  = edit_value (AR_Vert_Value_Idx                     ,ar_vert_value                 ,-60                                                               ,60                                                                                                 ,1);
+      ar_hori_value                  = edit_value (AR_Hori_Value_Idx                     ,ar_hori_value                 ,-60                                                               ,60                                                                                                 ,1);
+      ar_deadzone                    = edit_value (AR_Deadzone_Idx                       ,ar_deadzone                   ,0                                                                 ,75                                                                                                 ,1);
+      ar_rumble_influence            = edit_toggle(AR_Rumble_Influence_Toggle_Idx        ,ar_rumble_influence                                                                              ,TRUE);
+      ar_boost_time                  = edit_value (AR_Boost_Time_Idx                     ,ar_boost_time                 ,0                                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      aa_activation_type             = edit_toggle(AA_Activation_Type_Toggle_Idx         ,aa_activation_type                                                                               ,4);
+      aa_radius                      = edit_value (AA_Radius_Idx                         ,aa_radius                     ,1                                                                 ,60                                                                                                 ,1);
+      aa_rotate_by_angles            = edit_value (AA_Rotate_By_Angles_Idx               ,aa_rotate_by_angles           ,1                                                                 ,45                                                                                                 ,1);
+      aa_release_point               = edit_value (AA_Release_Point_Idx                  ,aa_release_point              ,1                                                                 ,60                                                                                                 ,1);
+      sa_angles_divided              = edit_value (SA_Angles_Divided_Idx                 ,sa_angles_divided             ,2                                                                 ,2 + 15                                                                                             ,1);
+      rc_release_activation_type     = edit_toggle(RC_Release_Activation_Type_Toggle_Idx ,rc_release_activation_type                                                                       ,1);
+      rc_max_reload_time_for_cancel  = edit_value (RC_Max_Reload_Time_For_Cancel_Idx     ,rc_max_reload_time_for_cancel ,ceil_to_multiple(HT_Min_Standard_Game_Hold_Time,ii_input_interval),floor_to_multiple(HT_Min_Standard_Game_Hold_Time + DP_Max_Large_Time_Based_Value,ii_input_interval),ii_input_interval);
+      //rc_cancel_method_edit_toggle   = edit_toggle(RC_Cancel_Method_Edit_Toggle_Idx      ,rc_cancel_method_edit_toggle                                                                     ,4);
+      ar2_release_activation_type    = edit_toggle(AR2_Release_Activation_Type_Toggle_Idx,ar2_release_activation_type                                                                      ,1);
+      ar2_shoot_time                 = edit_value (AR2_Shoot_Time_Idx                    ,ar2_shoot_time                ,ii_max_controller_polling_rate                                    ,floor_to_multiple(DP_Max_Large_Time_Based_Value,ii_max_controller_polling_rate)                    ,ii_max_controller_polling_rate);
+      tj_jump_wait_time              = edit_value (TJ_Jump_Wait_Time_Idx                 ,tj_jump_wait_time             ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      rf_activation_type             = edit_toggle(RF_Activation_Type_Toggle_Idx         ,rf_activation_type                                                                               ,1);
+      rf_shot_wait_time              = edit_value (RF_Shot_Wait_Time_Idx                 ,rf_shot_wait_time             ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      rf_single_shot_time            = edit_value (RF_Single_Shot_Time_Idx               ,rf_single_shot_time           ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      ii_input_interval              = edit_value (II_Input_Interval_Idx                 ,ii_input_interval             ,II_Min_Runtime_Interval_Step                                      ,50                                                                                                 ,II_Min_Runtime_Interval_Step);
+      fac_ads_time                   = edit_value (FAC_ADS_Time_Idx                      ,fac_ads_time                  ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      rl_delay_interval              = edit_value (RL_Delay_Interval_Idx                 ,rl_delay_interval             ,8                                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,8)                                                 ,8);
+      rl_brightness                  = edit_value (RL_Brightness_Idx                     ,rl_brightness                 ,1                                                                 ,100                                                                                                ,1);
+      rl_fx_brightness               = edit_value (RL_FX_Brightness_Idx                  ,rl_fx_brightness              ,1                                                                 ,100                                                                                                ,1);
+      rl_mod_menu_brightness         = edit_value (RL_Mod_Menu_Brightness_Idx            ,rl_mod_menu_brightness        ,1                                                                 ,100                                                                                                ,1);
+      rl_saturation                  = edit_value (RL_Saturation_Idx                     ,rl_saturation                 ,1                                                                 ,100                                                                                                ,1);
+      aaso_aim_hold_time             = edit_value (AASO_Aim_Hold_Time_Idx                ,aaso_aim_hold_time            ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      as_type                        = edit_toggle(AS_Type_Toggle_Idx                    ,as_type                                                                                          ,3);
+      as_crouch_prone_delay_time     = edit_value (AS_Crouch_Prone_Delay_Time_Idx        ,as_crouch_prone_delay_time    ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Large_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      js_activation_type             = edit_toggle(JS_Activation_Type_Toggle_Idx         ,js_activation_type                                                                               ,2);
+      js_press_variance_time         = edit_value (JS_Press_Variance_Time_Idx            ,js_press_variance_time        ,ii_max_controller_polling_rate                                    ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_max_controller_polling_rate)                    ,ii_max_controller_polling_rate);
+      ap_activation_type             = edit_toggle(AP_Activation_Type_Toggle_Idx         ,ap_activation_type                                                                               ,2);
+      ap_min_release_activation_time = edit_value (AP_Min_Release_Activation_Time_Idx    ,ap_min_release_activation_time,0                                                                 ,126                                                                                                ,1);
+      ap_unping_type                 = edit_toggle(AP_Unping_Type_Toggle_Idx             ,ap_unping_type                                                                                   ,2);
+      sc_type                        = edit_toggle(SC_Type_Toggle_Idx                    ,sc_type                                                                                          ,3);
+      sc_cancel_delay_time           = edit_value (SC_Cancel_Delay_Time_Idx              ,sc_cancel_delay_time          ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+      sc2_cancel_delay_time          = edit_value (SC2_Cancel_Delay_Time_Idx             ,sc2_cancel_delay_time         ,ceil_to_multiple(100,ii_input_interval)                           ,floor_to_multiple(100 + DP_Max_Small_Time_Based_Value,ii_input_interval)                           ,ii_input_interval);
+      af_type                        = edit_toggle(AF_Type_Toggle_Idx                    ,af_type                                                                                          ,1);
+      ds_activation_type             = edit_toggle(DS_Activation_Type_Toggle_Idx         ,ds_activation_type                                                                               ,1);
+      ds_press_variance_time         = edit_value (DS_Press_Variance_Time_Idx            ,ds_press_variance_time        ,ii_max_controller_polling_rate                                    ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_max_controller_polling_rate)                    ,ii_max_controller_polling_rate);
+      ds_stand_on_release            = edit_toggle(DS_Stand_On_Release_Toggle_Idx        ,ds_stand_on_release                                                                              ,TRUE);
+      ds_stand_type                  = edit_toggle(DS_Stand_Type_Toggle_Idx              ,ds_stand_type                                                                                    ,1);
+      cs_activation_type             = edit_toggle(CS_Activation_Type_Toggle_Idx         ,cs_activation_type                                                                               ,2);
+      cs_loop                        = edit_toggle(CS_Loop_Toggle_Idx                    ,cs_loop                                                                                          ,TRUE);
+      cs_once_release_stand          = edit_toggle(CS_Once_Release_Stand_Toggle_Idx      ,cs_once_release_stand                                                                            ,TRUE);
+      cs_delay_time                  = edit_value (CS_Delay_Time_Idx                     ,cs_delay_time                 ,ii_input_interval                                                 ,floor_to_multiple(DP_Max_Small_Time_Based_Value,ii_input_interval)                                 ,ii_input_interval);
+
+    }
+
+    if(dp_display_menu) {
+
+      // -- Display Menu Formatting
+      cls_oled(OLED_BLACK);
+      rect_oled(0,0,OLED_WIDTH,OLED_HEIGHT,OLED_BLACK,OLED_WHITE);
+
+      switch(dp_menu) {
+        // -- Display Main Menu Option Text
+        case 0: {
+          for(dp_main_idx = 0; dp_main_idx <= 4; dp_main_idx ++) {
+            print_menu_title(3 + (12 * dp_main_idx),dp_main_title_idx != dp_main_idx,Main_Menu_Strings[dp_main_idx]);
+          }
+          break;
+        }
+        // -- Display Mod Title Text
+        case 1: {
+          print_menu_title(12,OLED_WHITE,Mod_Title_Strings[dp_mod_title_idx]);
+          break;
+        }
+        // -- Display Edit Menu Title Text
+        case 2: {
+          print_menu_title(12,OLED_WHITE,Edit_Title_Strings[dp_edit_title_idx]);
+        }
+      }
+
+      // -- Reset Screen Sleep Timer
+      reset_screen_sleep_timer();
+
+      dp_display_menu = FALSE;
+
+    }
+
+    // -- Display Title Screen
+    if(event_press(OPTIONS)) {
+
+      if(dp_menu == 2) {
+        // -- Set updated amount of angles (Steady Aim)
+        if(dp_mod_title_idx == SA_Steady_Aim_Toggle_Idx)
+          sa_angles = 360 / sa_angles_divided;
+        // -- Update time-based values to the current interval multiple when exiting the 'input interval' edit menu
+        if(dp_mod_title_idx == HT_Hair_Triggers_Toggle_Idx) {
+          ii_vm_cycle_time = greatest_common_divisor_vm_timing();
+          round_time_based_values();
+        }
+      }
+
+      vm_tctrl(ii_vm_cycle_time - 10);
+      dp_title = TRUE;
+      dp_block_options = TRUE;
+      reset_screen_sleep_timer();
+
+    }
+
+    set_val(OPTIONS,0);
+
+
+  }
+  // -- Following will only run outside the menu (Title Screen)
+  else {
+
+
+    // -- Display Title Screen (aka an abomination of code)
+    if(dp_screen_sleep_timer) {
+
+      dp_title_display_interval += get_rtime();
+
+      if(dp_title_display_interval >= 8) {
+
+        cls_oled(OLED_BLACK);
+
+        dp_blackout_random = random(0,127 * 4);
+
+        if(dp_blackout_random == 1)
+          dp_blackout_shift = random(-2,2);
+
+        if(dp_hori_pos < 128 * 6) {
+          dp_hori_pos += 5 + dp_shift;
+        }
+        else {
+          dp_hori_pos = 0;
+          dp_blackout_shift_random = random(0,63);
+          dp_shift = random(0,2);
+        }
+
+        if(dp_blackout_random)
+          print(25,24 + dp_shift,OLED_FONT_MEDIUM,OLED_WHITE,Title_Strings[0]);
+        if(dp_blackout_random != 1)
+          print(42,46 + dp_shift,OLED_FONT_SMALL ,OLED_WHITE,Title_Strings[1]);
+
+        if(dp_blackout_random != 2) {
+          putc_oled(OLED_HEIGHT - 56,OLED_WIDTH - 13);
+          putc_oled(OLED_HEIGHT - 58,OLED_WIDTH - 6);
+          putc_oled(OLED_HEIGHT - 63,OLED_WIDTH - 58);
+          putc_oled(OLED_HEIGHT - 60,OLED_WIDTH - 27);
+          putc_oled(OLED_HEIGHT - 62,OLED_WIDTH - 31);
+          putc_oled(OLED_HEIGHT - 57,OLED_WIDTH - 89);
+          putc_oled(OLED_HEIGHT - 61,OLED_WIDTH - 28);
+          putc_oled(OLED_HEIGHT - 59,OLED_WIDTH - 8);
+          puts_oled(36,8 + dp_shift,0,8,1);
+        }
+
+        rect_oled(dp_hori_pos                                         ,dp_blackout_shift_random + dp_blackout_shift                                          ,12 +  (dp_blackout_shift_random % 2),1,OLED_BLACK,OLED_WHITE);
+        rect_oled(dp_hori_pos + 8 + (dp_blackout_shift_random % 2 * 8),dp_blackout_shift_random + dp_blackout_shift + 30 + (dp_blackout_shift_random % 2) * 2,9  + !(dp_blackout_shift_random % 2),1,OLED_BLACK,OLED_WHITE);
+
+        dp_title_display_interval = 0;
+
+      }
+
+    }
+
+
+    // Hair Triggers
+
+    if(ht_hair_triggers_toggle)
+      deadzone(AIM,FIRE,99,99);
+
+
+    // Block Rumble (Vibration)
+
+    // -- Note: This needs to be disabled with reset_rumble() but the menu rumble does this anyway, conveniently...
+    if(br_block_rumble_toggle)
+      block_rumble();
+
+
+    // Auto Focus
+
+    if(af_auto_focus_toggle)
+      if(fac_ads_timer >= fac_ads_time) {
+        if(af_type)
+          combo_run(Quick_Gasp);
+        else set_val(SPRINT_FOCUS,100);
+        if(event_press(SPRINT_FOCUS))
+          combo_run(Zoom);
+      }
+      else {
+        combo_stop(Quick_Gasp);
+        combo_stop(Zoom);
+      }
+
+
+    // Steady Aim
+
+    if(sa_steady_aim_toggle) {
+
+      sa_direction = angle_atan2(get_ival(POLAR_RX) / 256, get_ival(POLAR_RY) / 256);
+
+      if(get_ival(POLAR_RY) > 0)
+        sa_direction = map(0,sa_angles,0,180,(sa_direction * sa_angles) / 180);
+      else sa_direction = map(0,sa_angles,180,360,(((sa_direction - 180) * sa_angles) / 180));
+
+      sa_set_polar(sa_direction, isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2)), FALSE);
+
+    }
+
+
+    // Auto Reload + Reload Cancel
+
+    if((ar2_auto_reload_toggle || rc_reload_cancel_toggle || aaso_aim_assist_snap_on_abuse_toggle) && get_brtime(STREAK) >= 3000) {
+
+      if(event_press(FIRE))
+        rc_ar2_did_shoot_before_reload = TRUE;
+
+      if(rc_ar2_did_shoot_before_reload && event_press(RELOAD_INTERACT)) {
+        rc_reloading = TRUE;
+        rc_ar2_did_shoot_before_reload = FALSE;
+      }
+
+    }
+
+
+    // Reload Cancel
+
+    if(rc_reload_cancel_toggle) {
+
+      if(rc_reloading) {
+
+        rc_reloading_time += get_rtime();
+
+        // -- Prevented Reload (Revert State)
+        // -- Note: Add sprint cancel check
+        if(get_ival(RELOAD_INTERACT) && get_ptime(RELOAD_INTERACT) == ceil_to_multiple(HT_Min_Short_Game_Hold_Time + ii_vm_cycle_time,ii_vm_cycle_time) || event_press(SWAP_ARMOUR) || event_press(TACTICAL) || event_press(LETHAL) || event_press(STREAK)) {
+          rc_reloading = FALSE;
+          rc_ar2_did_shoot_before_reload = TRUE;
+        }
+
+        if(rc_reloading_time > rc_max_reload_time_for_cancel)
+          rc_reloading = FALSE;
+
+        if(rc_reloading_time && rc_reloading_time <= rc_max_reload_time_for_cancel && (rc_release_activation_type == 1 && event_press(AIM) || event_press(FIRE)))
+          combo_run(Reload_Cancel);
+
+      }
+      else rc_reloading_time = 0;
+
+    }
+
+
+    // Auto Reload
+
+    if(ar2_auto_reload_toggle) {
+      if(ar2_shoot_timer >= ar2_shoot_time && (!ar2_release_activation_type && event_release(FIRE)
+      || ar2_release_activation_type == 1 && (rc_ar2_did_shoot_before_reload && !get_ival(FIRE) && event_release(AIM) || !get_ival(AIM) && event_release(FIRE)) && get_brtime(STREAK) >= 3000)) {
+        combo_run(Auto_Reload);
+        ar2_shoot_timer = 0;
+        // -- Note: Best to delay this until after 'RELOAD' as been pressed
+        //if(rc_reload_cancel_toggle)
+        rc_reloading = TRUE;
+      }
+      if(get_ival(FIRE) && get_brtime(STREAK) >= 3000 && !(get_ival(TACTICAL) || get_ival(LETHAL) || combo_running(Turbo_Melee) || combo_running(Pickup_Cancel) || combo_running(Swap_Cancel) || combo_running(Reload_Cancel)))
+        ar2_shoot_timer += get_rtime();
+    }
+
+    if(rc_reload_cancel_toggle && (rc_reloading_time >= rc_max_reload_time_for_cancel || combo_running(Reload_Cancel)) || !rc_reload_cancel_toggle && event_press(RELOAD_INTERACT))
+      ar2_shoot_timer = 0;
+
+
+    // Quick Scoper
+
+    if(qs_quick_scoper_toggle)
+      if(event_press(FIRE) && !(get_ival(TACTICAL) || get_ival(LETHAL)))
+        combo_run(Quick_Scoper);
+
+
+    // Auto Ping
+
+    if(ap_auto_ping_toggle) {
+      if(event_press(FIRE) && get_brtime(FIRE) >= 1000 * ap_min_release_activation_time && (!ap_activation_type && fac_ads_timer >= fac_ads_time || ap_activation_type == 1 && get_ival(AIM) || ap_activation_type == 2))
+        combo_run(Auto_Ping);
+      if(rc_ar2_did_shoot_before_reload && (ap_unping_type == 1 && event_release(FIRE) || ap_unping_type == 2 && event_release(AIM) && !get_ival(FIRE)))
+        combo_run(Unping);
+    }
+
+
+    // Jump Shot
+
+    if(js_jump_shot_toggle)
+      if(!js_activation_type && event_press(AIM) ||
+      js_activation_type == 1 && get_ival(AIM) ||
+      js_activation_type == 2 && (get_ival(AIM) && get_ptime(AIM) <= js_press_variance_time && event_press(FIRE) || get_ival(FIRE) && get_ptime(FIRE) <= js_press_variance_time && event_press(AIM)))
+        combo_run(Jump_Shot);
+
+
+    // Auto Sprint
+
+    // -- Note: Need to improve this disable on crouch method for actual detection
+    if(as_precise_auto_sprint_toggle)
+      if(!get_ival(AIM) && !get_ival(STANCE_SLIDE_DIVE) && (get_ptime(STANCE_SLIDE_DIVE) >= as_crouch_prone_delay_time || get_val(SPRINT_FOCUS)) && in_sprint_area() && !(combo_running(Cancel_Stand_Slide_Cancel) || combo_running(Stand_Slide_Cancel))) {
+        switch(as_type) {
+          case 0: {
+            combo_run(Auto_Sprint);
+            break;
+          }
+          case 1: {
+            set_val(SPRINT_FOCUS,100);
+            break;
+          }
+          case 2: {
+            if(!(isqrt(pow(get_lval(MOVEX),2) + pow(get_lval(MOVEY),2)) >= 96 && get_lval(MOVEY) <= -72))
+              combo_run(Auto_Sprint);
+            break;
+          }
+          case 3: {
+            combo_run(Boosted_Auto_Sprint);
+          }
+        }
+      }
+      else {
+        combo_stop(Auto_Sprint);
+        combo_stop(Boosted_Auto_Sprint);
+      }
+
+
+    // Turbo Jump
+
+    if(tj_turbo_jump_toggle)
+      if(turbo_hold(JUMP_MANTLE))
+        combo_run(Turbo_Jump);
+
+
+    // Turbo Melee
+
+    if(tm_turbo_melee_toggle)
+      if(turbo_hold(MELEE))
+        combo_run(Turbo_Melee);
+
+
+    // Money Dupe (MWII)
+
+    if(md_money_dupe_toggle)
+      if(turbo_hold(RELOAD_INTERACT))
+        combo_run(Money_Dupe_Turbo_Interact);
+
+
+    // Slide Cancel
+
+    if(sc_slide_cancel_toggle) {
+      if(event_press(STANCE_SLIDE_DIVE) && in_sprint_area()) {
+        switch(sc_type) {
+          case 0: {
+            combo_run(Cancel_Stand_Slide_Cancel);
+            break;
+          }
+          case 1: {
+            sc_stand_btn = STANCE_SLIDE_DIVE;
+            combo_run(Stand_Slide_Cancel);
+            break;
+          }
+          case 2: {
+            sc_stand_btn = JUMP_MANTLE;
+            combo_run(Stand_Slide_Cancel);
+            break;
+          }
+          case 3: {
+            combo_run(MWII_Slide_Cancel);
+          }
+        }
+        /*
+        // -- Note: Add release mode(s)
+        if(event_release(STANCE_SLIDE_DIVE) && get_ptime(STANCE_SLIDE_DIVE) >= HT_Min_Standard_Game_Hold_Time && sc_slide_cancel_toggle == 4)
+          combo_run(Slide_Cancel_Release_Jump_Stand);
+        */
+      }
+    }
+
+
+    // Pickup Cancel
+
+    if(pac_pickup_cancel_toggle)
+      if(get_ival(RELOAD_INTERACT) && get_ptime(RELOAD_INTERACT) == ceil_to_multiple(HT_Min_Short_Game_Hold_Time + ii_vm_cycle_time,ii_vm_cycle_time))
+        combo_run(Pickup_Cancel);
+
+
+    // Swap Cancel
+
+    if(sc2_swap_cancel_toggle)
+      if(event_release(SWAP_ARMOUR) && get_ptime(SWAP_ARMOUR) < HT_Min_Standard_Game_Hold_Time && !(get_ival(TACTICAL) || get_ival(LETHAL)))
+        combo_run(Swap_Cancel);
+
+
+    // YY Cancel
+    // -- Note: Maybe this needs to be later or have input in a combo??
+
+    if(yyc_yy_cancel_toggle) {
+      if(!(get_ival(AIM) || get_ival(FIRE)) && in_sprint_area() && (as_precise_auto_sprint_toggle || event_press(SPRINT_FOCUS)))
+        yyc_sprinting = TRUE;
+      if(yyc_sprinting) {
+        if(!in_sprint_area() || event_press(JUMP_MANTLE) || event_press(STANCE_SLIDE_DIVE) || event_press(RELOAD_INTERACT) || event_press(SWAP_ARMOUR) || event_press(AIM) || event_press(FIRE) || event_press(MELEE) || event_press(TACTICAL) || event_press(LETHAL))
+          yyc_sprinting = FALSE;
+        else combo_run(YY_Cancel);
+      }
+      // -- Note: Is this needed for MWII??
+      if(yyc_sprinting || combo_running(YY_Cancel))
+        set_val(AIM,0);
+    }
+
+
+    // Dropshot
+
+    if(ds_dropshot_toggle) {
+      if(!(get_ival(TACTICAL) || get_ival(LETHAL)) && (!ds_activation_type && event_press(FIRE)) ||
+      (ds_activation_type && get_ival(AIM) && get_ptime(AIM) <= ds_press_variance_time && event_press(FIRE) || get_ival(FIRE) && get_ptime(FIRE) <= ds_press_variance_time && event_press(AIM))) {
+        combo_run(Dropshot);
+        ds_did_dropshot = TRUE;
+      }
+      // -- Note: Add release aim and fire version
+      if(ds_did_dropshot && ds_stand_on_release && event_release(FIRE)) {
+        combo_stop(Dropshot);
+        if(ds_stand_type)
+          combo_run(Stand);
+        else combo_run(Sprint_Stand);
+        ds_did_dropshot = FALSE;
+      }
+    }
+
+
+    // Crouch Shot
+
+    if(cs_crouch_shot_toggle) {
+      if((!(get_ival(TACTICAL) || get_ival(LETHAL)) && (!cs_activation_type && (!cs_loop && event_press(AIM) || cs_loop && get_ival(AIM))
+      || cs_activation_type == 1 && (!cs_loop && event_press(FIRE) || cs_loop && get_ival(FIRE))
+      || cs_activation_type == 2 && (!cs_loop && (get_ival(AIM) && event_press(FIRE) || get_ival(FIRE) && event_press(AIM)) || cs_loop && get_ival(AIM) && get_ival(FIRE))))) {
+        combo_run(Crouch_Shot);
+        cs_crouched = TRUE;
+      }
+      if(!cs_loop) {
+        // -- Note: Stop at second press in combo
+        if(combo_current_step(Crouch_Shot) >= 3)
+          combo_stop(Crouch_Shot);
+        if(cs_crouched && (!cs_activation_type && event_release(AIM) || cs_activation_type == 1 && event_release(FIRE)) || cs_activation_type == 2 && (!get_ival(AIM) && event_release(FIRE) || !get_ival(FIRE) && event_release(AIM))) {
+          combo_stop(Crouch_Shot);
+          combo_run(Crouch_Shot);
+          cs_crouched = FALSE;
+        }
+      }
+    }
+
+
+    // MWII Backwards Dive
+
+    if(bd_backwards_dive_toggle)
+      if(event_release(UNUSED) && get_ptime(UNUSED) < HT_Min_Standard_Game_Hold_Time)
+        combo_run(MWII_Backwards_Dive);
+
+
+    // Polar Aim Assist Abuse
+
+    if(aa_polar_aim_assist_abuse_toggle) {
+
+      //aa_current_magnitude = isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2));
+      //aa_max_magnitude = aa_current_magnitude < 100;
+      aa_angle += aa_rotate_by_angles;
+      aa_angle %= 360;
+      aa_sin_angle = aa_sa_polar_shape_array[aa_angle % 360];
+      aa_cos_angle = aa_sa_polar_shape_array[(aa_angle + 270) % 360];
+      aa_cos_angle = (aa_cos_angle * aa_radius) / 100;
+      aa_sin_angle = (aa_sin_angle * aa_radius) / 100;
+
+      // -- Note: Check over
+      if(/*aa_current_magnitude*/ isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2)) <= aa_release_point && get_brtime(STREAK) >= 3000 &&
+      (!aa_activation_type && fac_ads_timer >= fac_ads_time && get_ival(FIRE) ||
+      aa_activation_type == 1 && (fac_ads_timer >= fac_ads_time || get_ival(FIRE)) ||
+      aa_activation_type == 2 && fac_ads_timer >= fac_ads_time ||
+      aa_activation_type == 3 && get_ival(FIRE) ||
+      aa_activation_type == 4)) {
+        /*if(aa_current_magnitude <= aa_radius) {*/
+          aa_sin_angle -= get_ival(LOOKY);
+          aa_cos_angle -= get_ival(LOOKX);
+        /*}*/
+        /*
+        else {
+          aa_sin_angle = (aa_sin_angle * (200 - ((abs(get_ival(LOOKY)) + aa_current_magnitude) / 10) * 10) / 200) * aa_max_magnitude;
+          aa_cos_angle = (aa_cos_angle * (200 - ((abs(get_ival(LOOKX)) + aa_current_magnitude) / 10) * 10) / 200) * aa_max_magnitude;
+        }
+        */
+        set_val(POLAR_RX,clamp(get_ival(LOOKX) + aa_cos_angle,-100,100) * 32767/100);
+        set_val(POLAR_RY,clamp(get_ival(LOOKY) + aa_sin_angle,-100,100) * 32767/100);
+      }
+
+    }
+
+
+    // Aim Assist Snap On Abuse
+
+    if(aaso_aim_assist_snap_on_abuse_toggle) {
+      if(fac_ads_timer >= fac_ads_time)
+        combo_run(Aim_Assist_Snap_On_Abuse);
+      else combo_stop(Aim_Assist_Snap_On_Abuse);
+    }
+
+
+    // Rapid Fire
+
+    if(get_ival(SCOREBOARD)) {
+      if(event_press(STREAK)) {
+        rf_rapid_fire_toggle = !rf_rapid_fire_toggle;
+        combo_run(Menu_Toggle_FX);
+      }
+      set_val(STREAK,0);
+    }
+
+    if(rf_rapid_fire_toggle)
+      if((!rf_activation_type || rf_activation_type == 1 && get_ival(AIM)) && get_ival(FIRE) && get_ptime(FIRE) > rf_single_shot_time)
+        combo_run(Rapid_Fire);
+
+
+    // Anti-Recoil
+    // -- Note: Remove duplication (optimise)
+
+    if(ar_anti_recoil_toggle) {
+
+      if(get_ival(AIM) && get_ival(FIRE)) {
+
+        if(ar_rumble_influence) {
+
+          if(get_rumble(RUMBLE_B) != 100 && (get_rumble(RUMBLE_A) == 100 || get_rumble(RUMBLE_A) < get_rumble(RUMBLE_B)))
+            ar_smart_rumble = get_rumble(RUMBLE_B);
+          else ar_smart_rumble = get_rumble(RUMBLE_A);
+
+          ar_boost_timer += get_rtime();
+
+          if(ar_smart_rumble > 10 && ar_smart_rumble < 90) {
+            // -- Initial Boost
+            if(ar_boost_timer < ar_boost_time) {
+              if(get_controller() == PIO_PS4)
+                ar_strength = (ar_vert_value * 2) + (ar_smart_rumble / 4);
+              else ar_strength = (ar_vert_value * 2) + (ar_smart_rumble / 2);
+            }
+            // -- Normal Strength
+            else if(get_controller() == PIO_PS4)
+              ar_strength = ar_vert_value + (ar_smart_rumble / 3);
+            else ar_strength = ar_vert_value + (ar_smart_rumble / 2);
+          }
+
+        }
+        else {
+          ar_smart_rumble = 0;
+          ar_strength = ar_vert_value;
+        }
+
+        deadzone_offset(POLAR_RX,ar_hori_value * 32767/100);
+
+        // -- Outside Deadzone
+        // -- Note: Try fix properly for inverted
+        if(isqrt(pow(get_ival(XB1_RX),2) + pow(get_ival(XB1_RY),2)) > ar_deadzone) {
+          if(ar_smart_rumble < 10)
+            deadzone_offset(POLAR_RY,((ar_vert_value - (ar_deadzone * (((ar_vert_value >= 0) * 2) - 1))) * 32767/100));
+          else deadzone_offset(POLAR_RY,((ar_strength - (ar_deadzone * (((ar_vert_value >= 0) * 2) - 1))) * 32767/100));
+        }
+        // -- Inside Deadzone
+        else if(ar_smart_rumble < 10)
+          deadzone_offset(POLAR_RY,((ar_vert_value * (((ar_vert_value >= 0) * 2) - 1)) * 32767/100) - get_val(POLAR_RY));
+        else deadzone_offset(POLAR_RY,(ar_strength * (((ar_vert_value >= 0) * 2) - 1)) * 32767/100);
+
+      }
+      else ar_boost_timer = 0;
+
+    }
+
+
+    // Display
+
+    // -- Display Mod Menu
+
+    if(get_ival(AIM) >= 75) {
+
+      if(event_press(OPTIONS)) {
+
+        combo_stop(Display_Splash);
+        dp_title = FALSE;
+        dp_display_menu = TRUE;
+        combo_run(Menu_Toggle_FX);
+
+      }
+
+      set_val(OPTIONS,0);
+
+    }
+
+    // -- Block 'OPTIONS' until released from menu close
+
+    if(dp_block_options) {
+
+      if(event_release(OPTIONS))
+        dp_block_options = FALSE;
+
+      set_val(OPTIONS,0);
+
+    }
+
+
+  // -- End of run *only outside* the mod menu
+  }
+
+
+  // 'PS4_TOUCH' and 'XB1_VIEW' + 'XB1_SHARE' and 'XB1_SYNC' + 'SWI_CAPTURE' Fix
+  // -- (proper support for all controllers - mostly untested, doesn't appear to have any mistakes though 😛)
+  // -- Note: 'WII_A' and 'WII_B' are swapped from Switch - Check if they perform the same actions or should be swapped for Wii Controller
+
+  if(cf_crossover_fix_toggle) {
+
+    // -- PS4 Controller not on a PS4 Console/Output
+    if(get_console() != PIO_PS4) {
+      if(get_controller() == PIO_PS4) {
+        swap(PS4_TOUCH,XB1_VIEW);
+        // -- Remap 'PS4_SHARE' (now 'PS4_TOUCH') to 'XB1_SHARE' (Button 27) only on Xbox One (output), other consoles/output 'PS4_SHARE' will be left unmapped
+        switch(get_console()) {
+          case PIO_XB1: {
+            swap(PS4_TOUCH,XB1_SHARE);
+            break;
+          }
+          case PIO_SWITCH: {
+            swap(PS4_TOUCH,SWI_CAPTURE);
+          }
+        }
+      }
+    }
+    // -- PS4 Console/Output but not using a PS4 Controller
+    else {
+      if(get_controller() != PIO_PS4)
+        swap(PS4_TOUCH,PS4_SHARE);
+      if(get_controller() == PIO_SWITCH)
+        swap(PS4_TOUCH,SWI_CAPTURE);
+      if(get_controller() == PIO_XB1) {
+        // -- Enable remap if the SHARE button is used (Series X|S Controller)
+        if(event_press(XB1_SHARE))
+          cf_swap_xb1_share_sync = TRUE;
+      }
+      else cf_swap_xb1_share_sync = FALSE;
+    }
+
+    // -- Swap 'PS4_SHARE' (now 'PS4_TOUCH') to 'XB1_SHARE' (Button 27) when on Xbox One (output)
+    if(cf_swap_xb1_share_sync) {
+      swap(PS4_TOUCH,XB1_SHARE);
+      // -- Block input to accelerometer x-axis for other consoles
+      set_val(XB1_SYNC,0);
+    }
+
+  }
+
+
+  // Fully Aiming Check
+
+  // -- Note: Test - Reset aim state when detected is reloading or swapping
+  if((rc_reload_cancel_toggle && rc_reloading) || combo_running(Reload_Cancel) || get_brtime(SWAP_ARMOUR) < fac_ads_time)
+    fac_ads_timer = 0;
+  else {
+    if(get_ival(AIM))
+      fac_ads_timer += get_rtime();
+    else fac_ads_timer -= get_rtime();
+    fac_ads_timer = clamp(fac_ads_timer,0,fac_ads_time);
+  }
+
+
+  // -- Screen Sleep
+
+  // -- Note: Maybe try a combo to see if it is more efficient??
+  if(dp_screen_sleep_timer) {
+    if(dp_screen_sleep_timer <= get_rtime()) {
+      dp_title = TRUE;
+      dp_display_menu = FALSE;
+      cls_oled(OLED_BLACK);
+      ii_vm_cycle_time = greatest_common_divisor_vm_timing();
+      vm_tctrl(ii_vm_cycle_time - 10);
+    }
+    dp_screen_sleep_timer = max(0,dp_screen_sleep_timer - get_rtime());
+  }
+
+
+  // Rainbow LED
+
+  // -- Note: Add default (reset) mode
+
+  if(rl_rainbow_led_toggle) {
+
+    rl_timer += get_rtime();
+
+    if(rl_timer >= rl_delay_interval) {
+      rl_hue ++;
+      if(rl_hue > 359)
+        rl_hue = 0;
+      rl_timer = 0;
+    }
+
+    if(dp_title)
+      set_hsb(rl_hue,rl_saturation,rl_brightness);
+    else {
+      set_hsb(rl_hue,rl_saturation,rl_mod_menu_brightness);
+      // -- Note: This better off in the edit function??
+      if(dp_menu == 2) {
+        switch(dp_edit_title_idx) {
+          case RL_Brightness_Idx: {
+            set_hsb(rl_hue,rl_saturation,rl_brightness);
+            break;
+          }
+          case RL_FX_Brightness_Idx: {
+            set_hsb(rl_hue,rl_saturation,rl_fx_brightness);
+          }
+        }
+      }
+    }
+
+  }
+  else set_led(LED_1,0);
+
+
+  // -- [DEBUG]
+  set_val(TRACE_4,fac_ads_timer);
+
+
+}
+
+
+
+// Reload Cancel
+
+combo Reload_Cancel {
+
+  set_val(SWAP_ARMOUR,100);
+  wait(max(24,ii_input_interval));
+  wait(max(24,ii_input_interval));
+  set_val(SWAP_ARMOUR,100);
+  wait(max(24,ii_input_interval));
+  // -- Fixed??
+  rc_reloading = FALSE;
+  wait(get_rtime());
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Auto Reload
+
+combo Auto_Reload {
+
+  set_val(RELOAD_INTERACT,100);
+  wait(ii_input_interval);
+  // -- Note: This line may be causing a bug with 'Reload Cancel'
+  // -- Fixed or kinda shiet??
+  rc_ar2_did_shoot_before_reload = FALSE;
+  wait(get_rtime());
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Quick Scoper
+
+combo Quick_Scoper {
+
+  set_val(LETHAL,100);
+  wait(110);
+  set_val(LETHAL,100);
+  set_val(SWAP_ARMOUR,100);
+  wait(max(36,ii_input_interval));
+  wait(300);
+  set_val(AIM,100);
+  wait(max(36,ii_input_interval));
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Auto Ping
+
+combo Auto_Ping {
+
+  set_val(PING,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval);
+  set_val(PING,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+combo Unping {
+
+  set_val(PING,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Jump Shot
+
+combo Jump_Shot {
+
+  set_val(JUMP_MANTLE,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Auto Focus
+
+combo Quick_Gasp {
+
+  set_val(SPRINT_FOCUS,100);
+  wait(floor_to_multiple(2998,ii_input_interval));
+  wait(950 - get_rtime());
+
+}
+
+combo Zoom {
+
+  set_val(SPRINT_FOCUS,0);
+  wait(max(18,ii_input_interval));
+  set_val(SPRINT_FOCUS,100);
+  wait(max(18,ii_input_interval));
+  set_val(SPRINT_FOCUS,0);
+  wait(max(18,ii_input_interval) - get_rtime());
+  set_val(SPRINT_FOCUS,0);
+
+}
+
+
+
+// Auto Sprint
+
+combo Auto_Sprint {
+
+  set_val(SPRINT_FOCUS,100);
+  // -- Note: Fix for MW/WZ
+  wait(max(20,ii_input_interval));
+  set_val(SPRINT_FOCUS,0);
+  wait(ii_input_interval - get_rtime());
+  set_val(SPRINT_FOCUS,0);
+
+}
+
+combo Boosted_Auto_Sprint {
+
+  wait(ii_input_interval);
+  set_val(SPRINT_FOCUS,100);
+  wait(ii_input_interval);
+  wait(1000);
+  set_val(MOVEY,0);
+  wait(ii_input_interval - get_rtime());
+  set_val(MOVEY,0);
+
+}
+
+
+
+// Turbo Jump
+
+combo Turbo_Jump {
+
+  set_val(JUMP_MANTLE,get_ival(JUMP_MANTLE));
+  wait(ii_input_interval);
+  set_val(JUMP_MANTLE,0);
+  wait(tj_jump_wait_time - get_rtime());
+  set_val(JUMP_MANTLE,0);
+
+}
+
+
+
+// Pickup Cancel
+
+combo Pickup_Cancel {
+
+  wait(260);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Swap Cancel
+
+combo Swap_Cancel {
+
+  wait(sc2_cancel_delay_time);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// YY Cancel
+
+combo YY_Cancel {
+
+  wait(YY_Wait_Delay);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(YY_Cancel_Delay);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Dropshot
+
+combo Dropshot {
+
+  set_val(MOVEY,0);
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(ii_input_interval);
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(HT_Min_Standard_Game_Hold_Time + 100);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+combo Sprint_Stand {
+
+  set_val(AIM,0);
+  set_val(FIRE,0);
+  set_val(MOVEY,-100);
+  set_val(SPRINT_FOCUS,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+combo Stand {
+
+  set_val(JUMP_MANTLE,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Crouch Shot
+
+combo Crouch_Shot {
+
+  if(cs_activation_type == 1)
+    set_val(MOVEY,0);
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval);
+  if(cs_activation_type == 1)
+    set_val(MOVEY,0);
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(ii_input_interval);
+  wait(cs_delay_time - get_rtime());
+
+}
+
+
+
+// MWII Backwards Dive
+
+combo MWII_Backwards_Dive {
+
+  set_val(AIM,0);
+  set_val(FIRE,0);
+  wait(ii_input_interval);
+  set_val(AIM,0);
+  set_val(FIRE,0);
+  set_val(MOVEY,-100);
+  set_val(SPRINT_FOCUS,100);
+  wait(ii_input_interval);
+  set_val(AIM,0);
+  set_val(FIRE,0);
+  set_val(MOVEY,100);
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(300);
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(350);
+
+}
+
+
+
+// Turbo Melee
+
+combo Turbo_Melee {
+
+  set_val(MELEE,get_ival(MELEE));
+  wait(ii_input_interval);
+  set_val(MELEE,0);
+  wait(ii_input_interval - get_rtime());
+  set_val(MELEE,0);
+
+}
+
+
+
+// Money Dupe (MWII)
+
+combo Money_Dupe_Turbo_Interact {
+
+  set_val(RELOAD_INTERACT,get_ival(RELOAD_INTERACT));
+  wait(ii_input_interval);
+  set_val(RELOAD_INTERACT,0);
+  wait(ii_input_interval - get_rtime());
+  set_val(RELOAD_INTERACT,0);
+
+}
+
+
+
+// Aim Assist Snap On Abuse
+
+combo Aim_Assist_Snap_On_Abuse {
+
+  set_val(AIM,0);
+  wait(ii_input_interval/* * 2*/);
+  set_val(AIM,100);
+  wait(aaso_aim_hold_time - get_rtime());
+  set_val(AIM,100);
+
+}
+
+
+
+// Slide Cancel
+
+combo Cancel_Stand_Slide_Cancel {
+
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(HT_Min_Short_Game_Hold_Time);
+  set_val(STANCE_SLIDE_DIVE,0);
+  wait(sc_cancel_delay_time);
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(ii_input_interval);
+  // -- Note: Extra time for BOCW (fix)
+  wait(max(36,ii_input_interval));
+  set_val(JUMP_MANTLE,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+combo Stand_Slide_Cancel {
+
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(HT_Min_Short_Game_Hold_Time);
+  set_val(STANCE_SLIDE_DIVE,0);
+  wait(sc_cancel_delay_time);
+  set_val(sc_stand_btn,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+combo MWII_Slide_Cancel {
+
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(HT_Min_Short_Game_Hold_Time);
+  wait(sc_cancel_delay_time);
+  set_val(AIM,100);
+  wait(ii_input_interval);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval);
+  set_val(SWAP_ARMOUR,100);
+  wait(ii_input_interval);
+  wait(920 - sc_cancel_delay_time - (ii_input_interval * 4));
+  set_val(STANCE_SLIDE_DIVE,100);
+  wait(ii_input_interval);
+  wait(ii_input_interval - get_rtime());
+
+}
+
+
+
+// Rapid Fire
+
+combo Rapid_Fire {
+
+  set_val(FIRE,get_ival(FIRE));
+  wait(ii_input_interval);
+  set_val(FIRE,0);
+  wait(rf_shot_wait_time - get_rtime());
+  set_val(FIRE,0);
+
+}
+
+
+
+// Display
+
+combo Menu_Toggle_FX {
+
+  set_rumble(RUMBLE_B,100);
+  set_rumble(RUMBLE_LT,5);
+  set_rumble(RUMBLE_RT,5);
+  if(rl_rainbow_led_toggle)
+    set_hsb(rl_hue,rl_saturation,rl_fx_brightness);
+  wait(DP_FX_Time);
+  reset_rumble();
+  // -- Note: Need for switching to default LED later
+  //reset_leds();
+
+}
+
+combo Display_Splash {
+
+  cls_oled(OLED_WHITE);
+  print(center_text(string_len(Splash_Strings[0]),OLED_FONT_MEDIUM_WIDTH),24,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[0]);
+  wait(get_rtime());
+  wait(1400);
+
+  // -- Note: Buttons are hardcoded, which should be fine
+  cls_oled(OLED_WHITE);
+  if(get_controller() == PIO_XB1 || get_controller() == PIO_XB360)
+    print(center_text(string_len(Splash_Strings[1]),OLED_FONT_MEDIUM_WIDTH),24,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[1]);
+  else if(get_controller() == PIO_PS4 || get_controller() == PIO_PS3) {
+    print(center_text(string_len(Splash_Strings[2]),OLED_FONT_MEDIUM_WIDTH),14,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[2]);
+    print(center_text(string_len(Splash_Strings[3]),OLED_FONT_MEDIUM_WIDTH),34,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[3]);
+  }
+  else if(get_controller() == PIO_SWITCH || get_controller() == PIO_WII)
+    print(center_text(string_len(Splash_Strings[4]),OLED_FONT_MEDIUM_WIDTH),24,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[4]);
+  // ---
+  else if(get_console() == PIO_PS4 || get_console() == PIO_PS3) {
+    print(center_text(string_len(Splash_Strings[2]),OLED_FONT_MEDIUM_WIDTH),14,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[2]);
+    print(center_text(string_len(Splash_Strings[3]),OLED_FONT_MEDIUM_WIDTH),34,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[3]);
+  }
+  else if(get_console() == PIO_SWITCH)
+    print(center_text(string_len(Splash_Strings[4]),OLED_FONT_MEDIUM_WIDTH),24,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[4]);
+  // ---
+  else print(center_text(string_len(Splash_Strings[1]),OLED_FONT_MEDIUM_WIDTH),24,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[1]);
+  wait(get_rtime());
+  wait(2600);
+  
+  reset_screen_sleep_timer();
+
+}
+
+
+
+function print_menu_title(f_height,f_background,f_string) {
+
+  print(center_text(string_len(f_string),OLED_FONT_SMALL_WIDTH),f_height,OLED_FONT_SMALL,f_background,f_string);
+
+}
+
+
+
+// Anti-Recoil
+
+function deadzone_offset(f_stick,f_value) {
+
+  set_val(f_stick, clamp(f_value * (32767 - abs(get_val(f_stick))) / 32767 + get_val(f_stick), -32767, 32767));
+
+}
+
+
+
+// Steady Aim
+
+// -- Calculate current angle
+function angle_atan2(f_x,f_y) {
+
+  if(f_x >= 0 && f_y > 0)
+    sa_angle_out = -90;
+  else if(f_x < 0 && f_y >= 0)
+    sa_angle_out = 90;
+  else if(f_x <= 0 && f_y < 0)
+    sa_angle_out = -270;
+  else sa_angle_out = 270;
+
+  f_x = abs(f_x);
+  f_y = abs(f_y);
+
+  if(f_x < f_y)
+    sa_angle_out += (f_x * 45 / f_y);
+  else if(f_x > f_y)
+    sa_angle_out += 90 - (f_y * 45 / f_x);
+  else sa_angle_out += 45;
+
+  return abs(sa_angle_out % 360);
+
+}
+
+// -- Round to angle
+function map(f_in_min,f_in_max,f_out_min,f_out_max,f_x) {
+
+  return (f_x - f_in_min) * (f_out_max - f_out_min) / (f_in_max - f_in_min) + f_out_min;
+
+}
+
+// -- Set angle with current radius
+function sa_set_polar(f_angle,f_radius,f_offset) {
+
+  if(f_angle < 0)
+    f_angle = 360 + (f_angle % 360);
+  f_angle = (f_angle + 90) % 360;
+
+  sa_sin_angle = inv(aa_sa_polar_shape_array[f_angle]);
+  sa_cos_angle = inv(aa_sa_polar_shape_array[(f_angle + 90) % 360]);
+
+  if(f_offset) {
+    sa_offset(LOOKX, (sa_cos_angle * f_radius) / 100);
+    sa_offset(LOOKY, (sa_sin_angle * f_radius) / 100);
+  }
+  else {
+    set_val(POLAR_RX, clamp((sa_cos_angle * f_radius) / 100, -100, 100) * 32767/100);
+    set_val(POLAR_RY, clamp((sa_sin_angle * f_radius) / 100, -100, 100) * 32767/100);
+  }
+
+}
+
+// -- Round down offset
+function sa_offset(f_axis,f_offset_val) {
+
+  set_val(f_axis, clamp(f_offset_val * (100 - abs(get_val(f_axis))) / 100 + get_val(f_axis), -100, 100));
+
+}
+
+
+
+// Auto Sprint
+
+function in_sprint_area() {
+
+  return isqrt(pow(get_ival(MOVEX),2) + pow(get_ival(MOVEY),2)) >= 96 && get_ival(MOVEY) <= -72;
+
+}
+
+
+
+// Turbo Jump + Turbo Melee
+
+function turbo_hold(f_btn) {
+
+  return get_ival(f_btn) && get_ptime(f_btn) >= HT_Min_Standard_Game_Hold_Time && !(get_val(UNUSED) && get_ptime(UNUSED) >= HT_Min_Standard_Game_Hold_Time);
+
+}
+
+
+
+// Display
+
+function menu_navigation(f_mod_or_val,f_min,f_max) {
+
+  // -- Main Menu (Only) Nav
+  if(!dp_menu) {
+    // -- Previous Value
+    if(hold_step(XB1_UP,192)) {
+      f_mod_or_val --;
+      dp_display_menu = TRUE;
+    }
+    // -- Next Value
+    else if(hold_step(XB1_DOWN,192)) {
+      f_mod_or_val ++;
+      dp_display_menu = TRUE;
+    }
+  }
+
+  // -- Previous Value
+  if(hold_step(XB1_LEFT,72)) {
+    f_mod_or_val --;
+    dp_display_menu = TRUE;
+  }
+  // -- Next Value
+  else if(hold_step(XB1_RIGHT,72)) {
+    f_mod_or_val ++;
+    dp_display_menu = TRUE;
+  }
+
+  f_mod_or_val = cycle(f_mod_or_val,f_min,f_max);
+
+  if(event_press(XB1_A)) {
+    // -- Enter Mod Menu (From Main Menu)
+    if(!dp_menu) {
+      dp_mod_title_idx = Main_Menu_Mod_Ranges[dp_main_title_idx][0];
+      dp_menu ++;
+      dp_display_menu = TRUE;
+    }
+    // -- Enter Edit Menu (if selected an editable mod) (From Mod Menu)
+    if(!dp_display_menu && dp_menu == 1 && Edit_Value_Range[dp_mod_title_idx][0] < 255) {
+      dp_edit_title_idx = _End_Edit_Idx_;
+      dp_menu ++;
+      dp_display_menu = TRUE;
+    }
+  }
+
+  // -- Exit Current Menu
+  if(event_press(XB1_B) && dp_menu) {
+    // -- Adjust time-based values to the current "input interval" multiple when exiting it's edit menu
+    if(dp_mod_title_idx == HT_Hair_Triggers_Toggle_Idx && dp_menu == 2)
+      round_time_based_values();
+    dp_menu --;
+    dp_display_menu = TRUE;
+  }
+
+  set_val(XB1_UP,0);
+  set_val(XB1_DOWN,0);
+  set_val(XB1_LEFT,0);
+  set_val(XB1_RIGHT,0);
+  set_val(XB1_A,0);
+  set_val(XB1_B,0);
+
+  return f_mod_or_val;
+
+}
+
+// -- Note: Try to further optimise??
+function toggle_switch(f_idx,f_val,f_max) {
+
+  if(dp_mod_title_idx == f_idx) {
+
+    // -- Increase Toggle Value
+    if(hold_step(XB1_UP,216)) {
+      f_val ++;
+      dp_display_menu = TRUE;
+      combo_run(Menu_Toggle_FX);
+    }
+
+    // -- Decrease Toggle Value
+    if(hold_step(XB1_DOWN,216)) {
+      f_val --;
+      dp_display_menu = TRUE;
+      combo_run(Menu_Toggle_FX);
+    }
+
+    f_val = cycle(f_val,0,f_max);
+
+    // -- Set updated amount of angles (Steady Aim)
+    //if(dp_mod_title_idx == SA_Steady_Aim_Toggle_Idx)
+    sa_angles = 360 / sa_angles_divided;
+
+    // -- Mapping Toggles
+    // -- Note: See if 'switch' is more efficient
+    // -- Nite: Removed 'else' to reduce bytecode over CPU
+    if(dp_mod_title_idx >= TB_Tactical_Button_Toggle_Idx && dp_mod_title_idx <= SB2_Swap_Button_Toggle_Idx) {
+      if(get_controller() == PIO_XB1 || get_controller() == PIO_XB360)
+        toggle_print_medium(Xbox_Button_Strings[f_val]);
+      else if(get_controller() == PIO_PS4 || get_controller() == PIO_PS3)
+        toggle_print_medium(Playstation_Button_Strings[f_val]);
+      else if(get_controller() == PIO_SWITCH || get_controller() == PIO_WII)
+        toggle_print_medium(Nintendo_Button_Strings[f_val]);
+      // ---
+      else if(get_console() == PIO_PS4 || get_console() == PIO_PS3)
+        toggle_print_medium(Playstation_Button_Strings[f_val]);
+      else if(get_console() == PIO_SWITCH)
+        toggle_print_medium(Nintendo_Button_Strings[f_val]);
+      // ---
+      else toggle_print_medium(Xbox_Button_Strings[f_val]);
+      Apply_Button_Layout();
+    }
+    // -- Standard Off/On Toggle
+    else toggle_print_medium(Switch_Toggle_Strings[f_val]);
+
+    set_val(XB1_UP,0);
+    set_val(XB1_DOWN,0);
+
+  }
+
+  return f_val;
+
+}
+
+// -- Print Medium Toggle Strings
+function toggle_print_medium(f_string) {
+
+  print(center_text(string_len(f_string),OLED_FONT_MEDIUM_WIDTH),34,OLED_FONT_MEDIUM,OLED_WHITE,f_string);
+
+}
+
+// -- Edit value navigation
+function edit_value(f_index,f_index_value,f_index_value_min,f_index_value_max,f_index_value_step) {
+
+  if(f_index == dp_edit_title_idx) {
+    if(hold_step(XB1_UP,32)) {
+      f_index_value += f_index_value_step;
+      dp_display_menu = TRUE;
+    }
+    if(hold_step(XB1_DOWN,32)) {
+      f_index_value -= f_index_value_step;
+      dp_display_menu = TRUE;
+    }
+    f_index_value = cycle(f_index_value,f_index_value_min,f_index_value_max);
+    int_to_string(f_index_value,find_digits(f_index_value));
+    set_val(XB1_UP,0);
+    set_val(XB1_DOWN,0);
+  }
+
+  return f_index_value;
+
+}
+
+// -- Edit toggle navigation
+function edit_toggle(f_current_index,f_val,f_max) {
+
+  if(f_current_index == dp_edit_title_idx) {
+
+    if(hold_step(XB1_UP,216)) {
+      f_val ++;
+      dp_display_menu = TRUE;
+      combo_run(Menu_Toggle_FX);
+    }
+
+    if(hold_step(XB1_DOWN,216)) {
+      f_val --;
+      dp_display_menu = TRUE;
+      combo_run(Menu_Toggle_FX);
+    }
+
+    f_val = cycle(f_val,0,f_max);
+
+    // -- Note: Test in array
+    //edit_toggle_print_small(Edit_Toggle_Strings[Edit_Toggle_String_Array[dp_edit_title_idx]]);
+
+    // -- Note: Could maybe be optimised with a variable instead of calls
+    switch(dp_edit_title_idx) {
+      case AR_Rumble_Influence_Toggle_Idx: {}
+      case DS_Stand_On_Release_Toggle_Idx: {}
+      case CS_Loop_Toggle_Idx: {}
+      case CS_Once_Release_Stand_Toggle_Idx: {
+        // -- Note: Compare size with function instead and added strings - wtf does this mean??
+        print(center_text(string_len(Switch_Toggle_Strings[f_val]),OLED_FONT_MEDIUM_WIDTH),34,OLED_FONT_MEDIUM,OLED_WHITE,Switch_Toggle_Strings[f_val]);
+        break;
+      }
+      case AA_Activation_Type_Toggle_Idx: {
+        edit_toggle_print_small(AA_On_Aim_And_Fire_Toggle_String_Idx + f_val);
+        break;
+      }
+      case AR2_Release_Activation_Type_Toggle_Idx: {}
+      case RC_Release_Activation_Type_Toggle_Idx: {
+        edit_toggle_print_small(RC_On_Fire_Toggle_String_Idx + f_val);
+        break;
+      }
+      /*
+      case RC_Cancel_Method_Edit_Toggle_Idx: {
+        toggle_print_medium(RC_Swap_Toggle_String_Idx + f_val);
+        break;
+      }
+      */
+      case JS_Activation_Type_Toggle_Idx: {
+        edit_toggle_print_small(JS_On_Press_Aim_Toggle_String_Idx + f_val);
+        break;
+      }
+      case RF_Activation_Type_Toggle_Idx: {
+        edit_toggle_print_small(RF_On_Fire_Toggle_String_Idx + f_val);
+        break;
+      }
+      case AP_Activation_Type_Toggle_Idx: {
+        edit_toggle_print_small(AP_Fully_Aiming_Toggle_String_Idx + f_val);
+        break;
+      }
+      case AP_Unping_Type_Toggle_Idx: {
+        edit_toggle_print_small(AP_Unping_Off_Toggle_Idx + f_val);
+        break;
+      }
+      case AS_Type_Toggle_Idx: {
+        edit_toggle_print_small(AS_Turbo_Press_Toggle_String_Idx + f_val);
+        break;
+      }
+      case SC_Type_Toggle_Idx: {
+        edit_toggle_print_small(SC_Cancel_Stand_Toggle_String_Idx + f_val);
+        break;
+      }
+      case AF_Type_Toggle_Idx: {
+        edit_toggle_print_small(AF_Hold_Toggle_String_Idx + f_val);
+        break;
+      }
+      case DS_Activation_Type_Toggle_Idx: {
+        edit_toggle_print_small(DS_On_Press_Fire_Toggle_String_Idx + f_val);
+        break;
+      }
+      case DS_Stand_Type_Toggle_Idx: {
+        edit_toggle_print_small(DS_Sprint_Stand_Toggle_String_Idx + f_val);
+        break;
+      }
+      case CS_Activation_Type_Toggle_Idx: {
+        edit_toggle_print_small(CS_On_Aim_Toggle_String_Idx + f_val);
+      }
+    }
+
+  }
+
+  return f_val;
+
+}
+
+// -- Print Small Toggle Strings
+function edit_toggle_print_small(f_string_idx) {
+
+  print(center_text(string_len(Edit_Toggle_Strings[f_string_idx]),OLED_FONT_SMALL_WIDTH),38,OLED_FONT_SMALL,OLED_WHITE,Edit_Toggle_Strings[f_string_idx]);
+
+}
+
+// -- Button hold repeat interval
+// -- Note: Remove need for event_press()??
+function hold_step(f_btn,f_step_interval) {
+
+  if(event_press(f_btn)) {
+    dp_step_timer = 0;
+    return TRUE;
+  }
+
+  if(get_ival(f_btn) && get_ptime(f_btn) >= HT_Min_Standard_Game_Hold_Time) {
+    dp_step_timer += get_rtime();
+    if(get_ptime(f_btn) < 4000) {
+      if(dp_step_timer >= f_step_interval) {
+        dp_step_timer = 0;
+        return TRUE;
+      }
+    }
+    else if(dp_step_timer >= f_step_interval / (2 + (f_step_interval <= 64))) {
+      dp_step_timer = 0;
+      return TRUE;
+    }
+  }
+
+  // -- Note: Check if need to reset the timer
+  return FALSE;
+
+}
+
+// -- Loop back values
+function cycle(f_val,f_min,f_max) {
+
+  if(f_val > f_max)
+    return f_min;
+
+  if(f_val < f_min)
+    return f_max;
+
+  return f_val;
+
+}
+
+// -- Round to the nearest multiple of a number
+function round_to_multiple(f_num,f_multiple) {
+
+  if(f_num < f_multiple)
+    return f_multiple;
+
+  if(f_num % f_multiple > (f_multiple / 2) + (f_multiple % 2))
+    return f_num - (f_num % f_multiple) + f_multiple;
+  else return f_num - f_num % f_multiple;
+
+  return f_num;
+
+}
+
+// -- Round up to the nearest multiple of a number
+function ceil_to_multiple(f_num,f_multiple) {
+
+  if(!(f_num % f_multiple))
+    return f_num;
+
+  return f_num + f_multiple - (f_num % f_multiple);
+
+}
+
+// -- Round down to the nearest multiple of a number
+function floor_to_multiple(f_num,f_multiple) {
+
+  return f_num / f_multiple * f_multiple;
+
+}
+
+function update_max_polling_rate() {
+
+  if(get_controller() == PIO_PS4 /*|| get_controller() == PIO_PS3*/) {
+    if(ii_max_controller_polling_rate != 4) {
+      ii_max_controller_polling_rate = 4;
+      round_time_based_values();
+    }
+  }
+  else if(get_controller() && ii_max_controller_polling_rate < 8) {
+    ii_max_controller_polling_rate = 8;
+    round_time_based_values();
+  }
+
+}
+
+// -- Greatest common number from 8, 4, 2 and 1 that can fit in both the controller polling rate and input interval for vm timing
+function greatest_common_divisor_vm_timing() {
+
+  // -- Ensure the VM Timing is half the Input Interval so that the combo last loop "time removal" is not affected (no zero rounded wait time)
+  switch(ii_input_interval) {
+    case 8: {}
+    case 4: {}
+    case 2: {
+      return ii_input_interval / 2;
+    }
+  }
+
+  ii_calc_timing = ii_input_interval % 8;
+
+  if(ii_calc_timing >= 2 || ii_max_controller_polling_rate < 8 && !ii_calc_timing) {
+    if(ii_max_controller_polling_rate >= 4 && !(ii_calc_timing % 4))
+      return 4;
+    if(ii_max_controller_polling_rate >= 2 && !(ii_calc_timing % 2))
+      return 2;
+  }
+
+  if(ii_max_controller_polling_rate >= 8 && !ii_calc_timing)
+    return 8;
+
+  return 1;
+
+}
+
+// -- Reset the screen sleep timer (countdown) to the beginning
+function reset_screen_sleep_timer() {
+
+  dp_screen_sleep_timer = DP_Screen_Sleep_Time;
+
+}
+
+// -- Calculate length of a string
+function string_len(f_index) {
+
+  dp_string_length = 0;
+
+  do {
+    dp_string_length ++;
+    f_index ++;
+  }
+  while(duint8(f_index));
+
+  return dp_string_length;
+
+}
+
+// -- Center the text on screen widthways
+function center_text(f_chars,f_font) {
+
+  return (OLED_WIDTH / 2) - ((f_chars * f_font) / 2);
+
+}
+
+// -- Convert number to string value
+// -- Note: Limited to 5 digits max
+function int_to_string(f_value,f_digits) {
+
+  dp_val_str = 1;
+  dp_digits_val = 10000/*0000*/;
+
+  // -- Add "-" (minus)
+  if(f_value < 0) {
+    buffer_ascii_char(ASCII_MINUS);
+    f_value = abs(f_value);
+  }
+
+  switch(dp_edit_title_idx) {
+    // -- Add "+ "
+    case AA_Rotate_By_Angles_Idx: {
+      buffer_ascii_char(ASCII_PLUS);
+      buffer_ascii_char(ASCII_SPACE);
+      break;
+    }
+    // -- Add "/ "
+    case SA_Angles_Divided_Idx: {
+      buffer_ascii_char(ASCII_SLASH);
+      buffer_ascii_char(ASCII_SPACE);
+    }
+  }
+
+  // -- Convert digits to ASCII
+
+  for(dp_digit_idx = 5 /*9*/; dp_digit_idx; dp_digit_idx --) {
+
+    if(f_digits >= dp_digit_idx) {
+
+      buffer_ascii_char(ASCII_DIGIT0 + (f_value / dp_digits_val));
+      f_value %= dp_digits_val;
+
+      // -- Note: Convert to switch when fixed
+      if(dp_digit_idx == 1) {
+        // -- Add " sec"
+        if(Edit_Value_Text_Type[dp_edit_title_idx] == EVTT_Sec) {
+          buffer_ascii_char(ASCII_SPACE);
+          buffer_ascii_char(ASCII_LOWER_S);
+          buffer_ascii_char(ASCII_LOWER_E);
+          buffer_ascii_char(ASCII_LOWER_C);
+        }
+        // -- Add " ms"
+        if(Edit_Value_Text_Type[dp_edit_title_idx] == EVTT_MS || Edit_Value_Text_Type[dp_edit_title_idx] == EVTT_FPS) {
+          if(dp_edit_title_idx != II_Input_Interval_Idx)
+            buffer_ascii_char(ASCII_SPACE);
+          buffer_ascii_char(ASCII_LOWER_M);
+          buffer_ascii_char(ASCII_LOWER_S);
+          // -- Add fps conversion ('-___fps')
+          if(Edit_Value_Text_Type[dp_edit_title_idx] == EVTT_FPS) {
+            buffer_ascii_char(ASCII_MINUS);
+            dp_input_interval_fps = (1000 / ii_input_interval) + 1;
+            for(dp_input_interval_fps_digit_idx = find_digits(dp_input_interval_fps); dp_input_interval_fps_digit_idx; dp_input_interval_fps_digit_idx --) {
+              buffer_ascii_char(ASCII_DIGIT0 + (dp_input_interval_fps / pow(10,dp_input_interval_fps_digit_idx - 1) % 10));
+            }
+            buffer_ascii_char(ASCII_LOWER_F);
+            buffer_ascii_char(ASCII_LOWER_P);
+            buffer_ascii_char(ASCII_LOWER_S);
+          }
+        }
+        // -- Add " %"
+        if(Edit_Value_Text_Type[dp_edit_title_idx] == EVTT_Percentage) {
+          buffer_ascii_char(ASCII_SPACE);
+          buffer_ascii_char(ASCII_PERCENT);
+        }
+      }
+
+    }
+
+    dp_digits_val /= 10;
+
+  }
+
+  // -- Draw ASCII Character (digit)
+  puts_oled(center_text(dp_val_str - 1,OLED_FONT_MEDIUM_WIDTH),34,OLED_FONT_MEDIUM,dp_val_str - 1,OLED_WHITE);
+
+}
+
+// -- Add ASCII Character To Buffer
+function buffer_ascii_char(f_char) {
+
+  putc_oled(dp_val_str,f_char);
+  dp_val_str ++;
+
+}
+
+// -- Calculate number of digits for length
+// -- Note: Used once, remove function??
+function find_digits(f_num) {
+
+  dp_digit_count_idx = 0;
+
+  do {
+    dp_digit_count_idx ++;
+    f_num /= 10;
+  }
+  while(f_num);
+
+  return dp_digit_count_idx;
+
+}
+
+// -- Round all times values to of a e.g input interval multiple
+function round_time_based_values() {
+
+  ar_boost_time                 = round_to_multiple(ar_boost_time                ,ii_input_interval);
+  rc_max_reload_time_for_cancel = round_to_multiple(rc_max_reload_time_for_cancel,ii_input_interval);
+  ar2_shoot_time                = round_to_multiple(ar2_shoot_time               ,ii_input_interval);
+  tj_jump_wait_time             = round_to_multiple(tj_jump_wait_time            ,ii_input_interval);
+  rf_shot_wait_time             = round_to_multiple(rf_shot_wait_time            ,ii_input_interval);
+  rf_single_shot_time           = round_to_multiple(rf_single_shot_time          ,ii_input_interval);
+  fac_ads_time                  = round_to_multiple(fac_ads_time                 ,ii_input_interval);
+  aaso_aim_hold_time            = ceil_to_multiple (aaso_aim_hold_time           ,ii_input_interval);
+  as_crouch_prone_delay_time    = round_to_multiple(as_crouch_prone_delay_time   ,ii_input_interval);
+  sc_cancel_delay_time          = round_to_multiple(sc_cancel_delay_time         ,ii_input_interval);
+  sc2_cancel_delay_time         = round_to_multiple(sc2_cancel_delay_time        ,ii_input_interval);
+  cs_delay_time                 = round_to_multiple(cs_delay_time                ,ii_input_interval);
+  js_press_variance_time        = round_to_multiple(js_press_variance_time       ,ii_max_controller_polling_rate);
+  ds_press_variance_time        = round_to_multiple(ds_press_variance_time       ,ii_max_controller_polling_rate);
+  rl_delay_interval             = round_to_multiple(rl_delay_interval            ,8);  // -- Note: Might need to limit to lower limit
+
+}
+
+function Apply_Button_Layout() {
+
+  TACTICAL          = Button_Mapping[tb_tactical_button_toggle];
+  LETHAL            = Button_Mapping[lb_lethal_button_toggle];
+  AIM               = Button_Mapping[ab_aim_button_toggle];
+  FIRE              = Button_Mapping[fb_fire_button_toggle];
+  SPRINT_FOCUS      = Button_Mapping[sfb_sprint_focus_button_toggle];
+  MELEE             = Button_Mapping[mb_melee_button_toggle];
+  PING              = Button_Mapping[pb_ping_button_toggle];
+  STREAK            = Button_Mapping[sb_streak_button_toggle];
+  JUMP_MANTLE       = Button_Mapping[jmb_jump_mantle_button_toggle];
+  STANCE_SLIDE_DIVE = Button_Mapping[ssdb_stance_slide_dive_button_toggle];
+  RELOAD_INTERACT   = Button_Mapping[rib_reload_interact_button_toggle];
+  SWAP_ARMOUR       = Button_Mapping[sab_swap_armour_button_toggle];
+
+}
+
+/*
+// Didn't get around to adding this in yet
+function Stick_Layout(f_type) {
+
+  LOOKY = Layout_Sticks[f_type][0];
+  LOOKX = Layout_Sticks[f_type][1];
+  MOVEY = Layout_Sticks[f_type][2];
+  MOVEX = Layout_Sticks[f_type][3];
+
+}
+*/
+
+
+
+// Display
+
+enum {
+
+  // -- Mod index constants
+  AR_Anti_Recoil_Toggle_Idx = 0,
+  AA_Polar_Aim_Assist_Abuse_Toggle_Idx,
+  SA_Steady_Aim_Toggle_Idx,
+  RC_Reload_Cancel_Toggle_Idx,
+  AR2_Auto_Reload_Toggle_Idx,
+  JS_Jump_Shot_Toggle_Idx,
+  RF_Rapid_Fire_Toggle_Idx,
+  AF_Auto_Focus_Toggle_Idx,
+  AP_Auto_Ping_Toggle_Idx,
+  AASO_Aim_Assist_Snap_On_Abuse_Toggle_Idx,
+  QS_Quick_Scoper_Toggle_Idx,
+  TJ_Turbo_Jump_Toggle_Idx,
+  TM_Turbo_Melee_Toggle_Idx,
+  AS_Precise_Auto_Sprint_Toggle_Idx,
+  SC_Slide_Cancel_Toggle_Idx,
+  PAC_Pickup_Cancel_Toggle_Idx,
+  SC2_Swap_Cancel_Toggle_Idx,
+  DS_Dropshot_Toggle_Idx,
+  CS_Crouch_Shot_Toggle_Idx,
+  YYC_YY_Cancel_Toggle_Idx,
+  BD_Backwards_Dive_Toggle_Idx,
+  MD_Money_Dupe_Toggle_Idx,
+  HT_Hair_Triggers_Toggle_Idx,
+  CF_Crossover_Fix_Toggle_Idx,
+  BR_Block_Rumble_Toggle_Idx,
+  RL_Rainbow_Led_Toggle_Idx,
+  // ---
+  TB_Tactical_Button_Toggle_Idx,
+  LB_Lethal_Button_Toggle_Idx,
+  AB_Aim_Button_Toggle_Idx,
+  FB_Fire_Button_Toggle_Idx,
+  sfb_sprint_focus_button_toggle_Idx,
+  MB_Melee_Button_Toggle_Idx,
+  PB_Ping_Button_Toggle_Idx,
+  SB_Streak_Button_Toggle_Idx,
+  JB_Jump_Button_Toggle_Idx,
+  SSDB_Stance_Slide_Dive_Button_Toggle_Idx,
+  RIB_Reload_Interact_Button_Toggle_Idx,
+  SB2_Swap_Button_Toggle_Idx,
+  _End_Toggle_Idx_,
+
+  // -- Edit index constants
+  AR_Vert_Value_Idx = 0,
+  AR_Hori_Value_Idx,
+  AR_Deadzone_Idx,
+  AR_Rumble_Influence_Toggle_Idx,
+  AR_Boost_Time_Idx,
+  AA_Activation_Type_Toggle_Idx,
+  AA_Radius_Idx,
+  AA_Rotate_By_Angles_Idx,
+  AA_Release_Point_Idx,
+  SA_Angles_Divided_Idx,
+  RC_Release_Activation_Type_Toggle_Idx,
+  RC_Max_Reload_Time_For_Cancel_Idx,
+  RC_Cancel_Method_Edit_Toggle_Idx,
+  AR2_Release_Activation_Type_Toggle_Idx,
+  AR2_Shoot_Time_Idx,
+  TJ_Jump_Wait_Time_Idx,
+  RF_Activation_Type_Toggle_Idx,
+  RF_Shot_Wait_Time_Idx,
+  RF_Single_Shot_Time_Idx,
+  II_Input_Interval_Idx,
+  AF_Type_Toggle_Idx,
+  FAC_ADS_Time_Idx,
+  RL_Delay_Interval_Idx,
+  RL_Brightness_Idx,
+  RL_FX_Brightness_Idx,
+  RL_Mod_Menu_Brightness_Idx,
+  RL_Saturation_Idx,
+  AASO_Aim_Hold_Time_Idx,
+  AS_Type_Toggle_Idx,
+  AS_Crouch_Prone_Delay_Time_Idx,
+  JS_Activation_Type_Toggle_Idx,
+  JS_Press_Variance_Time_Idx,
+  AP_Min_Release_Activation_Time_Idx,
+  AP_Activation_Type_Toggle_Idx,
+  AP_Unping_Type_Toggle_Idx,
+  SC_Type_Toggle_Idx,
+  SC_Cancel_Delay_Time_Idx,
+  SC2_Cancel_Delay_Time_Idx,
+  DS_Activation_Type_Toggle_Idx,
+  DS_Press_Variance_Time_Idx,
+  DS_Stand_On_Release_Toggle_Idx,
+  DS_Stand_Type_Toggle_Idx,
+  CS_Activation_Type_Toggle_Idx,
+  CS_Loop_Toggle_Idx,
+  CS_Delay_Time_Idx,
+  CS_Once_Release_Stand_Toggle_Idx,
+  _End_Edit_Idx_,
+
+  // -- Edit toggle index constants
+  AA_On_Aim_And_Fire_Toggle_String_Idx = 0,
+  AA_On_Aim_Or_Fire_Toggle_String_Idx,
+  AA_On_Aim_Toggle_String_Idx,
+  AA_On_Fire_Toggle_String_Idx,
+  AA_None_Toggle_String_Idx,
+  // ---
+  RC_On_Fire_Toggle_String_Idx,
+  RC_On_Aim_And_Fire_Toggle_String_Idx,
+  // ---
+  RC_Swap_Toggle_String_Idx,
+  RC_Lethal_Toggle_String_Idx,
+  RC_Tactical_Toggle_String_Idx,
+  RC_Sprint_Toggle_String_Idx,
+  RC_Emote_Toggle_String_Idx,
+  // ---
+  JS_On_Press_Aim_Toggle_String_Idx,
+  JS_On_Hold_Aim_Toggle_String_Idx,
+  JS_Panic_Aim_And_Fire_Toggle_String_Idx,
+  // ---
+  RF_On_Fire_Toggle_String_Idx,
+  RF_On_Aim_And_Fire_Toggle_String_Idx,
+  // ---
+  AP_Fully_Aiming_Toggle_String_Idx,
+  AP_Aiming_Toggle_String_Idx,
+  AP_Ignore_Aim_Toggle_String_Idx,
+  AP_Unping_Off_Toggle_Idx,
+  AP_Unping_On_Release_Fire_Toggle_Idx,
+  AP_Unping_On_Release_Aim_Or_Fire_Toggle_Idx,
+  // ---
+  AS_Turbo_Press_Toggle_String_Idx,
+  AS_Hold_Toggle_String_Idx,
+  AS_Press_Toggle_Toggle_String_Idx,
+  AS_CW_Boost_Exploit_Toggle_String_Idx,
+  // ---
+  SC_Cancel_Stand_Toggle_String_Idx,
+  SC_Stand_Toggle_String_Idx,
+  SC_Jump_Toggle_String_Idx,
+  SC_MWII_Cancel_Toggle_String_Idx,
+  // ---
+  AF_Hold_Toggle_String_Idx,
+  AF_MWII_Quick_Gasp_Toggle_String_Idx,
+  // ---
+  DS_On_Press_Fire_Toggle_String_Idx,
+  DS_Panic_Aim_And_Fire_Toggle_String_Idx,
+  DS_Sprint_Stand_Toggle_String_Idx,
+  DS_Stand_Toggle_String_Idx,
+  // ---
+  CS_On_Aim_Toggle_String_Idx,
+  CS_On_Fire_Toggle_String_Idx,
+  CS_On_Aim_And_Fire_Toggle_String_Idx,
+
+  // -- Button toggle index constants
+  BTI_LB = 0,
+  BTI_RB,
+  BTI_LT,
+  BTI_RT,
+  BTI_LS,
+  BTI_RS,
+  BTI_UP,
+  BTI_DOWN,
+  BTI_LEFT,
+  BTI_RIGHT,
+  BTI_A,
+  BTI_B,
+  BTI_X,
+  BTI_Y,
+
+  // -- Edit value text type constants
+  EVTT_None = 0,
+  EVTT_Sec,
+  EVTT_MS,
+  EVTT_Percentage,
+  EVTT_FPS
+
+}
+
+
+
+// Display
+
+const string Splash_Strings[] = {
+
+/*0*/  "Welcome!",
+/*1*/  "LT + MENU",
+/*2*/  "L2 +",
+/*3*/  "OPTIONS",
+/*4*/  "ZL + PLUS"
+
+}
+
+const string Mod_Title_Strings[] = {
+
+/* 0*/  "Anti-Recoil",
+/* 1*/  "Polar AA Abuse",
+/* 2*/  "Steady Aim",
+/* 3*/  "Reload Cancel",
+/* 4*/  "Auto Reload",
+/* 5*/  "Jump Shot",
+/* 6*/  "Rapid Fire",
+/* 7*/  "Auto Focus",
+/* 8*/  "Auto Ping",
+/* 9*/  "AA Snap On Abuse",
+/*10*/  "Quick Scoper",
+/*11*/  "Turbo Jump",
+/*12*/  "Turbo Melee",
+/*13*/  "Auto Sprint",
+/*14*/  "Slide Cancel",
+/*15*/  "Pickup Cancel",
+/*16*/  "Swap Cancel",
+/*17*/  "Dropshot",
+/*18*/  "Crouch Shot",
+/*19*/  "YY Cancel (Exp.)",
+/*20*/  "MWII Backw. Dive",
+/*21*/  "MWII Money Dupe",
+/*22*/  "Hair Triggers",
+/*23*/  "Crossover Mapping",
+/*24*/  "Block Vibration",
+/*25*/  "Rainbow LED",
+/*26*/  "TACTICAL",
+/*27*/  "LETHAL",
+/*28*/  "AIM",
+/*29*/  "FIRE",
+/*30*/  "SPRINT FOCUS",
+/*31*/  "MELEE",
+/*32*/  "PING",
+/*33*/  "STREAK",
+/*34*/  "JUMP MANTLE",
+/*35*/  "STANCE SLIDE DIVE",
+/*36*/  "RELOAD INTERACT",
+/*37*/  "SWAP ARMOUR"
+
+};
+
+const string Edit_Title_Strings[] = {
+
+/* 0*/  "Vertical",
+/* 1*/  "Horizontal",
+/* 2*/  "Deadzone",
+/* 3*/  "Rumble Influence",
+/* 4*/  "Boost Time",
+/* 5*/  "Activation Type",
+/* 6*/  "Strength (outer)",
+/* 7*/  "Rotate By Angles",
+/* 8*/  "Release Point",
+/* 9*/  "Angle Steps",
+/*10*/  "Release Activation",
+/*11*/  "Reload Time",
+/*12*/  "Cancel Method *",
+/*13*/  "Release Activation",
+/*14*/  "Req. Shoot Time",
+/*15*/  "Delay",
+/*16*/  "Activation",
+/*17*/  "Delay",
+/*18*/  "Tap Shot Delay",
+/*19*/  "Input Interval",
+/*20*/  "Type",
+/*21*/  "ADS Time",
+/*22*/  "Delay Interval",
+/*23*/  "Bightness",
+/*24*/  "FX Bightness",
+/*25*/  "Menu Bightness",
+/*26*/  "Saturation",
+/*27*/  "Hold Time",
+/*28*/  "Type",
+/*29*/  "CrouchSprintDelay",
+/*30*/  "Activation Type",
+/*31*/  "PressTimeVariance",
+/*32*/  "ReleasedActDelay",
+/*33*/  "Req. Aim Type",
+/*34*/  "Unping Type (Exp.)",
+/*35*/  "Type",
+/*36*/  "Cancel Delay",
+/*37*/  "Cancel Delay",
+/*38*/  "Activation Type",
+/*39*/  "PressTimeVariance",
+/*40*/  "Stand On Release",
+/*41*/  "Stand Type",
+/*42*/  "Activation Type",
+/*43*/  "Loop On Hold",
+/*44*/  "Loop Delay",
+/*45*/  "Once Rele. Stand"
+
+};
+
+const string Switch_Toggle_Strings[] = {
+
+/*0*/  "Off",
+/*1*/  "On"
+
+};
+
+const string Edit_Toggle_Strings[] = {
+
+/* 0*/  "On AIM & FIRE",
+/* 1*/  "On AIM | FIRE",
+/* 2*/  "On AIM",
+/* 3*/  "On FIRE",
+/* 4*/  "None (always)",
+// ---
+/* 5*/  "On FIRE",
+/* 6*/  "On AIM & FIRE",
+// ---
+/* 7*/  "Swap",
+/* 8*/  "Lethal",
+/* 9*/  "Tactical",
+/*10*/  "Sprint",
+/*11*/  "Emote",
+// ---
+/*12*/  "On Press (AIM)",
+/*13*/  "On Hold (AIM)",
+/*14*/  "Panic (AIM & FIRE)",
+// ---
+/*15*/  "On FIRE",
+/*16*/  "On AIM & FIRE",
+// ---
+/*17*/  "Fully Aiming",
+/*18*/  "Aiming",
+/*19*/  "Ignore Aim",
+// ---
+/*20*/  "Off",
+/*21*/  "Release FIRE",
+/*22*/  "Release AIM|FIRE",
+// ---
+/*23*/  "Turbo (press)",
+/*24*/  "Hold",
+/*25*/  "Press (toggle)",
+/*26*/  "CW Boost Exploit",
+// ---
+/*27*/  "Cancel Stand",
+/*28*/  "Stand",
+/*29*/  "Jump",
+/*30*/  "MWII Cancel",
+// ---
+/*31*/  "Hold",
+/*32*/  "MWII Quick Gasp",
+// ---
+/*33*/  "On Press (FIRE)",
+/*34*/  "Panic (AIM & FIRE)",
+/*35*/  "Sprint (fast)",
+/*36*/  "Stand",
+// ---
+/*37*/  "On AIM",
+/*38*/  "On FIRE",
+/*39*/  "On AIM & FIRE"
+
+};
+
+const string Main_Menu_Strings[] = {
+
+/*0*/  " All ",
+/*1*/  " Aim + Fire ",
+/*2*/  " Movement ",
+/*3*/  " Misc ",
+/*4*/  " Settings "
+
+};
+
+const string Title_Strings[] = {
+
+/*0*/  "COD Pro",
+/*1*/  "v5.0.0"
+
+};
+
+const string Xbox_Button_Strings[] = {
+
+/* 0*/  "LB",
+/* 1*/  "RB",
+/* 2*/  "LT",
+/* 3*/  "RT",
+/* 4*/  "LS",
+/* 5*/  "RS",
+/* 6*/  "UP",
+/* 7*/  "DOWN",
+/* 8*/  "LEFT",
+/* 9*/  "RIGHT",
+/*10*/  "A",
+/*11*/  "B",
+/*12*/  "X",
+/*13*/  "Y"
+
+};
+
+const string Playstation_Button_Strings[] = {
+
+/* 0*/  "L1",
+/* 1*/  "R1",
+/* 2*/  "L2",
+/* 3*/  "R2",
+/* 4*/  "L3",
+/* 5*/  "R3",
+/* 6*/  "UP",
+/* 7*/  "DOWN",
+/* 8*/  "LEFT",
+/* 9*/  "RIGHT",
+/*10*/  "CROSS",
+/*11*/  "CIRCLE",
+/*12*/  "SQUARE",
+/*13*/  "TRIANGLE"
+
+};
+
+const string Nintendo_Button_Strings[] = {
+
+/* 0*/  "L",
+/* 1*/  "R",
+/* 2*/  "ZL",
+/* 3*/  "ZR",
+/* 4*/  "L3",
+/* 5*/  "R3",
+/* 6*/  "UP",
+/* 7*/  "DOWN",
+/* 8*/  "LEFT",
+/* 9*/  "RIGHT",
+/*10*/  "B",
+/*11*/  "A",
+/*12*/  "Y",
+/*13*/  "X"
+
+};
+
+
+
+const uint8 Button_Mapping[] = {
+
+/* 0*/  XB1_LB,
+/* 1*/  XB1_RB,
+/* 2*/  XB1_LT,
+/* 3*/  XB1_RT,
+/* 4*/  XB1_LS,
+/* 5*/  XB1_RS,
+/* 6*/  XB1_UP,
+/* 7*/  XB1_DOWN,
+/* 8*/  XB1_LEFT,
+/* 9*/  XB1_RIGHT,
+/*10*/  XB1_A,
+/*11*/  XB1_B,
+/*12*/  XB1_X,
+/*13*/  XB1_Y
+
+};
+
+
+
+//const string Stick_Layout_Strings[] = {
+
+///*0*/  "Default",
+///*1*/  "Southpaw",
+///*2*/  "Legacy",
+///*3*/  "Legacy Southpaw"
+
+//};
+
+/*
+// Didn't get around to adding this in yet
+const uint8 Layout_Sticks[][] = {
+
+  // Move X  Move Y  Look X  Look Y
+  { XB1_RY, XB1_RX, XB1_LY, XB1_LX}, // Default
+  { XB1_LY, XB1_LX, XB1_RY, XB1_RX}, // SouthPaw
+  { XB1_RY, XB1_LX, XB1_LY, XB1_RX}, // Legacy
+  { XB1_LY, XB1_RX, XB1_LY, XB1_LX}  // Legacy SouthPaw
+
+};
+*/
+
+
+
+// Display
+
+const uint8 Main_Menu_Mod_Ranges[][] = {
+
+/*0*/  { AR_Anti_Recoil_Toggle_Idx  , _End_Toggle_Idx_ - 1 },
+/*1*/  { AR_Anti_Recoil_Toggle_Idx  , AASO_Aim_Assist_Snap_On_Abuse_Toggle_Idx },
+/*2*/  { AF_Auto_Focus_Toggle_Idx   , BD_Backwards_Dive_Toggle_Idx },
+/*3*/  { MD_Money_Dupe_Toggle_Idx   , HT_Hair_Triggers_Toggle_Idx },
+/*4*/  { CF_Crossover_Fix_Toggle_Idx, _End_Toggle_Idx_ - 1 }
+
+};
+
+// -- Note: 255 = Doesn't have an edit value
+const uint8 Edit_Value_Range[][] = {
+
+/* 0*/  { AR_Vert_Value_Idx, AR_Boost_Time_Idx },
+/* 1*/  { AA_Activation_Type_Toggle_Idx, AA_Release_Point_Idx },
+/* 2*/  { SA_Angles_Divided_Idx, SA_Angles_Divided_Idx },
+/* 3*/  { RC_Release_Activation_Type_Toggle_Idx, RC_Max_Reload_Time_For_Cancel_Idx },
+/* 4*/  { AR2_Release_Activation_Type_Toggle_Idx, AR2_Shoot_Time_Idx },
+/* 5*/  { JS_Activation_Type_Toggle_Idx, JS_Press_Variance_Time_Idx },
+/* 6*/  { RF_Activation_Type_Toggle_Idx, RF_Single_Shot_Time_Idx },
+/* 7*/  { AF_Type_Toggle_Idx, FAC_ADS_Time_Idx },
+/* 8*/  { AP_Min_Release_Activation_Time_Idx, AP_Unping_Type_Toggle_Idx },
+/* 9*/  { AASO_Aim_Hold_Time_Idx, AASO_Aim_Hold_Time_Idx },
+/*10*/  { 255, 255 },
+/*11*/  { TJ_Jump_Wait_Time_Idx, TJ_Jump_Wait_Time_Idx },
+/*12*/  { 255, 255 },
+/*13*/  { AS_Type_Toggle_Idx, AS_Crouch_Prone_Delay_Time_Idx },
+/*14*/  { SC_Type_Toggle_Idx, SC_Cancel_Delay_Time_Idx },
+/*15*/  { 255, 255 },
+/*16*/  { SC2_Cancel_Delay_Time_Idx, SC2_Cancel_Delay_Time_Idx },
+/*17*/  { DS_Activation_Type_Toggle_Idx, DS_Stand_Type_Toggle_Idx },
+/*18*/  { CS_Activation_Type_Toggle_Idx, CS_Once_Release_Stand_Toggle_Idx },
+/*19*/  { 255, 255 },
+/*20*/  { 255, 255 },
+/*21*/  { 255, 255 },
+/*22*/  { II_Input_Interval_Idx, II_Input_Interval_Idx },
+/*23*/  { 255, 255 },
+/*24*/  { 255, 255 },
+/*25*/  { RL_Delay_Interval_Idx, RL_Saturation_Idx },
+/*26*/  { 255, 255 },
+/*27*/  { 255, 255 },
+/*28*/  { 255, 255 },
+/*29*/  { 255, 255 },
+/*30*/  { 255, 255 },
+/*31*/  { 255, 255 },
+/*32*/  { 255, 255 },
+/*33*/  { 255, 255 },
+/*34*/  { 255, 255 },
+/*35*/  { 255, 255 },
+/*36*/  { 255, 255 },
+/*37*/  { 255, 255 },
+/*38*/  { 255, 255 }
+
+}
+
+const uint8 Edit_Value_Text_Type[] = {
+
+/* 0*/  EVTT_Percentage,
+/* 1*/  EVTT_Percentage,
+/* 2*/  EVTT_Percentage,
+/* 3*/  EVTT_None,
+/* 4*/  EVTT_MS,
+/* 5*/  EVTT_None,
+/* 6*/  EVTT_Percentage,
+/* 7*/  EVTT_None,
+/* 8*/  EVTT_Percentage,
+/* 9*/  EVTT_None,
+/*10*/  EVTT_None,
+/*11*/  EVTT_MS,
+/*12*/  EVTT_None,
+/*13*/  EVTT_None,
+/*14*/  EVTT_MS,
+/*15*/  EVTT_MS,
+/*16*/  EVTT_None,
+/*17*/  EVTT_MS,
+/*18*/  EVTT_MS,
+/*19*/  EVTT_FPS,
+/*20*/  EVTT_None,
+/*21*/  EVTT_MS,
+/*22*/  EVTT_MS,
+/*23*/  EVTT_Percentage,
+/*24*/  EVTT_Percentage,
+/*25*/  EVTT_Percentage,
+/*26*/  EVTT_Percentage,
+/*27*/  EVTT_MS,
+/*28*/  EVTT_None,
+/*29*/  EVTT_MS,
+/*30*/  EVTT_None,
+/*31*/  EVTT_MS,
+/*32*/  EVTT_Sec,
+/*33*/  EVTT_None,
+/*34*/  EVTT_None,
+/*35*/  EVTT_None,
+/*36*/  EVTT_MS,
+/*37*/  EVTT_MS,
+/*38*/  EVTT_None,
+/*39*/  EVTT_MS,
+/*40*/  EVTT_None,
+/*41*/  EVTT_None,
+/*42*/  EVTT_None,
+/*43*/  EVTT_None,
+/*44*/  EVTT_MS
+
+}
+
+
+
+// Polar Aim Assist Abuse + Steady Aim
+
+const int8 aa_sa_polar_shape_array[] = {
+
+  100,100,100,100,100,100,100,100,99,99,99,99,98,98,97,97,97,96,95,95,94,94,93,92,92,91,90,89,89,88,87,86,85,84,83,82,81,80,79,78,77,75,74,73,72,71,70,69,67,66,65,63,62,61,59,58,56,55,
+  53,52,50,49,47,46,44,43,41,40,38,36,35,33,31,30,28,26,25,23,21,20,18,16,14,13,11,9,7,6,4,2,0,-1,-3,-5,-7,-8,-10,-12,-13,-15,-17,-19,-20,-22,-24,-25,-27,-29,-30,-32,-34,-35,-37,-39,
+  -40,-42,-43,-45,-46,-48,-50,-51,-53,-54,-55,-57,-58,-60,-61,-62,-64,-65,-66,-68,-69,-70,-71,-73,-74,-75,-76,-77,-78,-79,-80,-81,-82,-83,-84,-85,-86,-87,-88,-89,-89,-90,-91,-92,-92,
+  -93,-93,-94,-95,-95,-96,-96,-97,-97,-97,-98,-98,-99,-99,-99,-99,-100,-100,-100,-100,-100,-100,-100,-100,-100,-100,-100,-100,-100,-100,-99,-99,-99,-98,-98,-98,-97,-97,-96,-96,-95,-94,
+  -94,-93,-93,-92,-91,-90,-90,-89,-88,-87,-86,-85,-84,-83,-82,-81,-80,-79,-78,-77,-76,-75,-74,-72,-71,-70,-69,-67,-66,-65,-63,-62,-61,-59,-58,-56,-55,-53,-52,-50,-49,-47,-46,-44,-43,
+  -41,-40,-38,-36,-35,-33,-31,-30,-28,-26,-25,-23,-21,-20,-18,-16,-14,-13,-11,-9,-7,-6,-4,-2,0,2,4,6,7,9,11,13,14,16,18,20,21,23,25,26,28,30,31,33,35,36,38,40,41,43,44,46,47,49,51,52,
+  54,55,56,58,59,61,62,63,65,66,67,69,70,70,72,73,74,75,77,78,79,80,81,82,83,84,85,86,87,88,89,89,90,91,92,92,93,94,94,95,95,96,97,97,97,98,98,99,99,99,99,100,100,100,100,100,100,100
+
+};
+
+
+
+// Persistent Variables
+
+// -- Start of where data is stored
+function reset_spvar() {
+
+  pv_current_slot = SPVAR_1;
+  pv_current_bit = 0;
+  pv_current_value = 0;
+
+}
+
+// -- Function used to count the number of bits used by the given value
+function get_bit_count(f_val) {
+
+  pv_temp = 0;  // -- We need to start at 0, we use pv_temp here as we need to track the bits during our loop below
+
+  while(f_val) {
+    pv_temp ++;  // -- Increment the bit count by 1
+    f_val = abs(f_val >> 1);  // -- Shift the value down 1 bit, once we have no more bits set this will result in 0, unless the value is negative - in which case this will be endless, we do abs here to make it always
+  }
+
+  return pv_temp;
+
+}
+
+// -- Function used to count the number of bits used by 2 given values
+function get_bit_count2(f_val1, f_val2) {
+
+  pv_temp = max(get_bit_count(f_val1), get_bit_count(f_val2));  // -- Get the highest bit count required for either min or max
+
+  if(is_signed2(f_val1, f_val2))  // -- Check if we need to know if the value is negative or not
+    pv_temp ++;  // -- If we need to track if the saved value is negative, we need 1 bit for that specifically - the others are used to store the actual value
+
+  return pv_temp;
+
+}
+
+// -- Function used to determine if either of 2 given values is negative
+function is_signed2(f_val1, f_val2) {
+
+  return f_val1 < 0 || f_val2 < 0;
+
+}
+
+// -- Function used to generate a bitmask for the sign bit, this will always be the highest bit in the range we're requesting it for, to do that - we need to start with the lowest bit set and move it up the number of steps there is between 1 and the bits we need, this needs to be a maximum of 31 but can never be negative
+function make_sign(f_bits) {
+
+  return 1 << clamp(f_bits - 1, 0, 31);
+
+}
+
+// -- Function used to generate a full bitmask (essentially all bits set up to and including the number of bits given)
+function make_full_mask(f_bits) {
+
+  if(f_bits == 32)  // -- If we're wanting a bitmask for all bits, we can simply return -1 (which is all bits set to 1)
+    return -1;
+
+  return 0x7FFFFFFF >> (31 - f_bits);  // -- What we do here is basically take a value with all bits except the highest set and shift them down as many times as we need to get a mask that fits the bit count we're looking for
+
+}
+
+// -- Function used to generate a bitmask for just the bits required for the value part of a signed range, this means all the bits below the sign bit
+function make_sign_mask(f_bits) {
+
+  return make_full_mask(f_bits - 1);
+
+}
+
+// -- Function used to pack a value that has potential for being negative in a way that we use the least number of bits we really need to represent the value
+function pack_i(f_val, f_bits) {
+
+  if(f_val < 0)
+    return (abs(f_val) & make_sign_mask(f_bits)) | make_sign(f_bits);  // -- Get the positive version of the value and keep the bits that are within range of what we're doing and add the sign bit since we have a negative value and return the result
+
+  return f_val & make_sign_mask(f_bits);  // -- Get the bits that are within our range
+
+}
+
+// -- Function used to unpack (restore) a value that has potential for being negative, essentially reversing what pack_i does above
+function unpack_i(f_val, f_bits) {
+
+  if(f_val & make_sign(f_bits))  // -- Check if the stored value is supposed to ve negative
+    return 0 - (f_val & make_sign_mask(f_bits));  // -- Retrieve the stored positive value and subtract it from 0 (resulting in the same value except negative), return the result
+
+  return f_val & make_sign_mask(f_bits);  // -- Retrieve the stored positive value and return it
+
+}
+
+// -- Function used to read the value of a SPVAR without any limits
+function read_spvar_slot(f_slot) {
+
+  return get_pvar(f_slot, 0x80000000, 0x7FFFFFFF, 0);
+
+}
+
+// -- Function used to save your value in the SPVARs, this is the function you'll be calling when saving a value. You need to provide the value to save aswell as the range (minimum and maximum value, this is how we determine how many bits to use when saving this value)
+function save_spvar(f_val, f_min, f_max) {
+
+  pv_bits = get_bit_count2(f_min, f_max);  // -- Set pv_bits to the number of bits we need for this range
+
+  f_val = clamp(f_val, f_min, f_max);  // -- Make sure the value is within our defined range to begin with
+
+  if(is_signed2(f_min, f_max))  // -- If either min or max is negative, we need to pack this value as a possibly negative value
+    f_val = pack_i(f_val, pv_bits);  // -- Pack as signed value (possibly negative)
+
+  f_val = f_val & make_full_mask(pv_bits);  // -- Pack as unsigned value (always positive), this essentially just makes the resulting value not have any extra bits set - it's safe to use after the signed packing since we're not using any bits outside of the unsigned range anyways
+
+  if(pv_bits >= 32 - pv_current_bit) {  // -- Check if there is not enough bits remaining to save this value as-is. if there aren't enough bits, we save what we can here and store the remaining bits in the next spvar, if this means we're hitting the end, we can make this smaller by handling the case where we use all bits here aswell
+    pv_current_value = pv_current_value | (f_val << pv_current_bit);  // -- Add what we can to the current value where there is bits available to use
+    set_pvar(pv_current_slot, pv_current_value);  // -- Save the current SPVAR before advancing to the next one
+    pv_current_slot ++;  // -- Move to the next slot
+    pv_bits -= (32 - pv_current_bit);  // -- Update the required bits according to our needs for the next slot, if we don't do this here, we'll screw up the saved value by moving it too far out of range
+    f_val = f_val >> (32 - pv_current_bit);  // -- Move the remaining bits down, discarding the bits we've already saved
+    pv_current_bit = 0;  // -- Reset the current bit counter since we're starting with a new SPVAR
+    pv_current_value = 0;  // -- Reset our value so we start clean, we aren't currently using any bits anyways
+  }
+
+  pv_current_value = pv_current_value | (f_val << pv_current_bit);  // -- Merge the current SPVAR value with our currently value where there is space to keep our value
+
+  pv_current_bit += pv_bits;  // -- Move up the counter of next available bit to where we are currently saving data at
+
+  if(!pv_current_bit)
+    pv_current_value = 0;  // -- Reset our value so we start clean, we aren't currently using any bits anyways
+
+  set_pvar(pv_current_slot, pv_current_value);  // -- Save the SPVAR with the current value, this won't write anything to flash unless the value changed - so we can do this for each variable saved to no risk missing anything
+
+}
+
+// -- Function used to read your value from the SPVARs, this is the function you'll be calling when reading a value. You need to provide the range (minimum and maximum value, this is how we determine how many bits to use when reading the value)
+function read_spvar(f_min, f_max) {
+
+  pv_bits = get_bit_count2(f_min, f_max);  // -- Set pv_bits to the number of bits we need for this range
+    pv_current_value = (read_spvar_slot(pv_current_slot) >> pv_current_bit) & make_full_mask(pv_bits);  // -- Read the current SPVAR value from flash and shift them into position, we'll handle split values next
+
+  if(pv_bits >= 32 - pv_current_bit) {  // -- Check if we are dealing with a split SPVAR value, essentially if the current position means we're using more than 32 bits in the SPVAR, we need to retrieve the missing bits from the next SPVAR and put them back to our current value, we use the same space saving trick here as in the save function
+    pv_current_value = (pv_current_value & make_full_mask(32 - pv_current_bit)) | ((read_spvar_slot(pv_current_slot + 1) & make_full_mask(pv_bits - (32 - pv_current_bit))) << (32 - pv_current_bit));
+    // -- Below is a breakdown of the line above, with each step done one at a time instead of all at once - this however increases codesize - the below code is to explain how it all works tho
+    //pv_temp = read_spvar_slot(pv_current_slot + 1);  // -- Read the SPVAR slot coming after the initial one we used to pv_temp from flash, we need to maintain the data we've read thus far, but also add on what we have in flash for the next SPVAR
+    //pv_temp = pv_temp & make_full_mask(pv_bits - (32 - pv_current_bit));  // -- Extract the bits we need need (the ones that didn't fit in the previous SPVAR)
+    //pv_temp = pv_temp << (32 - pv_current_bit);  // -- Move the bits into their original position, they were stored at the beginning of the new SPVAR but belong at the top of the currently read value
+    //pv_current_value = (pv_current_value & make_full_mask(32 - pv_current_bit)) | pv_temp;  // -- put all bits together again with the part read from the first SPVAR cleaned up to only include the bits from this variable/value and not all bits set in the upper range like they normally are
+  }
+
+  pv_current_bit += pv_bits;  // -- Move up the counter of next available bit to where we are will be reading data from next
+
+  pv_current_value = pv_current_value & make_full_mask(pv_bits);  // -- Extract all bits included for this value and discard any other bits
+
+  if(pv_current_bit >= 32) {
+    pv_current_slot ++;  // -- Move to the next SPVAR slot
+    pv_current_bit -= 32;  // -- Remove 32 from the pv_current_bit tracker since we've gone beyond what we can do here
+  }
+
+  if(is_signed2(f_min, f_max))  // -- Check if the value can be negative and handle it accordingly
+    pv_current_value = unpack_i(pv_current_value, pv_bits);  // -- Restore the signed, possibly negative value
+
+  if(pv_current_value < f_min || pv_current_value > f_max)  // -- Check if the value is below our specified min or above our specified max, if so - return the min value
+    return f_min;
+
+  // -- Return the retrieved value to the user since it's within the expected range
+  return pv_current_value;
+
+}
