@@ -10,7 +10,7 @@
     █████─  ███   ████──    █     █   ██   ███
 
 
-    v6.0.0 — Sep 2023
+    v6.0.1 — Sep 2023
 
     By Fadexz
 
@@ -57,7 +57,7 @@
     █                                                                                                 █──
     █  Exit Current Menu       >  Press B/CIRCLE (saves values to memory when exiting the main menu)  █
     █                                                                                                 █─
-    █  Exit Menu               >  Press 'MENU' (Default: MENU/OPTIONS) (won't save to memory)      █
+    █  Exit Menu               >  Press 'MENU' (Default: MENU/OPTIONS) (won't save to memory)         █
     █                                                                                                 █─
     █  Change Selected Option  >  Press LEFT (previous) or Press RIGHT (next)                         █──
     █                                                                                                 █
@@ -139,6 +139,7 @@
     █ This script will eventually come to a "complete" state with time, so expect slow but constant updates 😎
     █ Please report any issues or suggestions to me, I rarely get any but it would help me improve
     █ the script with things I couldn't think of!
+    █ View code changes on GitHub at https://github.com/Fadexz/GPC-Scripts
 
 
 
@@ -304,7 +305,7 @@ YY_Cancel_Delay = 50,
 HI_Randomise_Values = 2,
 HI_Limit_Turbos = TRUE,
 // Display
-// -- [ OLED_FONT_SMALL (0) | OLED_FONT_MEDIUM (1) | OLED_FONT_LARGE (2)
+// -- [ OLED_FONT_SMALL (0) | OLED_FONT_MEDIUM (1) | OLED_FONT_LARGE (2) ]
 DP_Menu_Font_Size = OLED_FONT_MEDIUM,
 // -- Scroll transition speed apex
 DP_Forward_Scroll_Time = 3000,
@@ -325,9 +326,9 @@ DP_Amount_Of_Lasers = 10,
 // -- Wouldn't recommend lower than '5000' (5 secs) and higher than '120000' (2 mins) to prevent screen burn-in
 DP_Screen_Sleep_Time = 60000,
 // -- < 1023ms or > 32767ms not recommended (Default: signed 15-bit max (16383))
-DP_Max_Large_Time_Based_Value = (1<<14) - 1,
+DP_Max_Large_Time_Based_Value = (1 << 14) - 1,
 // -- < 511ms or > 16383ms not recommended (Default: signed 12-bit max (2047))
-DP_Max_Small_Time_Based_Value = (1<<11) - 1,
+DP_Max_Small_Time_Based_Value = (1 << 11) - 1,
 // -- Vibration and LED effect activation time
 DP_FX_Time = 100,
 
@@ -478,16 +479,19 @@ init {
 
 
   // -- If any Spvar contains a value then load from Spvars
-  for(_no_funct_layer_1_temp_ = 64; _no_funct_layer_1_temp_; _no_funct_layer_1_temp_ --) {
-    if(get_pvar(SPVAR_64 - (_no_funct_layer_1_temp_ - 1),-1 << 31,(1 << 31) - 1,0)) {
+  // -- Note: FIRST TIME THE VARIABLE IS BEING USED (NOT RESETTING)
+  while(_no_funct_layer_1_temp_ < 64) {
+    if(get_pvar(SPVAR_1 + _no_funct_layer_1_temp_,-1 << 31,(1 << 31) - 1,0)) {
       reset_spvar();
       // -- Load Mod Values (persistent memory)
-      for(_no_funct_layer_2_temp_ = 0; _no_funct_layer_2_temp_ < _End_Mod_Plus_One_Idx_; _no_funct_layer_2_temp_ ++) {
+      // -- Note: FIRST TIME THE VARIABLE IS BEING USED (NOT RESETTING)
+      while(_no_funct_layer_2_temp_ < _End_Mod_Plus_One_Idx_) {
         if(_no_funct_layer_2_temp_ < TB_Tactical_Button_Toggle_Idx) {
           if(_no_funct_layer_2_temp_ != DP_Menu_Options_Toggle_Idx)  // -- Unused, skip
             mod[_no_funct_layer_2_temp_] = read_spvar(FALSE,TRUE);
         }
         else mod[_no_funct_layer_2_temp_] = read_spvar(0,13);
+        _no_funct_layer_2_temp_ ++;
       }
       // -- Load Edit Values (persistent memory)
       for(_no_funct_layer_2_temp_ = 0; _no_funct_layer_2_temp_ < _End_Edit_Plus_One_Idx_; _no_funct_layer_2_temp_ ++) {
@@ -501,9 +505,10 @@ init {
       set_val(TRACE_6,pv_current_bit);
       break;
     }
+    _no_funct_layer_1_temp_ ++;
   }
   // -- If it made it to the end (nothing saved / first load)
-  if(!_no_funct_layer_1_temp_) {
+  if(_no_funct_layer_1_temp_ >= 64) {
     // -- Initial enabled mods (only uncomment these if you want these mods to be initially enabled)
     // -- Note: Try put this in an array... or not
     //mod[AR_Anti_Recoil_Toggle_Idx] = TRUE;
@@ -562,9 +567,11 @@ init {
   // -- Initialise values
   apply_button_layout();
   sa_angles = 360 / edit[SA_Angles_Divided_Idx];
-  // -- Enforce limit on Turbo Jump Time
-  if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
-    edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
+  // -- Turbos limit
+  if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
+    edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
+    edit[TJ_Jump_Wait_Time_Idx] = edit[RF_Shot_Wait_Time_Idx];
+  }
   // -- Round initial time-based values
   round_time_based_values();
   // -- Start LED on output ('console') based hue
@@ -583,7 +590,7 @@ init {
     }
   }
   // -- Set a initial delay for lasers
-  for(_no_funct_layer_1_temp_ = 0; _no_funct_layer_1_temp_ <= DP_Amount_Of_Lasers; _no_funct_layer_1_temp_ ++) {
+  for(_no_funct_layer_1_temp_ = 0; _no_funct_layer_1_temp_ < DP_Amount_Of_Lasers; _no_funct_layer_1_temp_ ++) {
     dp_laser_cooldown_timer[_no_funct_layer_1_temp_] = random(104,2504);
   }
 
@@ -635,7 +642,7 @@ main {
           puts_oled(36,8 + dp_shift,0,8,1);
         }
 
-        for(_no_funct_layer_1_temp_ = 0; _no_funct_layer_1_temp_ <= DP_Amount_Of_Lasers; _no_funct_layer_1_temp_ ++) {
+        for(_no_funct_layer_1_temp_ = 0; _no_funct_layer_1_temp_ < DP_Amount_Of_Lasers; _no_funct_layer_1_temp_ ++) {
           dp_laser_cooldown_timer[_no_funct_layer_1_temp_] = max(0,dp_laser_cooldown_timer[_no_funct_layer_1_temp_] - get_rtime());
           if(!dp_laser_cooldown_timer[_no_funct_layer_1_temp_]) {
             if(!dp_laser_x_pos[_no_funct_layer_1_temp_]) {
@@ -697,8 +704,8 @@ main {
       else sa_direction = map(0,sa_angles,179,359,(((sa_direction - 180) * sa_angles) / 180));
       //if(sa_direction < 0)
       //  sa_direction += 360;
-      set_val(POLAR_RX,clamp(((icos(sa_direction * 32768/360) * isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2))) / 32767) + ((mod[HI_Humanise_Inputs_Toggle_Idx] * edit[HI_Randomise_Values_Toggle_Idx] >= 1) * random(-130,130)),-32768,32767));
-      set_val(POLAR_RY,clamp(((isin(sa_direction * 32768/360) * isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2))) / 32767) + ((mod[HI_Humanise_Inputs_Toggle_Idx] * edit[HI_Randomise_Values_Toggle_Idx] >= 1) * random(-130,130)),-32768,32767));
+      set_val(POLAR_RX,clamp(((icos(sa_direction * 32768/360) * isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2))) / 32767) + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130)),-32768,32767));
+      set_val(POLAR_RY,clamp(((isin(sa_direction * 32768/360) * isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2))) / 32767) + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130)),-32768,32767));
     }
 
 
@@ -964,8 +971,8 @@ main {
           aa_cos_angle = (aa_cos_angle * (200 - ((abs(get_ival(LOOKX)) + aa_current_magnitude) / 10) * 10) / 200) * aa_max_magnitude;
         }
         */
-        set_val(POLAR_RX,clamp(get_ival(LOOKX) + aa_cos_angle + ((mod[HI_Humanise_Inputs_Toggle_Idx] * edit[HI_Randomise_Values_Toggle_Idx] >= 1) * random(-130,130)),-32768,32767));
-        set_val(POLAR_RY,clamp(get_ival(LOOKY) + aa_sin_angle + ((mod[HI_Humanise_Inputs_Toggle_Idx] * edit[HI_Randomise_Values_Toggle_Idx] >= 1) * random(-130,130)),-32768,32767));
+        set_val(POLAR_RX,clamp(get_ival(LOOKX) + aa_cos_angle + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130)),-32768,32767));
+        set_val(POLAR_RY,clamp(get_ival(LOOKY) + aa_sin_angle + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130)),-32768,32767));
       }
     }
 
@@ -1091,8 +1098,8 @@ main {
       }
     }
 
-    // -- On Main Menu
     switch(dp_menu) {
+      // -- On Main Menu
       case 0 {
         // -- Main Menu Navigation
         if(hold_step(XB1_UP,192) || hold_step(XB1_DOWN,192)) {
@@ -1246,8 +1253,9 @@ main {
           edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],0,Edit_Toggle_Value[dp_edit_title_idx],1);
         // -- Apply Edit Value Limits
         else {
-          if(dp_edit_title_idx == TJ_Jump_Wait_Time_Idx && mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
-            edit[TJ_Jump_Wait_Time_Idx] = cycle(edit[TJ_Jump_Wait_Time_Idx],100 - edit[II_Input_Interval_Idx],Edit_Value_Range[TJ_Jump_Wait_Time_Idx][1],dp_edit_idx_step);
+          // -- Use limit for turbos time
+          if((dp_edit_title_idx == RF_Shot_Wait_Time_Idx || dp_edit_title_idx == TJ_Jump_Wait_Time_Idx) && mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
+            edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],100 - edit[II_Input_Interval_Idx],Edit_Value_Range[dp_edit_title_idx][1],dp_edit_idx_step);
           else edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],Edit_Value_Range[dp_edit_title_idx][0],Edit_Value_Range[dp_edit_title_idx][1],dp_edit_idx_step);
         }
       }
@@ -1300,9 +1308,11 @@ main {
       round_time_based_values();  // -- Adjust time-based values to the current "input interval" multiple when exiting
       // -- Set updated amount of angles (Steady Aim)
       sa_angles = 360 / edit[SA_Angles_Divided_Idx];
-      // -- Apply turbo limit if needed
-      if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
-        edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
+      // -- Turbos limit
+      if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
+        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
+        edit[TJ_Jump_Wait_Time_Idx] = edit[RF_Shot_Wait_Time_Idx];
+      }
       dp_menu --;
       dp_display_menu = TRUE;
     }
@@ -1453,7 +1463,7 @@ main {
         }
       }
       // -- Display Main Menu Option Text (just prints over top of above)
-      if(!dp_menu) {
+      else {
         print(center_text(string_len(Main_Menu_Strings[0]),OLED_FONT_MEDIUM_WIDTH),10,OLED_FONT_MEDIUM,dp_main_title_idx,Main_Menu_Strings[0]);
         print(center_text(string_len(Main_Menu_Strings[1]),OLED_FONT_MEDIUM_WIDTH),37,OLED_FONT_MEDIUM,!dp_main_title_idx,Main_Menu_Strings[1]);
       }
@@ -1465,9 +1475,11 @@ main {
     if(event_press(MENU)) {
       // -- Set updated amount of angles (Steady Aim)
       sa_angles = 360 / edit[SA_Angles_Divided_Idx];
-      // -- Apply turbo limit if needed
-      if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
-        edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
+      // -- Turbos limit
+      if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
+        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
+        edit[TJ_Jump_Wait_Time_Idx] = edit[RF_Shot_Wait_Time_Idx];
+      }
       // -- Update time-based values to the current interval multiple when exiting the 'input interval' edit menu
       ii_vm_cycle_time = greatest_common_divisor_vm_timing();
       round_time_based_values();
@@ -1592,6 +1604,7 @@ main {
   // -- [DEBUG]
   //set_val(TRACE_3,fac_ads_timer);
   //get_info(CPU_USAGE);
+
 
 }
 
@@ -1851,7 +1864,7 @@ combo Turbo_Melee {
   set_val(Input_Layout[IL_Melee_Button_Idx],get_ival(Input_Layout[IL_Melee_Button_Idx]));
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   set_val(Input_Layout[IL_Melee_Button_Idx],0);
-  wait(edit[II_Input_Interval_Idx] + randomise_time() - get_rtime());
+  wait(max((100 - edit[II_Input_Interval_Idx]) * (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]),edit[II_Input_Interval_Idx]) + randomise_time() - get_rtime());
   set_val(Input_Layout[IL_Melee_Button_Idx],0);
 
 }
@@ -2009,7 +2022,7 @@ combo Display_Splash {
 
 function deadzone_offset(f_stick,f_value) {
 
-  set_val(f_stick, clamp((f_value + ((mod[HI_Humanise_Inputs_Toggle_Idx] * edit[HI_Randomise_Values_Toggle_Idx] >= 1) * random(-130,130))) * (32767 - abs(get_val(f_stick))) / 32767 + get_val(f_stick), -32768, 32767));
+  set_val(f_stick, clamp((f_value + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130))) * (32767 - abs(get_val(f_stick))) / 32767 + get_val(f_stick), -32768, 32767));
 
 }
 
@@ -2385,7 +2398,7 @@ function round_time_based_values() {
 // -- Randomise automated input timings for imperfect inputs
 function randomise_time() {
 
-  return mod[HI_Humanise_Inputs_Toggle_Idx] * edit[HI_Randomise_Values_Toggle_Idx] == 2 * random(0,40);
+  return (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx] == 2) * random(0,40);
 
 }
 
@@ -2421,7 +2434,7 @@ function isin(f_angle) {
   if(f_angle ^ (f_angle * 2) < 0)
     f_angle = (-1 << 31) - f_angle;
   f_angle = f_angle >> 17;
-  return f_angle * (0x18000 - (f_angle * f_angle) >> 11) >> 14;
+  return f_angle * (0x18000 - pow(f_angle,2) >> 11) >> 14;
 
 }
 
@@ -2624,7 +2637,7 @@ enum {
 
   // -- ASCII character index constants
   SPACE = ASCII_SPACE, EXCLAMATION, DOUBLE_QUOTE, QUOTES = DOUBLE_QUOTE, POUND, DOLLAR, PERCENT, AND, SINGLE_QUOTE, QUOTE = SINGLE_QUOTE, OPEN_PARENTHESIS,
-  CLOSE_PARENTHESIS, ASTERISK, PLUS, COMMA, MINUS, DASH = MINUS, PERIOD, DOT = PERIOD, SLASH, DIGIT0, DIGIT1, DIGIT2, DIGIT3, DIGIT4, DIGIT5, DIGIT6, DIGIT7, DIGIT8,
+  CLOSE_PARENTHESIS, ASTERISK, PLUS, COMMA, MINUS, HYPHEN = MINUS, DASH = MINUS, PERIOD, DOT = PERIOD, SLASH, DIGIT0, DIGIT1, DIGIT2, DIGIT3, DIGIT4, DIGIT5, DIGIT6, DIGIT7, DIGIT8,
   DIGIT9, COLON, SEMICOLON, LESS_THAN, LEFT_ARROW = LESS_THAN, EQUAL, GREATER_THAN, RIGHT_ARROW = GREATER_THAN, QUESTION_MARK, AT, A, B, C, D, E, F, G, H,
   I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z, OPEN_BRACKET, BACKSLASH, CLOSE_BRACKET, CARAT, UNDERSCORE, GRAVE, a, b, c, d, e, f, g, h, i, j, k,
   l, m, n, o, p, q, r, s, t, u, v, w, x, y, z, OPEN_BRACE, BAR, PIPE = BAR, OR = BAR, CLOSE_BRACE, TILDE
@@ -2657,7 +2670,7 @@ const string Main_Menu_Strings[] = {
 const string Title_Strings[] = {
 
 /*0*/  "COD Pro",
-/*1*/  "v6.0.0"
+/*1*/  "v6.0.1"
 
 };
 
@@ -2997,6 +3010,8 @@ const uint8 Round_Edit[] = {
   SC_Cancel_Delay_Time_Idx,
   SC2_Cancel_Delay_Time_Idx,
   CS_Delay_Time_Idx,
+  YY_Cancel_Delay_Idx,
+  YY_Wait_Delay_Idx,
   // -- Round to max polling rate value
   JS_Press_Variance_Time_Idx,
   DS_Press_Variance_Time_Idx,
@@ -3013,7 +3028,7 @@ const uint8 Scroll_Strings[] = {
 
   // -- Mod Title
 
-  SPACE, A,n,t,i, MINUS ,R,e,c,o,i,l, SPACE, 0,
+  SPACE, A,n,t,i, HYPHEN ,R,e,c,o,i,l, SPACE, 0,
   SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, QUOTE,S,l,o,w,d,o,w,n,QUOTE, SPACE, A,b,u,s,e, SPACE, 0,
   SPACE, S,t,e,a,d,y, SPACE, A,i,m, SPACE, 0,
   SPACE, R,e,l,o,a,d, SPACE, C,a,n,c,e,l, SPACE, 0,
@@ -3122,7 +3137,7 @@ const uint8 Scroll_Strings[] = {
   SPACE, C,a,n,c,e,l, SPACE, D,e,l,a,y, SPACE, 0,
   SPACE, I,n,p,u,t, SPACE, I,n,t,e,r,v,a,l, SPACE, 0,
   SPACE, R,a,n,d,o,m,i,s,e, SPACE, V,a,l,u,e,s, SPACE, 0,
-  SPACE, L,i,m,i,t, SPACE, T,u,r,b,o,s, SPACE, S,p,e,e,d, SPACE, 0,
+  SPACE, L,i,m,i,t, SPACE, T,u,r,b,o,s, SPACE, S,p,e,e,d, SPACE, OPEN_PARENTHESIS,DIGIT1,DIGIT0,SLASH,s,e,c,CLOSE_PARENTHESIS, SPACE, 0,
   SPACE, F,o,n,t, SPACE, S,i,z,e, SPACE, 0,
   SPACE, F,o,r,w,a,r,d,s, SPACE, S,c,r,o,l,l, SPACE, A,p,e,x, SPACE, T,i,m,e, SPACE, 0,
   SPACE, B,a,c,k,w,a,r,d,s, SPACE, S,c,r,o,l,l, SPACE, A,p,e,x, SPACE, T,i,m,e, SPACE, 0,
@@ -3468,4 +3483,32 @@ function read_spvar(f_min, f_max) {
   return pv_current_value;
 
 }
- ����������������
+
+
+
+
+/*
+
+MIT License
+
+Copyright (c) 2023 Fadexz
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
