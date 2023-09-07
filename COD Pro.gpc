@@ -10,7 +10,7 @@
     █████─  ███   ████──    █     █   ██   ███
 
 
-    v6.0.1 — Sep 2023
+    v6.0.2 — Sep 2023
 
     By Fadexz
 
@@ -510,7 +510,6 @@ init {
   // -- If it made it to the end (nothing saved / first load)
   if(_no_funct_layer_1_temp_ >= 64) {
     // -- Initial enabled mods (only uncomment these if you want these mods to be initially enabled)
-    // -- Note: Try put this in an array... or not
     //mod[AR_Anti_Recoil_Toggle_Idx] = TRUE;
     //mod[AA_Polar_Aim_Assist_Abuse_Toggle_Idx] = TRUE;
     //mod[SA_Steady_Aim_Toggle_Idx] = TRUE;
@@ -569,8 +568,8 @@ init {
   sa_angles = 360 / edit[SA_Angles_Divided_Idx];
   // -- Turbos limit
   if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
-    edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
-    edit[TJ_Jump_Wait_Time_Idx] = edit[RF_Shot_Wait_Time_Idx];
+    edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
+    edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
   }
   // -- Round initial time-based values
   round_time_based_values();
@@ -1310,8 +1309,8 @@ main {
       sa_angles = 360 / edit[SA_Angles_Divided_Idx];
       // -- Turbos limit
       if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
-        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
-        edit[TJ_Jump_Wait_Time_Idx] = edit[RF_Shot_Wait_Time_Idx];
+        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
+        edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
       }
       dp_menu --;
       dp_display_menu = TRUE;
@@ -1477,8 +1476,8 @@ main {
       sa_angles = 360 / edit[SA_Angles_Divided_Idx];
       // -- Turbos limit
       if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
-        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[II_Input_Interval_Idx]);
-        edit[TJ_Jump_Wait_Time_Idx] = edit[RF_Shot_Wait_Time_Idx];
+        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
+        edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
       }
       // -- Update time-based values to the current interval multiple when exiting the 'input interval' edit menu
       ii_vm_cycle_time = greatest_common_divisor_vm_timing();
@@ -2670,7 +2669,7 @@ const string Main_Menu_Strings[] = {
 const string Title_Strings[] = {
 
 /*0*/  "COD Pro",
-/*1*/  "v6.0.1"
+/*1*/  "v6.0.2"
 
 };
 
@@ -3026,7 +3025,7 @@ const uint8 Scroll_Strings[] = {
 
   1,
 
-  // -- Mod Title
+  // -- Mod Titles
 
   SPACE, A,n,t,i, HYPHEN ,R,e,c,o,i,l, SPACE, 0,
   SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, QUOTE,S,l,o,w,d,o,w,n,QUOTE, SPACE, A,b,u,s,e, SPACE, 0,
