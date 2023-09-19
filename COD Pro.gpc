@@ -10,7 +10,7 @@
     █████─  ███   ████──    █     █   ██   ███
 
 
-    v6.0.2 — Sep 2023
+    v6.0.3 — Sep 2023
 
     By Fadexz
 
@@ -39,6 +39,7 @@
     █ Crouch Shot (automatically crouches when firing)
     █ "YY" Cancel (fun feature, cancel the swap animation constantly to jitter the animation for a visual effect, may cause delayed aim)
     █ Hair Triggers (removed trigger deadzone — any press is 100% input)
+    █ Humanise Inputs (randomise values and limit turbo features to keep closer to human limitations)
     █ Crossover Mapping (proper mapping for unmatching controllers and consoles)
     █ Block Vibration (stop vibration to the controller but allow rumble-based features to still work)
     █ Cycling Hue LED (customised smoothly cycling through all hues (colours) on the LED)
@@ -64,7 +65,7 @@
     █  Change Selected Value   >  Press UP (increase) or Press DOWN (decrease)                        █─
     █                                                                                                 █
     ███████████████████████████████████████████████████████████████████████████████████████████████████
-    ███ Quick Toggles █████████████████████████████████████████████████████████████████████████████████─
+    ███ Quick Toggles (outside menu) ██████████████████████████████████████████████████████████████████─
     ███████████████████████████████████████████████████████████████████████████████████████████████████
     █                                                                                                 █
     █  Toggle Rapid Fire       >  Hold 'SCOREBOARD' & Press 'STREAK' (Default: VIEW/TOUCH & RIGHT)    █──
@@ -75,50 +76,7 @@
 
 
 
-    Notes:
-    █ [ Pickup Cancel ]
-    █ With this feature on you may have issues with hold interacting with things, you should not use this feature in modes
-    █ that you need to hold to interact in or if you intend on using them while you play
-    █
-    █ [ Swap Cancel ]
-    █ This feature doesn't won't benefit weapons that are brought out faster than cancelling the animation would be. For
-    █ this feature, I recommend both weapons being around the same time to swap to or both being not slow as you will need
-    █ to use a speed for the slowest one
-    █
-    █ [ Potential Conflicts ]
-    █ Currently mostly shot mods that activate when you fire may conflict as it is possible to enable multiple at once,
-    █ Just keep in mind that if they sound like they might interfere with each other they probably will
-    █ (i.e Dropshot, Crouch Shot, Jump Shot, etc.)
-    █ 
-    █ [ LED Brightness ]
-    █ I suggest you lower the brightness level of "Dual Shock 4 Light Bar Brightness" in the Device tab of Zen Studio so
-    █ you don't have to be blind by the Zen's LED (I use 25%), otherwise you can change it further through the menu just
-    █ for this script
-    █
-    █ [ Defaults ]
-    █ The features selected below under this large comment are what will be enabled or disabled by default, you can change
-    █ them there if you wish, otherwise you can change them later through the menu on the Zen's Screen which will be
-    █ saved to the memory for later use
-    █
-    █ [ > 60fps ]
-    █ Mainly if on PC and you understand this then be sure to adjust in the menu (under 'Hair Triggers') to whatever your
-    █ max frametime is plus one (e.g (1000ms/100fps) = 10ms, rounded up to even), your frame time or frame rate should not
-    █ drop past this number ever, mainly intended to be changed for higher framerates for faster completion of combo inputs
-    █ If you decide to use this on Modern Warfare / Warzone make sure you use 'PS Remote Play' mode in the Device tab to
-    █ allow for minimum delay between inputs, this will allow you to use 14ms input interval minimum instead of roughly
-    █ 18ms or 20ms that Xbox will allow without inputs being missed
-    █ You may test it to see how low you can get it but the game is strangely inconsistent or slower with some buttons
-    █ (just don't use faster than the game is running at)
-    █ Important: If you experience missed inputs from combos (automated inputs) you should increase this number until it
-    █ stops missing them (like keeping it at 18ms)
-    █
-    █ [ Cold War ]
-    █ Boosted Auto Sprint is ~3.5% faster than normal sprinting, however I haven't tested in normal gameplay if it still
-    █ has as much of a worthy benefit or if it can be better (might be more of an annoyance than useful)
-
-
-
-    Congrats, you now know everything you would need to know about the script, have fun! 😜
+    Congrats, you now know the basics to get started, have fun! 😜
 
 
 
@@ -126,10 +84,54 @@
 
 
 
+    In-Depth Notes:
+    █ [ Pickup Cancel ]
+    █ With this feature on you may have issues with hold interacting on things, you should not use this feature in modes
+    █ that you need to hold to interact in or if you intend on using them while you play (e.g bomb defuser)
+    █
+    █ [ Swap Cancel ]
+    █ This feature won't benefit weapons that are brought out faster than cancelling the animation would be
+	█ For this feature, I recommend both weapons being around the same time to swap to or both being somewhat fast as
+	█ you will need to use a speed for the slowest one
+    █
+    █ [ Potential Conflicts ]
+    █ Currently mostly shot mods that activate when you fire may conflict as it is possible to enable multiple at once,
+    █ just keep in mind that if they sound like they might interfere with each other they may in-fact
+    █ (i.e Dropshot, Crouch Shot, Jump Shot, etc. activate on AIM or FIRE inputs)
+    █
+    █ [ LED Brightness ]
+    █ I suggest you lower the brightness level of "Dual Shock 4 Light Bar Brightness" in the Device tab of Zen Studio so
+    █ you don't have to be blind by the Zen's LED (I use 25%), otherwise you can change it further through the menu just
+    █ for this script
+    █
+    █ [ Defaults ]
+    █ The features selected below under this large comment are what will be enabled or disabled by default, you can
+	█ change them there if you wish, otherwise you can change them later through the menu on the Zen's Screen which
+	█ will be saved to the memory for later use
+    █
+    █ [ > 60fps ]
+    █ Mainly if on PC and you understand this then be sure to adjust in the menu (under 'Hair Triggers') to whatever
+	█ your max frametime is plus one (e.g (1000ms/100fps) = 10ms, rounded up to even), your frame time or frame rate
+	█ should not drop past this number ever or 99% of the time, mainly intended to be changed for higher framerates
+	█ for faster completion of combo inputs
+    █ If you decide to use this on Modern Warfare / Warzone make sure you use 'PS Remote Play' mode in the Device tab
+	█ to allow for minimum delay between inputs, this will allow you to use 14ms input interval minimum instead of
+	█ roughly 18ms or 20ms that Xbox will allow without inputs being missed
+    █ You may test it to see how low you can get it but the game is strangely inconsistent or slower with some buttons
+    █ (just don't use faster than the game is running at)
+    █ Important: If you experience missed inputs from combos (automated inputs) you should increase this number until
+	█ it stops missing them (like keeping it at 18ms)
+    █
+    █ [ Cold War ]
+    █ Boosted Auto Sprint is ~3.5% faster than normal sprinting, however I haven't tested in normal gameplay if it still
+    █ has as much of a worthy benefit or if it can be better (might be more of an annoyance than useful)
+
+
+
     Donate:
     █ Feel free to support me for the countless hours put into this script, for the few people that do it does help
 	█ motivate me to put more work into scripts and makes my day 😊
-    █ https://www.buymeacoffee.com/Fadexz
+    █ https://www.buymeacoffee.com/Fadexz (sent international)
     █ https://paypal.me/Fadexz
 
 
@@ -150,10 +152,10 @@
 
 
     Additional Credits:
-    █ Batts          >  Base value displaying functionality
-    █ DoNotAtMe      >  Aim Assist "Slowdown" Abuse + Steady Aim
-    █ Swizzy         >  Bit-packed spvar saving
-    █ Taylordrift21  >  Based menu from + Anti-Recoil
+    █ Batts            >  Base value displaying functionality
+    █ DoNotAtMe (Me.)  >  Aim Assist "Slowdown" Abuse + Steady Aim
+    █ Swizzy           >  Bit-packed spvar saving
+    █ Taylordrift21    >  Based menu from + Anti-Recoil
 
 
 
@@ -567,10 +569,7 @@ init {
   apply_button_layout();
   sa_angles = 360 / edit[SA_Angles_Divided_Idx];
   // -- Turbos limit
-  if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
-    edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
-    edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
-  }
+  limit_turbos_value();
   // -- Round initial time-based values
   round_time_based_values();
   // -- Start LED on output ('console') based hue
@@ -800,7 +799,7 @@ main {
       if(!(get_ival(Input_Layout[IL_Aim_Button_Idx]) || get_ival(Input_Layout[IL_Stance_Slide_Dive_Button_Idx])) && (get_ptime(Input_Layout[IL_Stance_Slide_Dive_Button_Idx]) >= edit[AS_Crouch_Prone_Delay_Time_Idx] || get_ival(Input_Layout[IL_Sprint_Focus_Button_Idx])) && as_sc_yyc_in_sprint_area && !(combo_running(Cancel_Stand_Slide_Cancel) || combo_running(Stand_Slide_Cancel))) {
         switch(edit[AS_Type_Toggle_Idx]) {
           case 0 {
-            combo_run(Auto_Sprint);
+            combo_run(Turbo_Auto_Sprint);
             break;
           }
           case 1 {
@@ -809,7 +808,7 @@ main {
           }
           case 2 {
             if(isqrt(pow(get_lval(MOVEX - 35),2) + pow(get_lval(MOVEY - 35),2)) < 96 || get_lval(MOVEY - 35) > -72)
-              combo_run(Auto_Sprint);
+              combo_run(Press_Auto_Sprint);
             break;
           }
           case 3 {
@@ -818,7 +817,8 @@ main {
         }
       }
       else {
-        combo_stop(Auto_Sprint);
+        combo_stop(Turbo_Auto_Sprint);
+        combo_stop(Press_Auto_Sprint);
         combo_stop(Boosted_Auto_Sprint);
       }
     }
@@ -950,8 +950,7 @@ main {
     if(mod[AA_Polar_Aim_Assist_Abuse_Toggle_Idx]) {
       //aa_current_magnitude = isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2));
       //aa_max_magnitude = aa_current_magnitude < 100;
-      aa_angle += edit[AA_Rotate_By_Angles_Idx];
-      aa_angle %= 360;
+      aa_angle = (aa_angle + edit[AA_Rotate_By_Angles_Idx]) % 360;
       // -- Note: Check over
       if(/*aa_current_magnitude*/ isqrt(pow(get_ival(LOOKX - 35),2) + pow(get_ival(LOOKY - 35),2)) <= edit[AA_Release_Point_Idx] && get_brtime(Input_Layout[IL_Streak_Button_Idx]) >= 3000 &&
       (!edit[AA_Activation_Type_Toggle_Idx] && fac_ads_timer >= edit[FAC_ADS_Time_Idx] && get_ival(Input_Layout[IL_Fire_Button_Idx]) ||
@@ -961,10 +960,11 @@ main {
       edit[AA_Activation_Type_Toggle_Idx] == 4)) {
 	    aa_cos_angle = (isin(((aa_angle + 180) % 360) * 32768/360) * edit[AA_Radius_Idx]) / 100;
         aa_sin_angle = (icos(aa_angle * 32768/360) * edit[AA_Radius_Idx]) / 100;
-        /*if(aa_current_magnitude <= aa_radius) {*/
+        //if(aa_current_magnitude <= aa_radius) {
           aa_sin_angle -= get_ival(LOOKY);
           aa_cos_angle -= get_ival(LOOKX);
-        /*}
+        /*
+        }
         else {
           aa_sin_angle = (aa_sin_angle * (200 - ((abs(get_ival(LOOKY)) + aa_current_magnitude) / 10) * 10) / 200) * aa_max_magnitude;
           aa_cos_angle = (aa_cos_angle * (200 - ((abs(get_ival(LOOKX)) + aa_current_magnitude) / 10) * 10) / 200) * aa_max_magnitude;
@@ -1253,7 +1253,7 @@ main {
         // -- Apply Edit Value Limits
         else {
           // -- Use limit for turbos time
-          if((dp_edit_title_idx == RF_Shot_Wait_Time_Idx || dp_edit_title_idx == TJ_Jump_Wait_Time_Idx) && mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
+          if((dp_edit_title_idx == RF_Shot_Wait_Time_Idx || dp_edit_title_idx == TJ_Jump_Wait_Time_Idx || dp_edit_title_idx == CS_Delay_Time_Idx) && mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
             edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],100 - edit[II_Input_Interval_Idx],Edit_Value_Range[dp_edit_title_idx][1],dp_edit_idx_step);
           else edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],Edit_Value_Range[dp_edit_title_idx][0],Edit_Value_Range[dp_edit_title_idx][1],dp_edit_idx_step);
         }
@@ -1308,10 +1308,7 @@ main {
       // -- Set updated amount of angles (Steady Aim)
       sa_angles = 360 / edit[SA_Angles_Divided_Idx];
       // -- Turbos limit
-      if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
-        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
-        edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
-      }
+      limit_turbos_value();
       dp_menu --;
       dp_display_menu = TRUE;
     }
@@ -1442,7 +1439,7 @@ main {
               }
             }
           }
-          // -- Store Value to ASCII Array (string) for zero length string in array (only for edit menu)
+          // -- Store the value to the ASCII Array (stored string) for when it is a zero length string in array of strings (only done for edit menu)
           if(!dp_string_length[dp_string_idx])
             // -- Note: Is more efficient in a function due to referencing a simpler variable
             int_to_string(edit[dp_edit_title_idx],find_digits(edit[dp_edit_title_idx]));
@@ -1475,10 +1472,7 @@ main {
       // -- Set updated amount of angles (Steady Aim)
       sa_angles = 360 / edit[SA_Angles_Divided_Idx];
       // -- Turbos limit
-      if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
-        edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
-        edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
-      }
+      limit_turbos_value();
       // -- Update time-based values to the current interval multiple when exiting the 'input interval' edit menu
       ii_vm_cycle_time = greatest_common_divisor_vm_timing();
       round_time_based_values();
@@ -1717,13 +1711,21 @@ combo Zoom {
 
 // Auto Sprint
 
-combo Auto_Sprint {
+combo Turbo_Auto_Sprint {
 
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],100);
-  wait(max(20,edit[II_Input_Interval_Idx]) + randomise_time());  // -- Note: Fix for MW/WZ
+  wait(max(20,max((100 - edit[II_Input_Interval_Idx]) * (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]),edit[II_Input_Interval_Idx])) + randomise_time());  // -- Note: Fix for MW/WZ
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],0);
   wait(edit[II_Input_Interval_Idx] + randomise_time() - get_rtime());
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],0);
+
+}
+
+combo Press_Auto_Sprint {
+
+  set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],100);
+  wait(max(20,edit[II_Input_Interval_Idx]) + randomise_time());  // -- Note: Fix for MW/WZ
+  wait(edit[II_Input_Interval_Idx] + randomise_time() - get_rtime());
 
 }
 
@@ -1893,9 +1895,12 @@ combo Cancel_Stand_Slide_Cancel {
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],0);
   wait(edit[CS_Delay_Time_Idx] + randomise_time());
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
+  set_val(MOVEY,0);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
+  set_val(MOVEY,0);
   wait(max(36,edit[II_Input_Interval_Idx]) + randomise_time());  // -- Note: Extra time for BOCW (fix)
   set_val(Input_Layout[IL_Jump_Mantle_Button_Idx],100);
+  set_val(MOVEY,0);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   wait(edit[II_Input_Interval_Idx] - get_rtime());
 
@@ -2021,7 +2026,21 @@ combo Display_Splash {
 
 function deadzone_offset(f_stick,f_value) {
 
-  set_val(f_stick, clamp((f_value + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130))) * (32767 - abs(get_val(f_stick))) / 32767 + get_val(f_stick), -32768, 32767));
+  set_val(f_stick,clamp((f_value + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130))) * (32767 - abs(get_val(f_stick))) / 32767 + get_val(f_stick),-32768,32767));
+
+}
+
+
+
+// Humanise Inputs
+
+function limit_turbos_value() {
+
+  if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
+    edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
+    edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
+    edit[CS_Delay_Time_Idx]     = max(100 - edit[II_Input_Interval_Idx],edit[CS_Delay_Time_Idx]);
+  }
 
 }
 
@@ -2083,12 +2102,12 @@ function edit_toggle_string_idx(f_string_offset) {
 function menu_nav(f_index,f_min,f_max) {
 
   // -- Previous value
-  if(hold_step(XB1_LEFT,72)) {
+  if(hold_step(XB1_LEFT,80)) {
     f_index --;
     dp_display_menu = TRUE;
   }
   // -- Next value
-  if(hold_step(XB1_RIGHT,72)) {
+  if(hold_step(XB1_RIGHT,80)) {
     f_index ++;
     dp_display_menu = TRUE;
   }
@@ -2252,6 +2271,7 @@ function print_splash_text(f_index,f_height) {
 
 // -- Convert number to string value
 // -- Note: Limited to 5 digits max
+// -- Note: Slightly smaller in a function form
 function int_to_string(f_value,f_digits) {
 
   dp_val_str = 1;
@@ -2397,7 +2417,7 @@ function round_time_based_values() {
 // -- Randomise automated input timings for imperfect inputs
 function randomise_time() {
 
-  return (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx] == 2) * random(0,40);
+  return (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx] == 2) * random(0,20);
 
 }
 
@@ -2669,7 +2689,7 @@ const string Main_Menu_Strings[] = {
 const string Title_Strings[] = {
 
 /*0*/  "COD Pro",
-/*1*/  "v6.0.2"
+/*1*/  "v6.0.3"
 
 };
 
@@ -2991,7 +3011,8 @@ const uint8 Edit_Toggle_Value[] = {
 /*50*/  NOT_USE,
 /*51*/  NOT_USE,
 /*51*/  NOT_USE,
-/*52*/  NOT_USE
+/*52*/  NOT_USE,
+/*53*/  NOT_USE
 
 }
 
@@ -3028,7 +3049,7 @@ const uint8 Scroll_Strings[] = {
   // -- Mod Titles
 
   SPACE, A,n,t,i, HYPHEN ,R,e,c,o,i,l, SPACE, 0,
-  SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, QUOTE,S,l,o,w,d,o,w,n,QUOTE, SPACE, A,b,u,s,e, SPACE, 0,
+  SPACE, QUOTE,S,l,o,w,d,o,w,n,QUOTE, SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, A,b,u,s,e, SPACE, 0,
   SPACE, S,t,e,a,d,y, SPACE, A,i,m, SPACE, 0,
   SPACE, R,e,l,o,a,d, SPACE, C,a,n,c,e,l, SPACE, 0,
   SPACE, A,u,t,o, SPACE, R,e,l,o,a,d, SPACE, 0,
@@ -3036,7 +3057,7 @@ const uint8 Scroll_Strings[] = {
   SPACE, R,a,p,i,d, SPACE, F,i,r,e, SPACE, 0,
   SPACE, A,u,t,o, SPACE, F,o,c,u,s, SPACE, 0,
   SPACE, A,u,t,o, SPACE, P,i,n,g, SPACE, 0,
-  SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, QUOTE,S,n,a,p, SPACE, O,n,QUOTE, SPACE, A,b,u,s,e, SPACE, OPEN_PARENTHESIS, P,v,E, CLOSE_PARENTHESIS, SPACE, 0,
+  SPACE, QUOTE,S,n,a,p, SPACE, O,n,QUOTE, SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, A,b,u,s,e, SPACE, OPEN_PARENTHESIS, P,v,E, CLOSE_PARENTHESIS, SPACE, 0,
   SPACE, Q,u,i,c,k, SPACE, S,c,o,p,e,r, SPACE, OPEN_PARENTHESIS, R,e,q,DOT, SPACE, T,h,r,o,w,i,n,g, SPACE, K,n,i,f,e, CLOSE_PARENTHESIS, SPACE, 0,
   SPACE, T,u,r,b,o, SPACE, J,u,m,p, SPACE, 0,
   SPACE, T,u,r,b,o, SPACE, M,e,l,e,e, SPACE, 0,
