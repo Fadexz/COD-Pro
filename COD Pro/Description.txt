@@ -1,0 +1,53 @@
+A script designed around making timings fast and precise so you can execute features at a fast pace, mostly useful on PC with higher frame rates, has lots of features made by myself, and is highly customisable for how you want to play. It also aims to be simple and easy to navigate!
+
+This script includes randomised and limited values, so you can be sure it will be safe to use 😎
+
+Please contact me for any questions, suggestions, or issues, I value your feedback!
+Best place to contact me is on Discord
+https://discord.com/users/291872132898619392 (fadexz)
+
+If you would like to be generous, you can support my efforts to focus on putting out better and more scripts in the future (donate)
+https://paypal.me/Fadexz
+https://www.buymeacoffee.com/Fadexz (sent internationally)
+
+Be sure to read the information near the top of the script file to help you get along easier without issues.
+
+Current Potential Issues (minor):
+- This script may not work great with controllers running at 100hz, this would include Xbox Bluetooth connection, PS3 Controllers, and possibly others with Bluetooth connections that max out at this polling rate. This script will run in intervals of 2ms from 8ms, 4ms, or 2ms. I will update the script later to automatically detect the real polling rate instead of per platform and support for handling controllers of 10ms.
+- I have temporarily removed support for changing the displayed controls for remapping, so the buttons you see in the menu will be Xbox One format buttons and not based off what is currently connected, just use the equivalent Xbox One inputs for your platform (e.g A = CROSS on PlayStation)
+- With the large menu text you may see values of 4 digits with an 'f' at the end, this is a bug that needs to be fixed, just ignore it for now
+- When you use randomisation you should expect extra delay to be added to the speed you set for the input times, so it will be slightly slower than specified, I may change this later
+
+I may make another update soon to do some smaller additions, but I wanted to get this update out as I have been working hard on it for a long time, and it can't wait forever 😋
+
+Enjoy! 🎉
+
+
+Features:
+Anti-Recoil (compensates recoil while using rumble/vibration to increase the amount on shots)
+Aim Assist 'Slowdown' Abuse (gives aim assist slowdown while not looking around with stick)
+Steady Aim (reduce aim angles to possibly decrease shaking and increase your accuracy)
+Reload Cancel (automatically cancel reload on 'AIM' and/or 'FIRE')
+Auto Reload (automatically reload after shooting)
+Jump Shot (jump when pressing 'AIM' and 'FIRE' at similar times, or has aim based modes)
+Rapid Fire (turbo for non-auto weapons)
+Auto Focus (automatically focuses / holds breath while aiming)
+Auto Ping (ping when firing, on a specified time of no firing cooldown)
+Aim Assist Snap On Abuse (for ZM/CP aka PvE modes, don't use on PvP modes)
+Quick Scoper (instantly unscopes and removes shot recoil to make quick scoping feel nicer, requires a throwing knife)
+Turbo Jump (spam on hold)
+Turbo Melee (spam on hold)
+Auto Sprint (has press, toggle, and hold options) + Boosted Auto Sprint Mode (exploit for Black Ops Cold War) (these also make the walk area larger by making the sprint area a little tighter than in-game Auto Sprint, requires auto sprint in-game disabled and preferably use hold mode to allow the script to stop the sprinting)
+Slide Cancel (Quickly cancels your slide midway and stands immediately)
+Pickup Cancel (Cancels out the animation of picking up a weapon to almost instantly start being able to use it)
+Swap Cancel (Cancels out the animation of swapping a weapon as soon as the weapon has been swapped, best when both weapons have similar swap times)
+Dropshot (automatically drops to prone when firing then immediately stands afterwards)
+Crouch Shot (automatically crouches when firing)
+"YY" Cancel (fun feature, cancel the swap animation constantly to jitter the animation for a visual effect, may cause delayed aim)
+Hair Triggers (removed trigger deadzone — any press is 100% input)
+Humanise Inputs (randomise values and limit turbo features to keep closer to human limitations)
+Crossover Mapping (proper mapping for unmatching controllers and consoles)
+Block Vibration (stop vibration to the controller but allow rumble-based features to still work)
+Cycling Hue LED (customised smoothly cycling through all hues (colours) on the LED)
+Game Button Layout Customisation (map the script to your in-game button layout)
+All other features with combos (or automated input sequences) have the "Input Interval" and "Dynamic VM Timing" to ensure you get faster combos with no added "input delay" (aka normally running at 100hz or 10ms intervals, currently always ensures a 125hz/8ms or 250hz/4ms polling rate regardless of input interval used by changing based on the type of connected controller)
