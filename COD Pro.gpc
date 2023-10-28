@@ -10,7 +10,7 @@
     █████─  ███   ████──    █     █   ██   ███
 
 
-    v6.0.3 — Sep 2023
+    v6.1.0 — Oct 2023
 
     By Fadexz
 
@@ -19,15 +19,15 @@
 
     Features:
     █ Anti-Recoil (compensates recoil while using rumble/vibration to increase the amount on shots)
-    █ Aim Assist 'Slowdown' Abuse (gives aim assist slowdown while not looking around with stick)
-    █ Steady Aim (reduce aim angles to possibly decrease shaking and increase your accuracy)
-    █ Reload Cancel (automatically cancel reload on 'AIM' and/or 'FIRE')
+    █ Slowdown Aim Assist Abuse (automatically moves your aim (in small circle) while you are not moving to allow for slowing down when moving towards a target which will favour to their direction)
+    █ Steady Aim (reduce aim angles to possibly decrease small shaking and increase your accuracy)
+    █ Reload Cancel (automatically cancel reload on press of 'AIM' and/or 'FIRE' (based on settings))
     █ Auto Reload (automatically reload after shooting)
-    █ Jump Shot (jump when pressing 'AIM' and 'FIRE' at similar times, or has aim based modes)
-    █ Rapid Fire (turbo for non-auto weapons)
-    █ Auto Focus (automatically focuses / holds breath while aiming)
+    █ Jump Shot (jump when pressing 'AIM' and/or 'FIRE' (based on settings))
+    █ Rapid Fire (turbo/spam 'FIRE' for non-auto weapons automatically on hold)
+    █ Auto Focus (automatically focuses (hold breath) while aiming)
     █ Auto Ping (ping when firing, on a specified time of no firing cooldown)
-    █ Aim Assist Snap On Abuse (for ZM/CP aka PvE modes, don't use on PvP modes)
+    █ Snap On Aim Assist Abuse (for ZM/SP aka PvE modes, don't use on PvP modes)
     █ Quick Scoper (instantly unscopes and removes shot recoil to make quick scoping feel nicer, requires a throwing knife)
     █ Turbo Jump (spam on hold)
     █ Turbo Melee (spam on hold)
@@ -42,7 +42,7 @@
     █ Humanise Inputs (randomise values and limit turbo features to keep closer to human limitations)
     █ Crossover Mapping (proper mapping for unmatching controllers and consoles)
     █ Block Vibration (stop vibration to the controller but allow rumble-based features to still work)
-    █ Cycling Hue LED (customised smoothly cycling through all hues (colours) on the LED)
+    █ Cycling Hue LED (smoothly cycles through all hues (colours) on the LED)
     █ Game Button Layout Customisation (map the script to your in-game button layout)
     █ All other features with combos (or automated input sequences) have the "Input Interval" and "Dynamic VM Timing" to ensure you get faster combos with no added "input delay" (aka normally running at 100hz or 10ms intervals, currently always ensures a 125hz/8ms or 250hz/4ms polling rate regardless of input interval used)
 
@@ -113,14 +113,10 @@
     █ Mainly if on PC and you understand this then be sure to adjust in the menu (under 'Hair Triggers') to whatever
 	█ your max frametime is plus one (e.g (1000ms/100fps) = 10ms, rounded up to even), your frame time or frame rate
 	█ should not drop past this number ever or 99% of the time, mainly intended to be changed for higher framerates
-	█ for faster completion of combo inputs
-    █ If you decide to use this on Modern Warfare / Warzone make sure you use 'PS Remote Play' mode in the Device tab
-	█ to allow for minimum delay between inputs, this will allow you to use 14ms input interval minimum instead of
-	█ roughly 18ms or 20ms that Xbox will allow without inputs being missed
-    █ You may test it to see how low you can get it but the game is strangely inconsistent or slower with some buttons
-    █ (just don't use faster than the game is running at)
+	█ for faster completion of automated input sequences, just keep in mind you should expect it to be a little lower
+	█ than your average down to the worse performance for 1% of the time
     █ Important: If you experience missed inputs from combos (automated inputs) you should increase this number until
-	█ it stops missing them (like keeping it at 18ms)
+	█ it stops missing them (like keeping it at 20ms)
     █
     █ [ Cold War ]
     █ Boosted Auto Sprint is ~3.5% faster than normal sprinting, however I haven't tested in normal gameplay if it still
@@ -131,8 +127,8 @@
     Donate:
     █ Feel free to support me for the countless hours put into this script, for the few people that do it does help
 	█ motivate me to put more work into scripts and makes my day 😊
-    █ https://www.buymeacoffee.com/Fadexz (sent international)
-    █ https://paypal.me/Fadexz
+	█ https://paypal.me/Fadexz
+    █ https://www.buymeacoffee.com/Fadexz (sent internationally)
 
 
 
@@ -153,13 +149,14 @@
 
     Additional Credits:
     █ Batts            >  Base value displaying functionality
-    █ DoNotAtMe (Me.)  >  Aim Assist "Slowdown" Abuse + Steady Aim
-    █ Swizzy           >  Bit-packed spvar saving
+    █ DoNotAtMe (Me.)  >  "Slowdown" Aim Assist Abuse + Steady Aim
+    █ Swizzy           >  Bit-packed Spvar saving
     █ Taylordrift21    >  Based menu from + Anti-Recoil
 
 
 
     To Do (for me):
+    █ Dropshot - Stand on release of aim option - Dropshot on fire option
     █ Vibration + LED menu only options FX Toggle
     █ Auto Sprint for Sprint Cancels Reload
     █ Ez Equipment Cancel??
@@ -172,17 +169,19 @@
     █ Burst Fire
     █ Anti-AFK Kick
     █ Strafe AA
-    █ Quick Reload??
     █ Mod record time mode
-    █ "Faster" Rapid Fire
-    █ Slot number on start
+    █ "Faster" Rapid Fire (hold)
     █ Button swap
     █ Diamond and Star Shape "Aim Assist Abuse"
-    █ Actual Controller Polling Rate Detection
     █ Display battery level
     █ Weapon Pickup Mode
     █ Mouse & Keyboard Menu Support
-    █ Preset Value Loadouts
+    █ Loadouts/Profiles
+    █
+    █ Issues:
+    █ Fix slide cancel to allow dolpine dive (in MWIII)
+    █ Fix for 10ms polling - Actual Controller Polling Rate Detection
+    █ Fix randomisation to be averaged instead of adding onto
 
 
 
@@ -194,26 +193,90 @@
 
 define
 
+// -- Note: Please ignore
+Signed_2_Bit_Min  = -1 << 1,
+Signed_3_Bit_Min  = -1 << 2,
+Signed_4_Bit_Min  = -1 << 3,
+Signed_5_Bit_Min  = -1 << 4,
+Signed_6_Bit_Min  = -1 << 5,
+Signed_7_Bit_Min  = -1 << 6,
+Signed_8_Bit_Min  = -1 << 7,
+Signed_9_Bit_Min  = -1 << 8,
+Signed_10_Bit_Min = -1 << 9,
+Signed_11_Bit_Min = -1 << 10,
+Signed_12_Bit_Min = -1 << 11,
+Signed_13_Bit_Min = -1 << 12,
+Signed_14_Bit_Min = -1 << 13,
+Signed_15_Bit_Min = -1 << 14,
+Signed_16_Bit_Min = -1 << 15,
+Signed_17_Bit_Min = -1 << 16,
+Signed_18_Bit_Min = -1 << 17,
+Signed_19_Bit_Min = -1 << 18,
+Signed_20_Bit_Min = -1 << 19,
+Signed_21_Bit_Min = -1 << 20,
+Signed_22_Bit_Min = -1 << 21,
+Signed_23_Bit_Min = -1 << 22,
+Signed_24_Bit_Min = -1 << 23,
+Signed_25_Bit_Min = -1 << 24,
+Signed_26_Bit_Min = -1 << 25,
+Signed_27_Bit_Min = -1 << 26,
+Signed_28_Bit_Min = -1 << 27,
+Signed_29_Bit_Min = -1 << 28,
+Signed_30_Bit_Min = -1 << 29,
+Signed_31_Bit_Min = -1 << 30,
+Signed_32_Bit_Min = -1 << 31,
+Signed_2_Bit_Max  = (1 << 1) - 1,
+Signed_3_Bit_Max  = (1 << 2) - 1,
+Signed_4_Bit_Max  = (1 << 3) - 1,
+Signed_5_Bit_Max  = (1 << 4) - 1,
+Signed_6_Bit_Max  = (1 << 5) - 1,
+Signed_7_Bit_Max  = (1 << 6) - 1,
+Signed_8_Bit_Max  = (1 << 7) - 1,
+Signed_9_Bit_Max  = (1 << 8) - 1,
+Signed_10_Bit_Max = (1 << 9) - 1,
+Signed_11_Bit_Max = (1 << 10) - 1,
+Signed_12_Bit_Max = (1 << 11) - 1,
+Signed_13_Bit_Max = (1 << 12) - 1,
+Signed_14_Bit_Max = (1 << 13) - 1,
+Signed_15_Bit_Max = (1 << 14) - 1,
+Signed_16_Bit_Max = (1 << 15) - 1,
+Signed_17_Bit_Max = (1 << 16) - 1,
+Signed_18_Bit_Max = (1 << 17) - 1,
+Signed_19_Bit_Max = (1 << 18) - 1,
+Signed_20_Bit_Max = (1 << 19) - 1,
+Signed_21_Bit_Max = (1 << 20) - 1,
+Signed_22_Bit_Max = (1 << 21) - 1,
+Signed_23_Bit_Max = (1 << 22) - 1,
+Signed_24_Bit_Max = (1 << 23) - 1,
+Signed_25_Bit_Max = (1 << 24) - 1,
+Signed_26_Bit_Max = (1 << 25) - 1,
+Signed_27_Bit_Max = (1 << 26) - 1,
+Signed_28_Bit_Max = (1 << 27) - 1,
+Signed_29_Bit_Max = (1 << 28) - 1,
+Signed_30_Bit_Max = (1 << 29) - 1,
+Signed_31_Bit_Max = (1 << 30) - 1,
+Signed_32_Bit_Max = (1 << 31) - 1,
+
 // -- You can change any of the default values below IF you wish the script to start with these values before saving
 
 // Anti-Recoil
-AR_Vert_Value = 16,
+AR_Vert_Value = 18,
 AR_Hori_Value = 0,
-AR_Deadzone = 16,
+AR_Deadzone = 15,
 AR_Rumble_Influence = TRUE,
 AR_Reduced_Rumble = FALSE,
-AR_Boost_Time = 80,
+AR_Boost_Time = 100,
 // Polar Aim Assist Slowdown Abuse
 // -- [ 0 = Aim & Fire | 1 = 'Aim | Fire' | 2 = Aim | 3 = Fire | 4 = None ]
-AA_Activation_Type = 0,
+AA_Activation_Type = 1,
 // -- Line Strength (outer)
-AA_Radius = 20,
+AA_Radius = 18,
 // -- Line Speed (amount of angles/values skipped through each "vm interval")
-AA_Rotate_By_Angles = 18,
-AA_Release_Point = 16,
+AA_Rotate_By_Angles = 14,
+AA_Release_Point = 15,
 // Steady Aim
 // -- Reduce to amount of aim angles (divided) [Range: 2~17]
-SA_Angles_Divided = 4,
+SA_Angles_Divided = 2,
 // Reload Cancel
 // -- [ 0 = On Release Aim | 1 = On Release Aim & Fire ]
 RC_Release_Activation_Type = 0,
@@ -222,13 +285,13 @@ RC_Max_Reload_Time_For_Cancel = 1180,
 // Auto Reload
 // -- [ 0 = On Release Fire | 1 = On Release Fire or Aim ]
 AR2_Release_Activation_Type = 1,
-AR2_Shoot_Time = 2999,
+AR2_Shoot_Time = 1,
 // Turbo Jump
-TJ_Jump_Wait_Time = 0,
+TJ_Jump_Wait_Time = 1,
 // Rapid Fire
 // -- [ 0 = On Fire | 1 = On Aim + Fire ]
 RF_Activation_Type = 0,
-RF_Shot_Wait_Time = 0,
+RF_Shot_Wait_Time = 1,
 RF_Single_Shot_Time = 100,
 // Input Interval
 // -- Setting this correctly (mostly for PC) will result in faster input of combos (setting this up incorrectly can cause
@@ -287,7 +350,7 @@ SC2_Cancel_Delay_Time = 701,
 // -- [ 0 = On Fire | 1 = Panic (Aim & Fire) ]
 DS_Activation_Type = 1,
 // -- Max time between AIM and FIRE presses to activate
-DS_Press_Variance_Time = 130,
+DS_Press_Variance_Time = 120,
 DS_Stand_On_Release = TRUE,
 // -- [ 0 = Sprint (Fast) | 1 = Stand ]
 DS_Stand_Type = 0,
@@ -299,19 +362,24 @@ CS_Delay_Time = 200,
 CS_Once_Release_Stand = TRUE,
 // YY Cancel
 // -- Delay until ready to cancel again (should be longer than the "Cancel Delay")
-YY_Wait_Delay = 100,
+YY_Wait_Delay = 200,
 // -- Delay between YY inputs
 YY_Cancel_Delay = 50,
 // Humanise Inputs
-// -- [ 0 = Off | 1 = Aim Only | 2 = Everything ]
+// -- [ 0 = Off | 1 = Aim Only | 2 = All ]
 HI_Randomise_Values = 2,
 HI_Limit_Turbos = TRUE,
 // Display
 // -- [ OLED_FONT_SMALL (0) | OLED_FONT_MEDIUM (1) | OLED_FONT_LARGE (2) ]
 DP_Menu_Font_Size = OLED_FONT_MEDIUM,
-// -- Scroll transition speed apex
-DP_Forward_Scroll_Time = 3000,
-DP_Backward_Scroll_Time = 140,
+// -- Scroll transition speed (apex = slowest - for longer text | base = fastest - for short text)
+DP_Forward_Scroll_Apex_Time = 3300,
+DP_Forward_Scroll_Base_Time = 104,
+DP_Backward_Scroll_Apex_Time = 120,
+DP_Backward_Scroll_Base_Time = 16,
+DP_Start_Pause_Time = 820,
+DP_End_Pause_Time = 620,
+DP_Menu_Border = TRUE,
 
 // -- You can find extra settings here IF you need to change which are not in the menu
 
@@ -327,12 +395,14 @@ HT_Min_Short_Game_Hold_Time = 150,
 DP_Amount_Of_Lasers = 10,
 // -- Wouldn't recommend lower than '5000' (5 secs) and higher than '120000' (2 mins) to prevent screen burn-in
 DP_Screen_Sleep_Time = 60000,
-// -- < 1023ms or > 32767ms not recommended (Default: signed 15-bit max (16383))
-DP_Max_Large_Time_Based_Value = (1 << 14) - 1,
-// -- < 511ms or > 16383ms not recommended (Default: signed 12-bit max (2047))
-DP_Max_Small_Time_Based_Value = (1 << 11) - 1,
+// -- < 1023ms or > 32767ms not recommended (Default: 16383 ((2^14)-1)), changing bit size will divide or multiply by 2
+DP_Max_Large_Time_Based_Value = Signed_15_Bit_Max,
+// -- < 511ms or > 16383ms not recommended (Default: 2047 ((2^11)-1)), changing bit size will divide or multiply by 2
+DP_Max_Small_Time_Based_Value = Signed_12_Bit_Max,
 // -- Vibration and LED effect activation time
 DP_FX_Time = 100,
+// -- (ADVANCED!) Should be the length of the longest value string to not overflow into variables after (i.e ' __ms (___fps min) ' is 19 characters long)
+DP_Longest_Value_Length_For_ASCII_Array_Buffer = 19,
 
 // Game Button Layout
 // -- Stick to Xbox One Button Identifiers (constants) for layout consistency and to not mess up the crossover support (some buttons are not actual equivalents in other layouts)
@@ -414,15 +484,16 @@ ii_vm_cycle_time,
 ii_calc_timing,
 
 // Display
-dp_int_to_string_buffer[19],  // -- Note: Should be the length of the longest value string to not overflow into variables after
+dp_int_to_string_buffer[DP_Longest_Value_Length_For_ASCII_Array_Buffer],
 dp_title = TRUE,
 dp_screen_sleep_timer,
+dp_display_slot_only,
 dp_display_menu,
 dp_menu,
 dp_block_options,
-dp_main_title_idx,
-dp_mod_title_idx,
-dp_edit_title_idx,
+dp_main_idx,
+dp_mod_idx,
+dp_edit_idx,
 dp_edit_idx_step,
 dp_val_str,
 dp_digit_idx,
@@ -437,6 +508,11 @@ dp_laser_y_pos[DP_Amount_Of_Lasers],
 dp_laser_speed[DP_Amount_Of_Lasers],
 dp_laser_length[DP_Amount_Of_Lasers],
 dp_laser_cooldown_timer[DP_Amount_Of_Lasers],
+dp_snake_direction,
+dp_snake_x,
+dp_snake_y,
+dp_snake_length_x = 32,
+dp_snake_length_y = 32,
 dp_title_display_interval,
 dp_input_interval_fps,
 dp_input_interval_fps_digit_idx,
@@ -483,7 +559,7 @@ init {
   // -- If any Spvar contains a value then load from Spvars
   // -- Note: FIRST TIME THE VARIABLE IS BEING USED (NOT RESETTING)
   while(_no_funct_layer_1_temp_ < 64) {
-    if(get_pvar(SPVAR_1 + _no_funct_layer_1_temp_,-1 << 31,(1 << 31) - 1,0)) {
+    if(get_pvar(SPVAR_1 + _no_funct_layer_1_temp_,Signed_32_Bit_Min,Signed_32_Bit_Max,0)) {
       reset_spvar();
       // -- Load Mod Values (persistent memory)
       // -- Note: FIRST TIME THE VARIABLE IS BEING USED (NOT RESETTING)
@@ -500,18 +576,22 @@ init {
         if(_no_funct_layer_2_temp_ != RC_Cancel_Method_Edit_Toggle_Idx)  // -- Unused for now, skip
           edit[_no_funct_layer_2_temp_] = read_spvar(Edit_Value_Range[_no_funct_layer_2_temp_][0],Edit_Value_Range[_no_funct_layer_2_temp_][1]);
       }
-      reset_screen_sleep_timer();
+      // -- Run the initial splash screen
+      dp_display_slot_only = TRUE;
+      combo_run(Display_Splash);
       // -- [DEBUG] Spvars used
-      set_val(TRACE_4,(pv_current_slot - SPVAR_1) + (pv_current_bit > 0));
-      set_val(TRACE_5,((pv_current_slot - SPVAR_1) * 32) + pv_current_bit);
-      set_val(TRACE_6,pv_current_bit);
+      set_val(TRACE_4,(pv_current_slot - SPVAR_1) + (pv_current_bit > 0));  // -- Slots used (total: 64)
+      set_val(TRACE_5,pv_current_bit);  // -- Last slot bits used (total: 32)
+      set_val(TRACE_6,((pv_current_slot - SPVAR_1) * 32) + pv_current_bit);  // -- Bits used (total: 2048)
       break;
     }
     _no_funct_layer_1_temp_ ++;
   }
   // -- If it made it to the end (nothing saved / first load)
   if(_no_funct_layer_1_temp_ >= 64) {
-    // -- Initial enabled mods (only uncomment these if you want these mods to be initially enabled)
+    // -- *****                                                                                            *****
+    // -- ***** Initial enabled mods (only uncomment these (remove '//') if you want these mods to be initially enabled) *****
+    // -- *****                                                                                            *****
     //mod[AR_Anti_Recoil_Toggle_Idx] = TRUE;
     //mod[AA_Polar_Aim_Assist_Abuse_Toggle_Idx] = TRUE;
     //mod[SA_Steady_Aim_Toggle_Idx] = TRUE;
@@ -555,7 +635,7 @@ init {
     for(_no_funct_layer_2_temp_ = 0; _no_funct_layer_2_temp_ < _End_Edit_Plus_One_Idx_; _no_funct_layer_2_temp_ ++) {
       edit[_no_funct_layer_2_temp_] = Edit_Value_Range[_no_funct_layer_2_temp_][2];
     }
-    // -- Run the first time splash screen
+    // -- Run the initial splash screen
     combo_run(Display_Splash);
   }
 
@@ -601,6 +681,7 @@ main {
 
 
   // -- Adjust for PS4 Controller Max Polling Rate (4ms/250hz)
+  // -- Note: Check if this can be removed (if it is impossible to connect a controller while the script is running)
   update_max_polling_rate();
 
 
@@ -609,7 +690,48 @@ main {
   // -- On Title Screen (outside menu)
   if(dp_title) {
 
-  
+
+    // 'PS4_TOUCH' and 'XB1_VIEW' + 'XB1_SHARE' and 'XB1_SYNC' + 'SWI_CAPTURE' Fix
+    // -- (proper support for all controllers - mostly untested, doesn't appear to have any mistakes though 😛)
+    // -- Note: 'WII_A' and 'WII_B' are swapped from Switch - Check if they perform the same actions or should be swapped for Wii Controller
+    if(mod[CF_Crossover_Fix_Toggle_Idx])
+      // -- PS4/PS5 Controller not on PS4/PS5 Output (console)
+      if(get_console() != PIO_PS5 && get_console() != PIO_PS4) {
+        if(get_controller() == PIO_PS5 || get_controller() == PIO_PS4) {
+          swap(PS4_TOUCH,XB1_VIEW);
+          // -- Remap 'PS4_SHARE' (now 'PS4_TOUCH') to 'XB1_SHARE' (Button 27) only on Xbox One (output), other consoles/output 'PS4_SHARE' will be left unmapped
+          switch(get_console()) {
+            case PIO_XB1 {
+              swap(PS4_TOUCH,XB1_SHARE);
+              break;
+            }
+            case PIO_SWITCH {
+              swap(PS4_TOUCH,SWI_CAPTURE);
+            }
+          }
+        }
+      }
+      // -- PS4/PS5 Output (console) but not using a PS4/PS5 Controller
+      else {
+        if(get_controller() != PIO_PS5 && get_controller() != PIO_PS4)
+          swap(PS4_TOUCH,PS4_SHARE);
+        if(get_controller() == PIO_SWITCH)
+          swap(PS4_TOUCH,SWI_CAPTURE);
+        if(get_controller() == PIO_XB1) {
+          // -- Enable remap if the SHARE button is used (Series X|S Controller)
+          if(event_press(XB1_SHARE))
+            cf_swap_xb1_share_sync = TRUE;
+          // -- Swap `PS4_SHARE` (now `PS4_TOUCH`) to `XB1_SHARE` (button 27) when on Xbox One (output)
+          if(cf_swap_xb1_share_sync) {
+            swap(PS4_TOUCH,XB1_SHARE);
+            // -- Block input to accelerometer x-axis for other consoles
+            set_val(XB1_SYNC,0);
+          }
+        }
+        else cf_swap_xb1_share_sync = FALSE;
+      }
+
+
     // -- Check and store if is able to sprint
     as_sc_yyc_in_sprint_area = isqrt(pow(get_ival(MOVEX - 35),2) + pow(get_ival(MOVEY - 35),2)) >= 96 && get_ival(MOVEY - 35) <= -72;
 
@@ -644,7 +766,7 @@ main {
           dp_laser_cooldown_timer[_no_funct_layer_1_temp_] = max(0,dp_laser_cooldown_timer[_no_funct_layer_1_temp_] - get_rtime());
           if(!dp_laser_cooldown_timer[_no_funct_layer_1_temp_]) {
             if(!dp_laser_x_pos[_no_funct_layer_1_temp_]) {
-              dp_laser_speed[_no_funct_layer_1_temp_] = 3 + (random(1,7) >= 7);
+              dp_laser_speed[_no_funct_layer_1_temp_] = 3 + !random(0,6);
               dp_laser_y_pos[_no_funct_layer_1_temp_] = random(0,OLED_HEIGHT - 1);
               dp_laser_length[_no_funct_layer_1_temp_] = random(3,12);
             }
@@ -700,8 +822,11 @@ main {
       if(get_ival(POLAR_RY) > 0)
         sa_direction = map(0,sa_angles,0,179,(sa_direction * sa_angles) / 180);
       else sa_direction = map(0,sa_angles,179,359,(((sa_direction - 180) * sa_angles) / 180));
-      //if(sa_direction < 0)
-      //  sa_direction += 360;
+      // -- Note: Check if should delete this
+      if(sa_direction < 0) {
+        sa_direction += 360;
+        //set_val(TRACE_1,11111);
+      }
       set_val(POLAR_RX,clamp(((icos(sa_direction * 32768/360) * isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2))) / 32767) + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130)),-32768,32767));
       set_val(POLAR_RY,clamp(((isin(sa_direction * 32768/360) * isqrt(pow(get_ival(LOOKX),2) + pow(get_ival(LOOKY),2))) / 32767) + ((mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Randomise_Values_Toggle_Idx]) * random(-130,130)),-32768,32767));
     }
@@ -770,7 +895,7 @@ main {
       if(event_press(Input_Layout[IL_Fire_Button_Idx]) && get_brtime(Input_Layout[IL_Fire_Button_Idx]) >= 1000 * edit[AP_Min_Release_Activation_Time_Idx] && (!edit[AP_Activation_Type_Toggle_Idx] && fac_ads_timer >= edit[FAC_ADS_Time_Idx] || edit[AP_Activation_Type_Toggle_Idx] == 1 && get_ival(Input_Layout[IL_Aim_Button_Idx]) || edit[AP_Activation_Type_Toggle_Idx] == 2))
         combo_run(Auto_Ping);
       if(ap_can_unping) {
-        if(isqrt(pow(get_ival(MOVEX - 35),2) + pow(get_ival(MOVEY - 35),2)) >= 16)
+        if(isqrt(pow(get_ival(MOVEX - 35),2) + pow(get_ival(MOVEY - 35),2)) >= 15)
           ap_can_unping = FALSE;
         if(rc_ar2_did_shoot_before_reload && event_release(Input_Layout[IL_Fire_Button_Idx]))
           combo_run(Auto_Ping);
@@ -796,7 +921,7 @@ main {
 
     // -- Note: Need to improve this disable on crouch method for actual detection
     if(mod[AS_Precise_Auto_Sprint_Toggle_Idx]) {
-      if(!(get_ival(Input_Layout[IL_Aim_Button_Idx]) || get_ival(Input_Layout[IL_Stance_Slide_Dive_Button_Idx])) && (get_ptime(Input_Layout[IL_Stance_Slide_Dive_Button_Idx]) >= edit[AS_Crouch_Prone_Delay_Time_Idx] || get_ival(Input_Layout[IL_Sprint_Focus_Button_Idx])) && as_sc_yyc_in_sprint_area && !(combo_running(Cancel_Stand_Slide_Cancel) || combo_running(Stand_Slide_Cancel))) {
+      if(!(get_ival(Input_Layout[IL_Aim_Button_Idx]) || get_ival(Input_Layout[IL_Stance_Slide_Dive_Button_Idx])) && (get_ptime(Input_Layout[IL_Stance_Slide_Dive_Button_Idx]) >= edit[AS_Crouch_Prone_Delay_Time_Idx] || get_ival(Input_Layout[IL_Sprint_Focus_Button_Idx])) && as_sc_yyc_in_sprint_area && !(combo_running(Legacy_Cancel_Stand_Slide_Cancel) || combo_running(Stand_Slide_Cancel))) {
         switch(edit[AS_Type_Toggle_Idx]) {
           case 0 {
             combo_run(Turbo_Auto_Sprint);
@@ -844,7 +969,7 @@ main {
       if(event_press(Input_Layout[IL_Stance_Slide_Dive_Button_Idx]) && as_sc_yyc_in_sprint_area) {
         switch(edit[SC_Type_Toggle_Idx]) {
           case 0 {
-            combo_run(Cancel_Stand_Slide_Cancel);
+            combo_run(Legacy_Cancel_Stand_Slide_Cancel);
             break;
           }
           case 1 {
@@ -986,7 +1111,7 @@ main {
 
     // Rapid Fire
 
-    if(get_ival(SCOREBOARD)) {
+    if((get_controller() != PIO_PS4 && get_controller() != PIO_PS5) && get_ival(SCOREBOARD) || (get_controller() == PIO_PS4 || get_controller() == PIO_PS5) && SCOREBOARD == XB1_VIEW && get_ival(PS4_TOUCH)) {
       if(event_press(Input_Layout[IL_Streak_Button_Idx])) {
         mod[RF_Rapid_Fire_Toggle_Idx] = !mod[RF_Rapid_Fire_Toggle_Idx];
         combo_run(Menu_Press_FX);
@@ -1008,9 +1133,8 @@ main {
 
         if(edit[AR_Rumble_Influence_Toggle_Idx]) {
 
-          if(get_rumble(RUMBLE_B) != 100 && (get_rumble(RUMBLE_A) == 100 || get_rumble(RUMBLE_A) < get_rumble(RUMBLE_B)))
-            ar_smart_rumble = get_rumble(RUMBLE_B);
-          else ar_smart_rumble = get_rumble(RUMBLE_A);
+          // -- Decide on which rumble motor to get a value from
+          ar_smart_rumble = get_rumble(get_rumble(RUMBLE_B) != 100 && (get_rumble(RUMBLE_A) == 100 || get_rumble(RUMBLE_A) < get_rumble(RUMBLE_B)));
 
           if(edit[AR_Reduced_Rumble_Toggle_Idx])
             ar_smart_rumble = ar_smart_rumble * 3 / 5;
@@ -1085,13 +1209,13 @@ main {
 
     // -- Enter menu
     if(event_press(XB1_A)) {
-      if(dp_menu == 1 && Edit_Range[dp_mod_title_idx][0] < 255) {
-        dp_edit_title_idx = (1 << 31) - 1;
+      if(dp_menu == 1 && Edit_Range[dp_mod_idx][0] < 255) {
+        dp_edit_idx = Signed_32_Bit_Max;
         dp_menu ++;
         dp_display_menu = TRUE;
       }
       if(!dp_menu) {
-        dp_mod_title_idx = (1 << 31) - 1;
+        dp_mod_idx = Signed_32_Bit_Max;
         dp_menu ++;
         dp_display_menu = TRUE;
       }
@@ -1102,10 +1226,10 @@ main {
       case 0 {
         // -- Main Menu Navigation
         if(hold_step(XB1_UP,192) || hold_step(XB1_DOWN,192)) {
-          dp_main_title_idx = !dp_main_title_idx;
+          dp_main_idx = !dp_main_idx;
           dp_display_menu = TRUE;
         }
-        dp_main_title_idx = menu_nav(dp_main_title_idx,0,1);
+        dp_main_idx = menu_nav(dp_main_idx,0,1);
         // -- Exit Menu
         if(event_press(XB1_B)) {
           dp_title = TRUE;
@@ -1132,73 +1256,31 @@ main {
       }
       // -- On Mod Menu
       case 1 {
-        // -- Mod Navigation
-        if(dp_main_title_idx)
-          dp_mod_title_idx = menu_nav(dp_mod_title_idx,HI_Humanise_Inputs_Toggle_Idx,_End_Mod_Plus_One_Idx_ - 1);
-        else dp_mod_title_idx = menu_nav(dp_mod_title_idx,0,HI_Humanise_Inputs_Toggle_Idx - 1);
+        // -- Mod Navigation (change range based on the selected menu)
+        if(dp_main_idx)
+          dp_mod_idx = menu_nav(dp_mod_idx,HI_Humanise_Inputs_Toggle_Idx,_End_Mod_Plus_One_Idx_ - 1);
+        else dp_mod_idx = menu_nav(dp_mod_idx,0,HI_Humanise_Inputs_Toggle_Idx - 1);
         // -- Increase Mod Toggle Value
         if(hold_step(XB1_UP,216)) {
-          mod[dp_mod_title_idx] ++;
+          mod[dp_mod_idx] ++;
           dp_display_menu = TRUE;
         }
         // -- Decrease Mod Toggle Value
         if(hold_step(XB1_DOWN,216)) {
-          mod[dp_mod_title_idx] --;
+          mod[dp_mod_idx] --;
           dp_display_menu = TRUE;
         }
-        if((event_press(XB1_UP) || event_press(XB1_DOWN)) && dp_mod_title_idx != DP_Menu_Options_Toggle_Idx)  // -- Ignore unused mod
+        if((event_press(XB1_UP) || event_press(XB1_DOWN)) && dp_mod_idx != DP_Menu_Options_Toggle_Idx)  // -- Note: Ignore unused mod
           combo_run(Menu_Press_FX);
-        // -- Adjust max based on mod
-        if(dp_mod_title_idx < TB_Tactical_Button_Toggle_Idx)
-          mod[dp_mod_title_idx] = cycle(mod[dp_mod_title_idx],FALSE,TRUE,1);
-        else {
-          mod[dp_mod_title_idx] = cycle(mod[dp_mod_title_idx],0,13,1);
-          // -- Mapping Mods
-          /*
-          switch(get_controller()) {
-            case PIO_XB360 {}
-            case PIO_XB1 {
-              mod_toggle_print(Xbox_Button_Strings[mod[dp_mod_title_idx]]);
-              break;
-            }
-            case PIO_PS3 {}
-            case PIO_PS4 {}
-            case PIO_PS5 {
-              mod_toggle_print(Playstation_Button_Strings[mod[dp_mod_title_idx]]);
-              break;
-            }
-            case PIO_WII {}
-            case PIO_SWITCH {
-              mod_toggle_print(Nintendo_Button_Strings[mod[dp_mod_title_idx]]);
-              break;
-            }
-            default {
-              switch(get_console()) {
-                case PIO_PS3 {}
-                case PIO_PS4 {}
-                case PIO_PS5 {
-                  mod_toggle_print(Playstation_Button_Strings[mod[dp_mod_title_idx]]);
-                  break;
-                }
-                case PIO_SWITCH {
-                  mod_toggle_print(Nintendo_Button_Strings[mod[dp_mod_title_idx]]);
-                  break;
-                }
-                default { mod_toggle_print(Xbox_Button_Strings[mod[dp_mod_title_idx]]); }
-              }
-            }
-          }
-          */
-          apply_button_layout();
-        }
         break;
       }
       // -- On Edit Menu
       case 2 {
-        // -- Edit Mod Navigation
-        dp_edit_title_idx = menu_nav(dp_edit_title_idx,Edit_Range[dp_mod_title_idx][0],Edit_Range[dp_mod_title_idx][1]);
+        // -- Edit Navigation
+        dp_edit_idx = menu_nav(dp_edit_idx,Edit_Range[dp_mod_idx][0],Edit_Range[dp_mod_idx][1]);
         // -- Step value
-        switch(dp_edit_title_idx) {
+        // -- Note: Try to see if it is smaller in an array
+        switch(dp_edit_idx) {
           // -- For output related times that should be an interval of the game
           case AR_Boost_Time_Idx {}
           case RC_Max_Reload_Time_For_Cancel_Idx {}
@@ -1207,7 +1289,6 @@ main {
           case RF_Single_Shot_Time_Idx {}
           case FAC_ADS_Time_Idx {}
           case AASO_Aim_Hold_Time_Idx {}
-          case AS_Crouch_Prone_Delay_Time_Idx {}
           case SC_Cancel_Delay_Time_Idx {}
           case SC2_Cancel_Delay_Time_Idx {}
           case CS_Delay_Time_Idx {}
@@ -1219,9 +1300,14 @@ main {
           // -- For controller or non-output related times
           case AR2_Shoot_Time_Idx {}
           case JS_Press_Variance_Time_Idx {}
+          case AS_Crouch_Prone_Delay_Time_Idx {}
           case DS_Press_Variance_Time_Idx {}
-          case DP_Forward_Scroll_Time_Idx {}
-          case DP_Backward_Scroll_Time_Idx {
+          case DP_Forward_Scroll_Apex_Time_Idx {}
+          case DP_Forward_Scroll_Base_Time_Idx {}
+          case DP_Backward_Scroll_Apex_Time_Idx {}
+          case DP_Backward_Scroll_Base_Time_Idx {}
+          case DP_Start_Pause_Time_Idx {}
+          case DP_End_Pause_Time_Idx {
             dp_edit_idx_step = ii_max_controller_polling_rate;
             break;
           }
@@ -1237,28 +1323,98 @@ main {
           }
           default { dp_edit_idx_step = 1; }
         }
-        if(hold_step(XB1_UP,DP_Menu_Type_Interval_Time[Edit_Toggle_Value[dp_edit_title_idx]])) {
-          edit[dp_edit_title_idx] += dp_edit_idx_step;
+        if(hold_step(XB1_UP,DP_Menu_Type_Interval_Time[Edit_Toggle_Value[dp_edit_idx]])) {
+          edit[dp_edit_idx] += dp_edit_idx_step;
           dp_display_menu = TRUE;
         }
-        if(hold_step(XB1_DOWN,DP_Menu_Type_Interval_Time[Edit_Toggle_Value[dp_edit_title_idx]])) {
-          edit[dp_edit_title_idx] -= dp_edit_idx_step;
+        if(hold_step(XB1_DOWN,DP_Menu_Type_Interval_Time[Edit_Toggle_Value[dp_edit_idx]])) {
+          edit[dp_edit_idx] -= dp_edit_idx_step;
           dp_display_menu = TRUE;
         }
         if(event_press(XB1_UP) || event_press(XB1_DOWN))
           combo_run(Menu_Press_FX);
         // -- Apply Edit Toggle Limits
-        if(Edit_Toggle_Value[dp_edit_title_idx])
-          edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],0,Edit_Toggle_Value[dp_edit_title_idx],1);
+        if(Edit_Toggle_Value[dp_edit_idx])
+          edit[dp_edit_idx] = cycle(edit[dp_edit_idx],0,Edit_Toggle_Value[dp_edit_idx],1);
         // -- Apply Edit Value Limits
         else {
-          // -- Use limit for turbos time
-          if((dp_edit_title_idx == RF_Shot_Wait_Time_Idx || dp_edit_title_idx == TJ_Jump_Wait_Time_Idx || dp_edit_title_idx == CS_Delay_Time_Idx) && mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
-            edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],100 - edit[II_Input_Interval_Idx],Edit_Value_Range[dp_edit_title_idx][1],dp_edit_idx_step);
-          else edit[dp_edit_title_idx] = cycle(edit[dp_edit_title_idx],Edit_Value_Range[dp_edit_title_idx][0],Edit_Value_Range[dp_edit_title_idx][1],dp_edit_idx_step);
+          switch(dp_edit_idx) {
+            // -- Use lower limit for turbos time
+            case RF_Shot_Wait_Time_Idx {}
+            case TJ_Jump_Wait_Time_Idx {}
+            case CS_Delay_Time_Idx {}
+            case AASO_Aim_Hold_Time_Idx {
+              if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx])
+                edit[dp_edit_idx] = cycle(edit[dp_edit_idx],77 - edit[II_Input_Interval_Idx],Edit_Value_Range[dp_edit_idx][1],dp_edit_idx_step);
+              break;
+            }
+            default {
+              // -- Use standard limits
+              edit[dp_edit_idx] = cycle(edit[dp_edit_idx],Edit_Value_Range[dp_edit_idx][0],Edit_Value_Range[dp_edit_idx][1],dp_edit_idx_step);
+            }
+          }
         }
       }
 
+    }
+
+    if(edit[DP_Menu_Border_Toggle_Idx]) {
+      rect_oled(0,0,OLED_WIDTH,OLED_HEIGHT,OLED_BLACK,OLED_WHITE);
+      if(!dp_menu || dp_menu == 1 && Edit_Range[dp_mod_idx][0] < 255) {
+        _no_funct_layer_1_temp_ += get_rtime();
+        // -- Refresh at half the rate as the menu/device which results in a dimmed brightness appearance
+        if(_no_funct_layer_1_temp_ >= 16) {
+          // -- Transition lengths
+          // -- Down and up
+          if(dp_snake_direction % 2) {
+            if(dp_snake_length_x) {
+              dp_snake_length_x -= 2;
+              dp_snake_length_y += 2;
+            }
+          }
+          // -- Left and right
+          else if(dp_snake_length_y) {
+            dp_snake_length_x += 2;
+            dp_snake_length_y -= 2;
+          }
+          // -- Apply lengths and draw
+          // -- Update position and direction
+          switch(dp_snake_direction) {
+            case 0 {
+              line_clamped(dp_snake_x - dp_snake_length_x,dp_snake_y,dp_snake_x - dp_snake_length_x,dp_snake_y + dp_snake_length_y);
+              line_clamped(dp_snake_x - dp_snake_length_x,dp_snake_y,dp_snake_x,dp_snake_y);
+              dp_snake_x = min(dp_snake_x + 2,OLED_WIDTH - 1);
+              if(dp_snake_x >= OLED_WIDTH - 1)
+                dp_snake_direction ++;
+              break;
+            }
+            case 1 {
+              line_clamped(dp_snake_x - dp_snake_length_x,dp_snake_y - dp_snake_length_y,dp_snake_x,dp_snake_y - dp_snake_length_y);
+              line_clamped(dp_snake_x,dp_snake_y - dp_snake_length_y,dp_snake_x,dp_snake_y);
+              dp_snake_y = min(dp_snake_y + 2,OLED_WIDTH - 1);
+              if(dp_snake_y >= OLED_HEIGHT - 1)
+                dp_snake_direction ++;
+              break;
+            }
+            case 2 {
+              line_clamped(dp_snake_x,dp_snake_y,dp_snake_x + dp_snake_length_x,dp_snake_y + dp_snake_length_y);
+              line_clamped(dp_snake_x + dp_snake_length_x,dp_snake_y,dp_snake_x + dp_snake_length_x,dp_snake_y - dp_snake_length_y);
+              dp_snake_x = max(0,dp_snake_x - 2);
+              if(!dp_snake_x)
+                dp_snake_direction ++;
+              break;
+            }
+            case 3 {
+              line_clamped(dp_snake_x,dp_snake_y + dp_snake_length_y,dp_snake_x,dp_snake_y);
+              line_clamped(dp_snake_x + dp_snake_length_x,dp_snake_y + dp_snake_length_y,dp_snake_x,dp_snake_y + dp_snake_length_y);
+              dp_snake_y = max(0,dp_snake_y - 2);
+              if(!dp_snake_y)
+                dp_snake_direction = 0;
+            }
+          }
+          _no_funct_layer_1_temp_ = 0;
+        }
+      }
     }
 
     if(dp_menu)
@@ -1269,10 +1425,10 @@ main {
           // -- Delay until next update
           if(dp_scroll_timer[dp_string_idx] <= 0) {
             // -- Set default delay for forward transition
-            dp_scroll_pause_time[dp_string_idx] = max(104,edit[DP_Forward_Scroll_Time_Idx] / dp_string_length[dp_string_idx]);
+            dp_scroll_pause_time[dp_string_idx] = max(edit[DP_Forward_Scroll_Base_Time_Idx],edit[DP_Forward_Scroll_Apex_Time_Idx] / dp_string_length[dp_string_idx]);
             // -- Decrement string offset back to 0 (go back to start)
             if(dp_reverse_offset[dp_string_idx]) {
-              dp_scroll_pause_time[dp_string_idx] = max(16,edit[DP_Backward_Scroll_Time_Idx] / (dp_string_length[dp_string_idx] / 2));
+              dp_scroll_pause_time[dp_string_idx] = max(edit[DP_Backward_Scroll_Base_Time_Idx],edit[DP_Backward_Scroll_Apex_Time_Idx] / (dp_string_length[dp_string_idx] / 2));
               dp_text_offset[dp_string_idx] --;
             }
             // -- Increment string offset while ready to increment
@@ -1285,15 +1441,15 @@ main {
               else putc_oled(dp_char_idx,Scroll_Strings[dp_string_start_idx[dp_string_idx] + dp_text_offset[dp_string_idx] + dp_char_idx]);
             }
             // -- Draw the visible characters
-            puts_oled(1,6 + (dp_string_idx * 26) + dp_text_size_y_offset,edit[DP_Menu_Font_Size_Idx],dp_text_display_length,OLED_WHITE);
+            puts_oled(1,6 + (dp_string_idx * 26) + dp_text_size_y_offset,edit[DP_Menu_Font_Size_Toggle_Idx],dp_text_display_length,OLED_WHITE);
             // -- When reached the start offset add a long delay and start offsetting forward
             if(!dp_text_offset[dp_string_idx]) {
-              dp_scroll_pause_time[dp_string_idx] = 800;
+              dp_scroll_pause_time[dp_string_idx] = edit[DP_Start_Pause_Time_Idx];
               dp_reverse_offset[dp_string_idx] = FALSE;
             }
             // -- If the string offset is at the end of the string add a long delay and start offsetting backward
             if(dp_text_offset[dp_string_idx] > dp_string_length[dp_string_idx] - dp_text_display_length) {
-              dp_scroll_pause_time[dp_string_idx] = 600;
+              dp_scroll_pause_time[dp_string_idx] = edit[DP_End_Pause_Time_Idx];
               dp_reverse_offset[dp_string_idx] = TRUE;
             }
             // -- Reset timer to count again for the next update
@@ -1316,22 +1472,53 @@ main {
     if(dp_display_menu) {
       // -- Display Menu Formatting
       cls_oled(OLED_BLACK);
-      rect_oled(0,0,OLED_WIDTH,OLED_HEIGHT,OLED_BLACK,OLED_WHITE);
       switch(dp_menu) {
         case 1 {
-          dp_selected_string_idx[0] = dp_mod_title_idx;
-          if(dp_mod_title_idx < TB_Tactical_Button_Toggle_Idx) {
-            if(dp_mod_title_idx != DP_Menu_Options_Toggle_Idx)
-              dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + mod[dp_mod_title_idx];
-            else dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2
+          // -- Choose string index offset to display
+          dp_selected_string_idx[0] = dp_mod_idx;
+          if(dp_mod_idx < TB_Tactical_Button_Toggle_Idx) {
+            mod[dp_mod_idx] = cycle(mod[dp_mod_idx],FALSE,TRUE,1);
+            if(dp_mod_idx != DP_Menu_Options_Toggle_Idx)
+              dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + mod[dp_mod_idx];
+            else dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2;
           }
-          else dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2 + 1 + mod[dp_mod_title_idx];
+          else {
+            mod[dp_mod_idx] = cycle(mod[dp_mod_idx],0,13,1);
+            apply_button_layout();
+            dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2 + 1 + mod[dp_mod_idx];
+            switch(get_controller()) {
+              case PIO_PS3 {}
+              case PIO_PS4 {}
+              case PIO_PS5 {
+                dp_selected_string_idx[1] += 14;
+                break;
+              }
+              case PIO_WII {}
+              case PIO_SWITCH {
+                dp_selected_string_idx[1] += 28;
+                break;
+              }
+              default {
+                switch(get_console()) {
+                  case PIO_PS3 {}
+                  case PIO_PS4 {}
+                  case PIO_PS5 {
+                    dp_selected_string_idx[1] += 14;
+                    break;
+                  }
+                  case PIO_SWITCH {
+                    dp_selected_string_idx[1] += 28;
+                  }
+                }
+              }
+            }
+          }
           break;
         }
         case 2 {
-          dp_selected_string_idx[0] = _End_Mod_Plus_One_Idx_ + 2 + 1 + 14 + dp_edit_title_idx;
+          dp_selected_string_idx[0] = _End_Mod_Plus_One_Idx_ + 2 + 1 + (14 * 3) + dp_edit_idx;
           // -- Note: Maybe check if it is smaller in an array
-          switch(dp_edit_title_idx) {
+          switch(dp_edit_idx) {
             // -- Standard Off/On Toggle
             case AR_Rumble_Influence_Toggle_Idx {}
             case AR_Reduced_Rumble_Toggle_Idx {}
@@ -1339,8 +1526,9 @@ main {
             case DS_Stand_On_Release_Toggle_Idx {}
             case CS_Loop_Toggle_Idx {}
             case CS_Once_Release_Stand_Toggle_Idx {}
-            case HI_Limit_Turbos_Toggle_Idx {
-              dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + edit[dp_edit_title_idx];
+            case HI_Limit_Turbos_Toggle_Idx {}
+            case DP_Menu_Border_Toggle_Idx {
+              dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + edit[dp_edit_idx];
               break;
             }
             case AA_Activation_Type_Toggle_Idx {
@@ -1398,7 +1586,7 @@ main {
               edit_toggle_string_idx(CS_On_Aim_Toggle_String_Idx);
               break;
             }
-            case DP_Menu_Font_Size_Idx {
+            case DP_Menu_Font_Size_Toggle_Idx {
               edit_toggle_string_idx(DP_Small_Font_Toggle_String_Idx);
               break;
             }
@@ -1406,14 +1594,16 @@ main {
               edit_toggle_string_idx(HI_Off_Toggle_String_Idx);
               break;
             }
-            default { dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2 + 1 + 14 + _End_Edit_Plus_One_Idx_ + dp_edit_title_idx; }
+            default { dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2 + 1 + (14 * 3) + _End_Edit_Plus_One_Idx_ + dp_edit_idx; }
           }
         }
       }
       if(dp_menu) {
-        dp_text_size_y_offset = 8 - (4 * edit[DP_Menu_Font_Size_Idx]);
-        dp_text_display_length = 8 + (10 * !edit[DP_Menu_Font_Size_Idx]) + (4 * (edit[DP_Menu_Font_Size_Idx] == OLED_FONT_MEDIUM));
-        dp_text_size_width = 16 - (9 * !edit[DP_Menu_Font_Size_Idx]) - (5 * (edit[DP_Menu_Font_Size_Idx] == OLED_FONT_MEDIUM));
+        // -- Get formatting values
+        dp_text_size_y_offset = 8 - (4 * edit[DP_Menu_Font_Size_Toggle_Idx]);
+        dp_text_display_length = 8 + (10 * !edit[DP_Menu_Font_Size_Toggle_Idx]) + (4 * (edit[DP_Menu_Font_Size_Toggle_Idx] == OLED_FONT_MEDIUM));
+        dp_text_size_width = 16 - (9 * !edit[DP_Menu_Font_Size_Toggle_Idx]) - (5 * (edit[DP_Menu_Font_Size_Toggle_Idx] == OLED_FONT_MEDIUM));
+        // -- Loop through first and second display strings
         for(dp_string_idx = 0; dp_string_idx <= 1; dp_string_idx ++) {
           dp_cur_string_idx = 0;
           dp_string_start_idx[dp_string_idx] = 0;
@@ -1442,7 +1632,7 @@ main {
           // -- Store the value to the ASCII Array (stored string) for when it is a zero length string in array of strings (only done for edit menu)
           if(!dp_string_length[dp_string_idx])
             // -- Note: Is more efficient in a function due to referencing a simpler variable
-            int_to_string(edit[dp_edit_title_idx],find_digits(edit[dp_edit_title_idx]));
+            int_to_string(edit[dp_edit_idx],find_digits(edit[dp_edit_idx]));
           // -- Display type (dp_scroll / normal centred)
           if(dp_string_length[dp_string_idx] > dp_text_display_length)
             dp_scroll[dp_string_idx] = TRUE;
@@ -1454,14 +1644,14 @@ main {
               else putc_oled(dp_char_idx,Scroll_Strings[1 + dp_string_start_idx[dp_string_idx] + dp_char_idx]);
             }
             // -- Draw the characters
-            puts_oled(center_text(dp_string_length[dp_string_idx] - 2,dp_text_size_width),6 + (26 * dp_string_idx) + dp_text_size_y_offset,edit[DP_Menu_Font_Size_Idx],dp_string_length[dp_string_idx] - 1,OLED_WHITE);
+            puts_oled(centre_text(dp_string_length[dp_string_idx] - 2,dp_text_size_width),6 + (26 * dp_string_idx) + dp_text_size_y_offset,edit[DP_Menu_Font_Size_Toggle_Idx],dp_string_length[dp_string_idx] - 1,OLED_WHITE);
           }
         }
       }
-      // -- Display Main Menu Option Text (just prints over top of above)
+      // -- Display Main Menu Option Text
       else {
-        print(center_text(string_len(Main_Menu_Strings[0]),OLED_FONT_MEDIUM_WIDTH),10,OLED_FONT_MEDIUM,dp_main_title_idx,Main_Menu_Strings[0]);
-        print(center_text(string_len(Main_Menu_Strings[1]),OLED_FONT_MEDIUM_WIDTH),37,OLED_FONT_MEDIUM,!dp_main_title_idx,Main_Menu_Strings[1]);
+        print(centre_text(string_len(Main_Menu_Strings[0]),OLED_FONT_MEDIUM_WIDTH),10,OLED_FONT_MEDIUM,dp_main_idx,Main_Menu_Strings[0]);
+        print(centre_text(string_len(Main_Menu_Strings[1]),OLED_FONT_MEDIUM_WIDTH),37,OLED_FONT_MEDIUM,!dp_main_idx,Main_Menu_Strings[1]);
       }
       reset_screen_sleep_timer();
       dp_display_menu = FALSE;
@@ -1493,47 +1683,6 @@ main {
   }
 
 
-  // 'PS4_TOUCH' and 'XB1_VIEW' + 'XB1_SHARE' and 'XB1_SYNC' + 'SWI_CAPTURE' Fix
-  // -- (proper support for all controllers - mostly untested, doesn't appear to have any mistakes though 😛)
-  // -- Note: 'WII_A' and 'WII_B' are swapped from Switch - Check if they perform the same actions or should be swapped for Wii Controller
-  if(mod[CF_Crossover_Fix_Toggle_Idx])
-    // -- PS4 Controller not on PS4 Output (console)
-    if(get_console() != PIO_PS5 && get_console() != PIO_PS4) {
-      if(get_controller() == PIO_PS5 || get_controller() == PIO_PS4) {
-        swap(PS4_TOUCH,XB1_VIEW);
-        // -- Remap 'PS4_SHARE' (now 'PS4_TOUCH') to 'XB1_SHARE' (Button 27) only on Xbox One (output), other consoles/output 'PS4_SHARE' will be left unmapped
-        switch(get_console()) {
-          case PIO_XB1 {
-            swap(PS4_TOUCH,XB1_SHARE);
-            break;
-          }
-          case PIO_SWITCH {
-            swap(PS4_TOUCH,SWI_CAPTURE);
-          }
-        }
-      }
-    }
-    // -- PS4 Output (console) but not using a PS4 Controller
-    else {
-      if(get_controller() != PIO_PS5 && get_controller() != PIO_PS4)
-        swap(PS4_TOUCH,PS4_SHARE);
-      if(get_controller() == PIO_SWITCH)
-        swap(PS4_TOUCH,SWI_CAPTURE);
-      if(get_controller() == PIO_XB1) {
-        // -- Enable remap if the SHARE button is used (Series X|S Controller)
-        if(event_press(XB1_SHARE))
-          cf_swap_xb1_share_sync = TRUE;
-        // -- Swap `PS4_SHARE` (now `PS4_TOUCH`) to `XB1_SHARE` (button 27) when on Xbox One (output)
-        if(cf_swap_xb1_share_sync) {
-          swap(PS4_TOUCH,XB1_SHARE);
-          // -- Block input to accelerometer x-axis for other consoles
-          set_val(XB1_SYNC,0);
-        }
-      }
-      else cf_swap_xb1_share_sync = FALSE;
-    }
-
-
   // Fully Aiming Check
 
   // -- Note: Test - Reset aim state when detected is reloading or swapping
@@ -1549,7 +1698,7 @@ main {
 
   // Rainbow LED
 
-  // -- Note: Add default (reset) mode and do console pulsate 😎
+  // -- Note: Add default (reset) mode and do console pulsate reset_leds() 😎
   // -- Note: Maybe look into reducing CPU
 
   if(mod[RL_Rainbow_Led_Toggle_Idx]) {
@@ -1566,7 +1715,7 @@ main {
       set_hsb(rl_hue,edit[RL_Saturation_Idx],edit[RL_Mod_Menu_Brightness_Idx]);
       // -- Note: This better off in the edit function??
       if(dp_menu == 2)
-        switch(dp_edit_title_idx) {
+        switch(dp_edit_idx) {
           case RL_Brightness_Idx {
             set_hsb(rl_hue,edit[RL_Saturation_Idx],edit[RL_Brightness_Idx]);
             break;
@@ -1646,7 +1795,7 @@ combo Quick_Scoper {
   set_val(Input_Layout[IL_Lethal_Button_Idx],100);
   set_val(Input_Layout[IL_Swap_Armour_Button_Idx],100);
   wait(max(36,edit[II_Input_Interval_Idx]) + randomise_time());
-  wait(300 + randomise_time());
+  wait(200 + randomise_time());
   set_val(Input_Layout[IL_Aim_Button_Idx],100);
   wait(max(36,edit[II_Input_Interval_Idx]) + randomise_time());
   wait(edit[II_Input_Interval_Idx] - get_rtime());
@@ -1714,7 +1863,7 @@ combo Zoom {
 combo Turbo_Auto_Sprint {
 
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],100);
-  wait(max(20,max((100 - edit[II_Input_Interval_Idx]) * (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]),edit[II_Input_Interval_Idx])) + randomise_time());  // -- Note: Fix for MW/WZ
+  wait(max(20,max((77 - edit[II_Input_Interval_Idx]) * (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]),edit[II_Input_Interval_Idx])) + randomise_time());  // -- Note: Fix for MW/WZ
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],0);
   wait(edit[II_Input_Interval_Idx] + randomise_time() - get_rtime());
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],0);
@@ -1724,7 +1873,7 @@ combo Turbo_Auto_Sprint {
 combo Press_Auto_Sprint {
 
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],100);
-  wait(max(20,edit[II_Input_Interval_Idx]) + randomise_time());  // -- Note: Fix for MW/WZ
+  wait(max(20,edit[II_Input_Interval_Idx]) + randomise_time());  // -- Note: Lower time limit fix for MW/WZ
   wait(edit[II_Input_Interval_Idx] + randomise_time() - get_rtime());
 
 }
@@ -1793,10 +1942,10 @@ combo Swap_Cancel {
 
 combo YY_Cancel {
 
-  wait(YY_Wait_Delay + randomise_time());
+  wait(edit[YY_Wait_Delay_Idx] + randomise_time());
   set_val(Input_Layout[IL_Swap_Armour_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
-  wait(YY_Cancel_Delay + randomise_time());
+  wait(edit[YY_Cancel_Delay_Idx] + randomise_time());
   set_val(Input_Layout[IL_Swap_Armour_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   wait(edit[II_Input_Interval_Idx] + randomise_time() - get_rtime());
@@ -1822,7 +1971,7 @@ combo Sprint_Stand {
 
   set_val(Input_Layout[IL_Aim_Button_Idx],0);
   set_val(Input_Layout[IL_Fire_Button_Idx],0);
-  set_val(MOVEY,-100);
+  set_val(MOVEY,-32768);
   set_val(Input_Layout[IL_Sprint_Focus_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   wait(edit[II_Input_Interval_Idx] - get_rtime());
@@ -1847,12 +1996,12 @@ combo Crouch_Shot {
     set_val(MOVEY,0);
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
-  wait(edit[II_Input_Interval_Idx] + randomise_time());
+  wait((edit[CS_Delay_Time_Idx] / 2) + randomise_time());
   if(edit[CS_Activation_Type_Toggle_Idx] == 1)
     set_val(MOVEY,0);
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
-  wait(edit[CS_Delay_Time_Idx] + randomise_time() - get_rtime());
+  wait((edit[CS_Delay_Time_Idx] / 2) + randomise_time() - get_rtime());
 
 }
 
@@ -1865,7 +2014,7 @@ combo Turbo_Melee {
   set_val(Input_Layout[IL_Melee_Button_Idx],get_ival(Input_Layout[IL_Melee_Button_Idx]));
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   set_val(Input_Layout[IL_Melee_Button_Idx],0);
-  wait(max((100 - edit[II_Input_Interval_Idx]) * (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]),edit[II_Input_Interval_Idx]) + randomise_time() - get_rtime());
+  wait(max((77 - edit[II_Input_Interval_Idx]) * (mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]),edit[II_Input_Interval_Idx]) + randomise_time() - get_rtime());
   set_val(Input_Layout[IL_Melee_Button_Idx],0);
 
 }
@@ -1888,19 +2037,16 @@ combo Aim_Assist_Snap_On_Abuse {
 
 // Slide Cancel
 
-combo Cancel_Stand_Slide_Cancel {
+combo Legacy_Cancel_Stand_Slide_Cancel {
 
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
   wait(HT_Min_Short_Game_Hold_Time + randomise_time());
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],0);
-  wait(edit[CS_Delay_Time_Idx] + randomise_time());
+  wait(edit[SC_Cancel_Delay_Time_Idx] + randomise_time());
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
   set_val(MOVEY,0);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
-  set_val(MOVEY,0);
-  wait(max(36,edit[II_Input_Interval_Idx]) + randomise_time());  // -- Note: Extra time for BOCW (fix)
   set_val(Input_Layout[IL_Jump_Mantle_Button_Idx],100);
-  set_val(MOVEY,0);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   wait(edit[II_Input_Interval_Idx] - get_rtime());
 
@@ -1911,7 +2057,7 @@ combo Stand_Slide_Cancel {
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
   wait(HT_Min_Short_Game_Hold_Time + randomise_time());
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],0);
-  wait(edit[CS_Delay_Time_Idx] + randomise_time());
+  wait(edit[SC_Cancel_Delay_Time_Idx] + randomise_time());
   set_val(sc_stand_btn,100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   wait(edit[II_Input_Interval_Idx] - get_rtime());
@@ -1922,7 +2068,7 @@ combo MWII_Slide_Cancel {
 
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
   wait(HT_Min_Short_Game_Hold_Time + randomise_time());
-  wait(edit[CS_Delay_Time_Idx] + randomise_time());
+  wait(edit[SC_Cancel_Delay_Time_Idx] + randomise_time());
   set_val(Input_Layout[IL_Aim_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   set_val(Input_Layout[IL_Swap_Armour_Button_Idx],100);
@@ -1930,7 +2076,7 @@ combo MWII_Slide_Cancel {
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   set_val(Input_Layout[IL_Swap_Armour_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
-  wait(920 - edit[CS_Delay_Time_Idx] - (edit[II_Input_Interval_Idx] * 4) + randomise_time());
+  wait(920 - edit[SC_Cancel_Delay_Time_Idx] - (edit[II_Input_Interval_Idx] * 4) + randomise_time());
   set_val(Input_Layout[IL_Stance_Slide_Dive_Button_Idx],100);
   wait(edit[II_Input_Interval_Idx] + randomise_time());
   wait(edit[II_Input_Interval_Idx] - get_rtime());
@@ -1957,6 +2103,7 @@ combo Rapid_Fire {
 
 combo Menu_Press_FX {
 
+  set_rumble(RUMBLE_A,1);
   set_rumble(RUMBLE_B,100);
   set_rumble(RUMBLE_LT,5);
   set_rumble(RUMBLE_RT,5);
@@ -1971,11 +2118,37 @@ combo Menu_Press_FX {
 
 combo Display_Splash {
 
+  // -- Show current slot
   cls_oled(OLED_WHITE);
-  print_splash_text(0,24);
+  putc_oled(1,ASCII_UPPER_S);
+  putc_oled(2,ASCII_LOWER_L);
+  putc_oled(3,ASCII_LOWER_O);
+  putc_oled(4,ASCII_LOWER_T);
+  putc_oled(5,ASCII_SPACE);
+  if(get_slot() != 10)
+    putc_oled(6,ASCII_DIGIT0 + get_slot());
+  else {
+    putc_oled(6,ASCII_DIGIT1);
+    putc_oled(7,ASCII_DIGIT0);
+  }
+  puts_oled(centre_text(6 + (get_slot() == 10),OLED_FONT_MEDIUM_WIDTH),24,OLED_FONT_MEDIUM,6 + (get_slot() == 10),OLED_BLACK);
+  wait(get_rtime());
+  wait(800);
+
+  // -- End here if not the first load
+  if(dp_display_slot_only) {
+    reset_screen_sleep_timer();
+    combo_stop(Display_Splash);
+  }
+  // -- Show "Welcome!"
+  else {
+    cls_oled(OLED_WHITE);
+    print_splash_text(0,24);
+  }
   wait(get_rtime());
   wait(1400);
 
+  // -- Show open menu combination
   // -- Note: Buttons are hardcoded, which should be fine
   cls_oled(OLED_WHITE);
   switch(get_controller()) {
@@ -2037,9 +2210,10 @@ function deadzone_offset(f_stick,f_value) {
 function limit_turbos_value() {
 
   if(mod[HI_Humanise_Inputs_Toggle_Idx] && edit[HI_Limit_Turbos_Toggle_Idx]) {
-    edit[RF_Shot_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
-    edit[TJ_Jump_Wait_Time_Idx] = max(100 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
-    edit[CS_Delay_Time_Idx]     = max(100 - edit[II_Input_Interval_Idx],edit[CS_Delay_Time_Idx]);
+    edit[RF_Shot_Wait_Time_Idx]  = max(77 - edit[II_Input_Interval_Idx],edit[RF_Shot_Wait_Time_Idx]);
+    edit[TJ_Jump_Wait_Time_Idx]  = max(77 - edit[II_Input_Interval_Idx],edit[TJ_Jump_Wait_Time_Idx]);
+    edit[CS_Delay_Time_Idx]      = max(77 - edit[II_Input_Interval_Idx],edit[CS_Delay_Time_Idx]);
+    edit[AASO_Aim_Hold_Time_Idx] = max(77 - edit[II_Input_Interval_Idx],edit[AASO_Aim_Hold_Time_Idx]);
   }
 
 }
@@ -2048,7 +2222,7 @@ function limit_turbos_value() {
 
 // Steady Aim
 
-// -- Calculate current angle (with 360 angles and high accuracy)
+// -- Calculate current angle (with precisely 360 angles and high accuracy)
 function angle_atan2(f_x,f_y) {
 
   if(f_x >= 0 && f_y > 0)
@@ -2093,9 +2267,15 @@ function turbo_hold(f_btn) {
 
 // Display
 
+function line_clamped(f_x1,f_y1,f_x2,f_y2) {
+
+  line_oled(clamp(f_x1,0,OLED_WIDTH - 1),clamp(f_y1,0,OLED_HEIGHT - 1),clamp(f_x2,0,OLED_WIDTH - 1),clamp(f_y2,0,OLED_HEIGHT - 1),1,OLED_BLACK);
+
+}
+
 function edit_toggle_string_idx(f_string_offset) {
 
-  dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2 + 1 + 14 + _End_Edit_Plus_One_Idx_ + _End_Edit_Plus_One_Idx_ + f_string_offset + edit[dp_edit_title_idx];
+  dp_selected_string_idx[1] = _End_Mod_Plus_One_Idx_ + 2 + 1 + (14 * 3) + _End_Edit_Plus_One_Idx_ + _End_Edit_Plus_One_Idx_ + f_string_offset + edit[dp_edit_idx];
 
 }
 
@@ -2226,6 +2406,10 @@ function greatest_common_divisor_vm_timing() {
       return 2;
   }
 
+  // -- Note: For 10ms poll rate (later)
+  //if(ii_max_controller_polling_rate == 10 && !(edit[II_Input_Interval_Idx] % 2)))
+  //  return 2;
+
   if(ii_max_controller_polling_rate >= 8 && !ii_calc_timing)
     return 8;
 
@@ -2255,17 +2439,17 @@ function string_len(f_index) {
 
 }
 
-// -- Center the text on screen widthways
-function center_text(f_chars,f_char_width) {
+// -- Centre the text on screen widthways
+function centre_text(f_chars,f_char_width) {
 
-  return (OLED_WIDTH / 2) - ((f_char_width * f_chars) / 2);
+  return max(0,(OLED_WIDTH / 2) - ((f_char_width * f_chars) / 2));
 
 }
 
 // -- Print splash screen text
 function print_splash_text(f_index,f_height) {
 
-  print(center_text(string_len(Splash_Strings[f_index]),OLED_FONT_MEDIUM_WIDTH),f_height,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[f_index]);
+  print(centre_text(string_len(Splash_Strings[f_index]),OLED_FONT_MEDIUM_WIDTH),f_height,OLED_FONT_MEDIUM,OLED_BLACK,Splash_Strings[f_index]);
 
 }
 
@@ -2283,7 +2467,7 @@ function int_to_string(f_value,f_digits) {
     f_value = abs(f_value);
   }
 
-  switch(dp_edit_title_idx) {
+  switch(dp_edit_idx) {
     // -- Add "+ "
     case AA_Rotate_By_Angles_Idx {
       buffer_char(ASCII_PLUS);
@@ -2310,7 +2494,7 @@ function int_to_string(f_value,f_digits) {
       buffer_char(ASCII_DIGIT0 + (f_value / dp_digits_val));
 
       if(dp_digit_idx == 1) {
-        switch(Edit_Value_Text_Type[dp_edit_title_idx]) {
+        switch(Edit_Value_Text_Type[dp_edit_idx]) {
           // -- Add " sec"
           case EVTT_Sec {
             buffer_char(ASCII_SPACE);
@@ -2328,15 +2512,21 @@ function int_to_string(f_value,f_digits) {
             buffer_char(ASCII_LOWER_S);
             break;
           }
-          // -- Add fps conversion ('ms (___fps min)')
+          // -- Add " %"
+          case EVTT_Percentage {
+            buffer_char(ASCII_SPACE);
+            buffer_char(ASCII_PERCENT);
+            break;
+          }
+          // -- Add 'ms (___fps min)' (fps conversion)
           case EVTT_FPS {
             buffer_char(ASCII_LOWER_M);
             buffer_char(ASCII_LOWER_S);
             buffer_char(ASCII_SPACE);
             buffer_char(ASCII_OPEN_PARENTHESIS);
             // -- Calculate fps and round up number if there is any remainder
-            dp_input_interval_fps = (1000 * 2147483) / (edit[II_Input_Interval_Idx] * 2147483);
-            if((1000 * 2147483) % (edit[II_Input_Interval_Idx] * 2147483))
+            dp_input_interval_fps = Signed_32_Bit_Max / (edit[II_Input_Interval_Idx] * (Signed_32_Bit_Max/1000));
+            if((1000 * (Signed_32_Bit_Max/1000)) % (edit[II_Input_Interval_Idx] * (Signed_32_Bit_Max/1000)))
               dp_input_interval_fps ++;
             // -- Display fps digits
             for(dp_input_interval_fps_digit_idx = find_digits(dp_input_interval_fps); dp_input_interval_fps_digit_idx; dp_input_interval_fps_digit_idx --) {
@@ -2352,10 +2542,29 @@ function int_to_string(f_value,f_digits) {
             buffer_char(ASCII_CLOSE_PARENTHESIS);
             break;
           }
-          // -- Add " %"
-          case EVTT_Percentage {
+          // -- Add 'ms (__._/sec)'
+          // -- Note: Optimise later...
+          case EVTT_Times_Per_Sec {
+            buffer_char(ASCII_LOWER_M);
+            buffer_char(ASCII_LOWER_S);
             buffer_char(ASCII_SPACE);
-            buffer_char(ASCII_PERCENT);
+            buffer_char(ASCII_OPEN_PARENTHESIS);
+            // -- Calculate tps and round up number if there is any remainder in the scaled upper half
+            dp_input_interval_fps = ((1000 * 1000 * 1000) / ((edit[II_Input_Interval_Idx] + edit[dp_edit_idx]) * 1000) + (100 / 2)) / 100;
+            //dp_input_interval_fps = (Signed_32_Bit_Max / ((edit[II_Input_Interval_Idx] + edit[dp_edit_idx]) * (Signed_32_Bit_Max/1000000)) + (100 / 2)) / 100;
+            // -- Display tps digits
+            for(dp_input_interval_fps_digit_idx = find_digits(dp_input_interval_fps); dp_input_interval_fps_digit_idx; dp_input_interval_fps_digit_idx --) {
+              if(dp_input_interval_fps_digit_idx == 1)
+                if(dp_input_interval_fps % 10)
+                  buffer_char(ASCII_PERIOD);
+                else break;
+              buffer_char(ASCII_DIGIT0 + (dp_input_interval_fps / pow(10,dp_input_interval_fps_digit_idx - 1) % 10));
+            }
+            buffer_char(ASCII_SLASH);
+            buffer_char(ASCII_LOWER_S);
+            buffer_char(ASCII_LOWER_E);
+            buffer_char(ASCII_LOWER_C);
+            buffer_char(ASCII_CLOSE_PARENTHESIS);
           }
         }
       }
@@ -2369,8 +2578,10 @@ function int_to_string(f_value,f_digits) {
   }
 
   dp_int_to_string_buffer[0] = ASCII_SPACE;
-  dp_int_to_string_buffer[dp_val_str] = ASCII_SPACE;
-  dp_string_length[dp_string_idx] = dp_val_str + 1;
+  buffer_char(ASCII_SPACE);
+  // -- Make sure extra character doesn't appear on screen
+  dp_int_to_string_buffer[min(dp_val_str,DP_Longest_Value_Length_For_ASCII_Array_Buffer - 1)] = ASCII_SPACE;
+  dp_string_length[dp_string_idx] = dp_val_str;
   dp_is_value = TRUE;
 
 }
@@ -2384,7 +2595,6 @@ function buffer_char(f_char) {
 }
 
 // -- Calculate number of digits for length
-// -- Note: Used once, remove function??
 function find_digits(f_num) {
 
   dp_digit_count_idx = 0;
@@ -2404,13 +2614,13 @@ function round_time_based_values() {
 
   // -- Round first lot to input interval then second lot to max controller polling rate
   for(dp_round_edit_idx = 0; dp_round_edit_idx < sizeof(Round_Edit); dp_round_edit_idx ++) {
-    if(dp_round_edit_idx < sizeof(Round_Edit) - 4)
+    if(dp_round_edit_idx <= 10)
       edit[Round_Edit[dp_round_edit_idx]] = round_to_multiple(edit[Round_Edit[dp_round_edit_idx]],edit[II_Input_Interval_Idx]);
     else edit[Round_Edit[dp_round_edit_idx]] = round_to_multiple(edit[Round_Edit[dp_round_edit_idx]],ii_max_controller_polling_rate);
   }
 
   edit[AASO_Aim_Hold_Time_Idx] = ceil_to_multiple(edit[AASO_Aim_Hold_Time_Idx],edit[II_Input_Interval_Idx]);
-  edit[RL_Delay_Interval_Idx]  = round_to_multiple(edit[RL_Delay_Interval_Idx],8);
+  edit[RL_Delay_Interval_Idx] = round_to_multiple(edit[RL_Delay_Interval_Idx],8);
 
 }
 
@@ -2450,17 +2660,20 @@ function Stick_Layout(f_type) {
 function isin(f_angle) {
 
   f_angle = f_angle << 17;
+
   if(f_angle ^ (f_angle * 2) < 0)
-    f_angle = (-1 << 31) - f_angle;
+    f_angle = Signed_32_Bit_Min - f_angle;
+
   f_angle = f_angle >> 17;
-  return f_angle * (0x18000 - pow(f_angle,2) >> 11) >> 14;
+
+  return f_angle * (0x18000 - (f_angle * f_angle) >> 11) >> 14;
 
 }
 
 // -- Sin but +90°
 function icos(f_angle) {
 
-  return (isin((f_angle + 8192) % 32768));
+  return isin((f_angle + 8192) % 32768);
 
 }
 
@@ -2574,9 +2787,14 @@ enum {
   II_Input_Interval_Idx,
   HI_Randomise_Values_Toggle_Idx,
   HI_Limit_Turbos_Toggle_Idx,
-  DP_Menu_Font_Size_Idx,
-  DP_Forward_Scroll_Time_Idx,
-  DP_Backward_Scroll_Time_Idx,
+  DP_Menu_Font_Size_Toggle_Idx,
+  DP_Forward_Scroll_Apex_Time_Idx,
+  DP_Forward_Scroll_Base_Time_Idx,
+  DP_Backward_Scroll_Apex_Time_Idx,
+  DP_Backward_Scroll_Base_Time_Idx,
+  DP_Start_Pause_Time_Idx,
+  DP_End_Pause_Time_Idx,
+  DP_Menu_Border_Toggle_Idx,
   RL_Delay_Interval_Idx,
   RL_Brightness_Idx,
   RL_FX_Brightness_Idx,
@@ -2653,6 +2871,7 @@ enum {
   EVTT_MS,
   EVTT_Percentage,
   EVTT_FPS,
+  EVTT_Times_Per_Sec,
 
   // -- ASCII character index constants
   SPACE = ASCII_SPACE, EXCLAMATION, DOUBLE_QUOTE, QUOTES = DOUBLE_QUOTE, POUND, DOLLAR, PERCENT, AND, SINGLE_QUOTE, QUOTE = SINGLE_QUOTE, OPEN_PARENTHESIS,
@@ -2689,7 +2908,7 @@ const string Main_Menu_Strings[] = {
 const string Title_Strings[] = {
 
 /*0*/  "COD Pro",
-/*1*/  "v6.0.3"
+/*1*/  "v6.1.0"
 
 };
 
@@ -2817,7 +3036,7 @@ const uint8 Edit_Range[][] = {
 /*19*/  { YY_Wait_Delay_Idx, YY_Cancel_Delay_Idx },
 /*20*/  { II_Input_Interval_Idx, II_Input_Interval_Idx },
 /*21*/  { HI_Randomise_Values_Toggle_Idx, HI_Limit_Turbos_Toggle_Idx },
-/*22*/  { DP_Menu_Font_Size_Idx, DP_Backward_Scroll_Time_Idx },
+/*22*/  { DP_Menu_Font_Size_Toggle_Idx, DP_Menu_Border_Toggle_Idx },
 /*23*/  { 255, 255 },
 /*24*/  { 255, 255 },
 /*25*/  { RL_Delay_Interval_Idx, RL_Saturation_Idx },
@@ -2858,7 +3077,7 @@ const uint8 Edit_Value_Text_Type[] = {
 /*16*/  EVTT_None,
 /*17*/  EVTT_MS,
 /*18*/  EVTT_None,
-/*19*/  EVTT_MS,
+/*19*/  EVTT_Times_Per_Sec,
 /*20*/  EVTT_MS,
 /*21*/  EVTT_None,
 /*22*/  EVTT_MS,
@@ -2866,7 +3085,7 @@ const uint8 Edit_Value_Text_Type[] = {
 /*24*/  EVTT_None,
 /*25*/  EVTT_None,
 /*26*/  EVTT_MS,
-/*27*/  EVTT_MS,
+/*27*/  EVTT_Times_Per_Sec,
 /*28*/  EVTT_None,
 /*29*/  EVTT_MS,
 /*30*/  EVTT_None,
@@ -2889,10 +3108,15 @@ const uint8 Edit_Value_Text_Type[] = {
 /*47*/  EVTT_MS,
 /*48*/  EVTT_MS,
 /*49*/  EVTT_MS,
-/*50*/  EVTT_Percentage,
-/*51*/  EVTT_Percentage,
-/*52*/  EVTT_Percentage,
-/*53*/  EVTT_Percentage
+/*50*/  EVTT_MS,
+/*51*/  EVTT_MS,
+/*52*/  EVTT_MS,
+/*53*/  EVTT_None,
+/*54*/  EVTT_MS,
+/*55*/  EVTT_Percentage,
+/*56*/  EVTT_Percentage,
+/*57*/  EVTT_Percentage,
+/*58*/  EVTT_Percentage
 
 }
 
@@ -2946,13 +3170,18 @@ const int16 Edit_Value_Range[][] = {
 /*44*/  { 0                             ,2                                                             ,HI_Randomise_Values },
 /*45*/  { FALSE                         ,TRUE                                                          ,HI_Limit_Turbos },
 /*46*/  { 0                             ,2                                                             ,DP_Menu_Font_Size },
-/*47*/  { 1                             ,DP_Max_Large_Time_Based_Value                                 ,DP_Forward_Scroll_Time },
-/*48*/  { 1                             ,DP_Max_Small_Time_Based_Value                                 ,DP_Backward_Scroll_Time },
-/*49*/  { 8                             ,DP_Max_Small_Time_Based_Value                                 ,RL_Delay_Interval },
-/*50*/  { 1                             ,100                                                           ,RL_Brightness },
-/*51*/  { 1                             ,100                                                           ,RL_FX_Brightness },
-/*52*/  { 1                             ,100                                                           ,RL_Mod_Menu_Brightness },
-/*53*/  { 1                             ,100                                                           ,RL_Saturation }
+/*47*/  { 1                             ,DP_Max_Large_Time_Based_Value                                 ,DP_Forward_Scroll_Apex_Time },
+/*48*/  { 1                             ,DP_Max_Small_Time_Based_Value                                 ,DP_Backward_Scroll_Apex_Time },
+/*49*/  { 1                             ,DP_Max_Small_Time_Based_Value                                 ,DP_Forward_Scroll_Base_Time },
+/*50*/  { 1                             ,DP_Max_Small_Time_Based_Value                                 ,DP_Backward_Scroll_Base_Time },
+/*51*/  { 1                             ,DP_Max_Small_Time_Based_Value                                 ,DP_Start_Pause_Time },
+/*52*/  { 1                             ,DP_Max_Small_Time_Based_Value                                 ,DP_End_Pause_Time },
+/*53*/  { FALSE                         ,TRUE                                                          ,DP_Menu_Border },
+/*54*/  { 8                             ,/*8 +*/ DP_Max_Small_Time_Based_Value                         ,RL_Delay_Interval },
+/*55*/  { 1                             ,100                                                           ,RL_Brightness },
+/*56*/  { 1                             ,100                                                           ,RL_FX_Brightness },
+/*57*/  { 1                             ,100                                                           ,RL_Mod_Menu_Brightness },
+/*58*/  { 1                             ,100                                                           ,RL_Saturation }
 
 }
 
@@ -3010,9 +3239,13 @@ const uint8 Edit_Toggle_Value[] = {
 /*49*/  NOT_USE,
 /*50*/  NOT_USE,
 /*51*/  NOT_USE,
-/*51*/  NOT_USE,
 /*52*/  NOT_USE,
-/*53*/  NOT_USE
+/*53*/  NOT_USE,
+/*54*/  NOT_USE,
+/*55*/  NOT_USE,
+/*56*/  NOT_USE,
+/*57*/  NOT_USE,
+/*58*/  NOT_USE
 
 }
 
@@ -3021,22 +3254,26 @@ const uint8 Round_Edit[] = {
   // -- Round to input interval value
   AR_Boost_Time_Idx,
   RC_Max_Reload_Time_For_Cancel_Idx,
-  AR2_Shoot_Time_Idx,
   TJ_Jump_Wait_Time_Idx,
   RF_Shot_Wait_Time_Idx,
   RF_Single_Shot_Time_Idx,
   FAC_ADS_Time_Idx,
-  AS_Crouch_Prone_Delay_Time_Idx,
   SC_Cancel_Delay_Time_Idx,
   SC2_Cancel_Delay_Time_Idx,
   CS_Delay_Time_Idx,
   YY_Cancel_Delay_Idx,
   YY_Wait_Delay_Idx,
   // -- Round to max polling rate value
+  AR2_Shoot_Time_Idx,
   JS_Press_Variance_Time_Idx,
+  AS_Crouch_Prone_Delay_Time_Idx,
   DS_Press_Variance_Time_Idx,
-  DP_Forward_Scroll_Time_Idx,
-  DP_Backward_Scroll_Time_Idx
+  DP_Forward_Scroll_Apex_Time_Idx,
+  DP_Forward_Scroll_Base_Time_Idx,
+  DP_Backward_Scroll_Apex_Time_Idx,
+  DP_Backward_Scroll_Base_Time_Idx,
+  DP_Start_Pause_Time_Idx,
+  DP_End_Pause_Time_Idx
 
 }
 
@@ -3049,7 +3286,7 @@ const uint8 Scroll_Strings[] = {
   // -- Mod Titles
 
   SPACE, A,n,t,i, HYPHEN ,R,e,c,o,i,l, SPACE, 0,
-  SPACE, QUOTE,S,l,o,w,d,o,w,n,QUOTE, SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, A,b,u,s,e, SPACE, 0,
+  SPACE, S,l,o,w,d,o,w,n, SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, A,b,u,s,e, SPACE, 0,
   SPACE, S,t,e,a,d,y, SPACE, A,i,m, SPACE, 0,
   SPACE, R,e,l,o,a,d, SPACE, C,a,n,c,e,l, SPACE, 0,
   SPACE, A,u,t,o, SPACE, R,e,l,o,a,d, SPACE, 0,
@@ -3057,7 +3294,7 @@ const uint8 Scroll_Strings[] = {
   SPACE, R,a,p,i,d, SPACE, F,i,r,e, SPACE, 0,
   SPACE, A,u,t,o, SPACE, F,o,c,u,s, SPACE, 0,
   SPACE, A,u,t,o, SPACE, P,i,n,g, SPACE, 0,
-  SPACE, QUOTE,S,n,a,p, SPACE, O,n,QUOTE, SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, A,b,u,s,e, SPACE, OPEN_PARENTHESIS, P,v,E, CLOSE_PARENTHESIS, SPACE, 0,
+  SPACE, S,n,a,p, SPACE, O,n, SPACE, A,i,m, SPACE, A,s,s,i,s,t, SPACE, A,b,u,s,e, SPACE, OPEN_PARENTHESIS, P,v,E, SPACE, o,n,l,y, CLOSE_PARENTHESIS, SPACE, 0,
   SPACE, Q,u,i,c,k, SPACE, S,c,o,p,e,r, SPACE, OPEN_PARENTHESIS, R,e,q,DOT, SPACE, T,h,r,o,w,i,n,g, SPACE, K,n,i,f,e, CLOSE_PARENTHESIS, SPACE, 0,
   SPACE, T,u,r,b,o, SPACE, J,u,m,p, SPACE, 0,
   SPACE, T,u,r,b,o, SPACE, M,e,l,e,e, SPACE, 0,
@@ -3109,6 +3346,36 @@ const uint8 Scroll_Strings[] = {
   SPACE, B, SPACE, 0,
   SPACE, X, SPACE, 0,
   SPACE, Y, SPACE, 0,
+  // ---
+  SPACE, L,DIGIT1, SPACE, 0,
+  SPACE, R,DIGIT1, SPACE, 0,
+  SPACE, L,DIGIT2, SPACE, 0,
+  SPACE, R,DIGIT2, SPACE, 0,
+  SPACE, L,DIGIT3, SPACE, 0,
+  SPACE, R,DIGIT3, SPACE, 0,
+  SPACE, U,P, SPACE, 0,
+  SPACE, D,O,W,N, SPACE, 0,
+  SPACE, L,E,F,T, SPACE, 0,
+  SPACE, R,I,G,H,T, SPACE, 0,
+  SPACE, C,R,O,S,S, SPACE, 0,
+  SPACE, C,I,R,C,L,E, SPACE, 0,
+  SPACE, S,Q,U,A,R,E, SPACE, 0,
+  SPACE, T,R,I,A,N,G,L,E, SPACE, 0,
+  // ---
+  SPACE, L, SPACE, 0,
+  SPACE, R, SPACE, 0,
+  SPACE, Z,L, SPACE, 0,
+  SPACE, Z,R, SPACE, 0,
+  SPACE, L,DIGIT3, SPACE, 0,
+  SPACE, R,DIGIT3, SPACE, 0,
+  SPACE, U,P, SPACE, 0,
+  SPACE, D,O,W,N, SPACE, 0,
+  SPACE, L,E,F,T, SPACE, 0,
+  SPACE, R,I,G,H,T, SPACE, 0,
+  SPACE, B, SPACE, 0,
+  SPACE, A, SPACE, 0,
+  SPACE, Y, SPACE, 0,
+  SPACE, X, SPACE, 0,
 
   // -- Edit Titles
 
@@ -3157,10 +3424,15 @@ const uint8 Scroll_Strings[] = {
   SPACE, C,a,n,c,e,l, SPACE, D,e,l,a,y, SPACE, 0,
   SPACE, I,n,p,u,t, SPACE, I,n,t,e,r,v,a,l, SPACE, 0,
   SPACE, R,a,n,d,o,m,i,s,e, SPACE, V,a,l,u,e,s, SPACE, 0,
-  SPACE, L,i,m,i,t, SPACE, T,u,r,b,o,s, SPACE, S,p,e,e,d, SPACE, OPEN_PARENTHESIS,DIGIT1,DIGIT0,SLASH,s,e,c,CLOSE_PARENTHESIS, SPACE, 0,
+  SPACE, L,i,m,i,t, SPACE, T,u,r,b,o,s, SPACE, S,p,e,e,d, SPACE, OPEN_PARENTHESIS,DIGIT1,DIGIT3,SLASH,s,e,c,CLOSE_PARENTHESIS, SPACE, 0,
   SPACE, F,o,n,t, SPACE, S,i,z,e, SPACE, 0,
-  SPACE, F,o,r,w,a,r,d,s, SPACE, S,c,r,o,l,l, SPACE, A,p,e,x, SPACE, T,i,m,e, SPACE, 0,
-  SPACE, B,a,c,k,w,a,r,d,s, SPACE, S,c,r,o,l,l, SPACE, A,p,e,x, SPACE, T,i,m,e, SPACE, 0,
+  SPACE, A,p,e,x, SPACE, F,o,r,w,a,r,d, SPACE, S,c,r,o,l,l, SPACE, T,i,m,e, SPACE, 0,
+  SPACE, B,a,s,e, SPACE, F,o,r,w,a,r,d, SPACE, S,c,r,o,l,l, SPACE, T,i,m,e, SPACE, 0,
+  SPACE, A,p,e,x, SPACE, B,a,c,k,w,a,r,d, SPACE, S,c,r,o,l,l, SPACE, T,i,m,e, SPACE, 0,
+  SPACE, B,a,s,e, SPACE, B,a,c,k,w,a,r,d, SPACE, S,c,r,o,l,l, SPACE, T,i,m,e, SPACE, 0,
+  SPACE, S,t,a,r,t, SPACE, P,a,u,s,e, SPACE, T,i,m,e, SPACE, 0,
+  SPACE, E,n,d, SPACE, P,a,u,s,e, SPACE, T,i,m,e, SPACE, 0,
+  SPACE, B,o,r,d,e,r, SPACE, 0,
   SPACE, D,e,l,a,y, SPACE, I,n,t,e,r,v,a,l, SPACE, 0,
   SPACE, B,i,g,h,t,n,e,s,s, SPACE, 0,
   SPACE, F,X, SPACE, B,i,g,h,t,n,e,s,s, SPACE, 0,
@@ -3238,6 +3510,11 @@ const uint8 Scroll_Strings[] = {
   SPACE, 0,
   0,
   0,
+  0,
+  0,
+  0,
+  0,
+  SPACE, 0,
 
   0,
   0,
