@@ -1,35 +1,34 @@
-A script designed around making timings fast and precise so you can execute features at a fast pace, this feature will mostly be useful on PC with higher frame rates, it also has lots of features made by myself, and is highly customisable for how you want to play. It also aims to be simple and easy to navigate!
+A script designed around making timings fast and precise so you can execute features at a fast pace.
+It also has lots of features made by myself, and is highly customisable for how you want to play.
+It also aims to be simple and easy to navigate!
+The script involves thousands of hours of work, quality and care to make it all come together made to the best of my ability 😰
 
-This script includes randomised and speed limited values, so you can be sure it will be safe to use 😎
+This script includes randomised and speed limited values, so you can be sure it will be safe to use in case you are worried about some kind of detection (however it shouldn't be something to worry about, you can disable these) 😎
 
 Please contact me for any questions, suggestions, or issues, I value your feedback!
-Best place to contact me is on Discord
+Best place to contact me is on Discord, however you can use the forum as well
 https://discord.com/users/291872132898619392 (fadexz)
 
-If you would like to be generous, you can support my efforts to focus on putting out better and more scripts in the future (donate)
+If you would like to be generous, you can support my efforts to focus on putting out better and more scripts in the future and hopefully keep going 🥵
+https://revolut.me/Fadexz
+https://www.buymeacoffee.com/Fadexz (note: sent internationally)
 https://paypal.me/Fadexz
-https://www.buymeacoffee.com/Fadexz (sent internationally)
 
-Be sure to read the information near the top of the script file to help you get along easier without issues.
+Be sure to read the information near the top of the script file to help you get along smoothly.
 
-Current Minor Issues:
-- This script may not work great with controllers running at 100hz, this would include Xbox Bluetooth connection, PS3 Controllers, and possibly others with Bluetooth connections that max out at this polling rate. This script will run in intervals of 2ms from 8ms, 4ms, or 2ms. I will update the script later to automatically detect the real polling rate instead of per platform and support for handling controllers of 10ms.
-- When you use randomisation you should expect extra delay to be added to the speed you set for the input times, so it will be slightly slower than specified, I may change this later
-
-I may make another update soon to do some smaller additions, but I wanted to get this update out as I have been working hard on it for a long time, and it can't wait forever 😋
+I may make another smaller update soon to do some additions, but I wanted to get this update out as I have been working hard on it for months, and it can't wait forever... as usual, lol 😋
 
 Enjoy! 🎉
 
 
 Features:
- Anti-Recoil (compensates recoil while using rumble/vibration to increase the amount on shots)
- Slowdown Aim Assist Abuse (automatically moves your aim (in small circle) while you are not moving to allow for slowing down when moving towards a target which will favour to their direction)
- Steady Aim (reduce aim angles to possibly decrease small shaking and increase your accuracy)
- Reload Cancel (automatically cancel reload on press of 'AIM' and/or 'FIRE' (based on settings))
+ Anti-Recoil (compensates recoil while also able to use rumble/vibration to increase the amount on shots)
+ Slowdown Aim Assist Abuse (automatically moves your ads (in small circle) while you are not moving to allow for slowing down when moving towards a target which will favour to their direction)
+ Reload Cancel (automatically cancel reload on press of 'ADS' and/or 'FIRE')
  Auto Reload (automatically reload after shooting)
- Jump Shot (jump when pressing 'AIM' and/or 'FIRE' (based on settings))
+ Jump Shot (jump when pressing 'ADS' and/or 'FIRE')
  Rapid Fire (turbo/spam 'FIRE' for non-auto weapons automatically on hold)
- Auto Focus (automatically focuses (hold breath) while aiming)
+ Auto Focus (automatically focuses (hold breath) while adsing)
  Auto Ping (ping when firing, on a specified time of no firing cooldown)
  Snap On Aim Assist Abuse (for ZM/SP aka PvE modes, don't use on PvP modes)
  Quick Scoper (instantly unscopes and removes shot recoil to make quick scoping feel nicer, requires a throwing knife)
@@ -41,56 +40,53 @@ Features:
  Swap Cancel (Cancels out the animation of swapping a weapon as soon as the weapon has been swapped, best when both weapons have similar swap times)
  Dropshot (automatically drops to prone when firing then immediately stands afterwards)
  Crouch Shot (automatically crouches when firing)
- "YY" Cancel (fun feature, cancel the swap animation constantly to jitter the animation for a visual effect, may cause delayed aim)
+ "YY" Cancel (fun feature, cancel the swap animation constantly to jitter the animation for a visual effect, may cause delayed ads)
  Hair Triggers (removed trigger deadzone — any press is 100% input)
  Humanise Inputs (randomise values and limit turbo features to keep closer to human limitations)
- Crossover Mapping (proper mapping for unmatching controllers and consoles)
+ Display Config (configure what displays on the OLED Screen and how it does, such as screensaver options)
+ LED Config (customise how the Zen's LED displays)
  Block Vibration (stop vibration to the controller but allow rumble-based features to still work)
- Cycling Hue LED (smoothly cycles through all hues (colours) on the LED)
- Game Button Layout Customisation (map the script to your in-game button layout)
+ Inactivity Timeout (allows for you to turn off your controller or other stuff when inactive)
+ Fast Power Off (quickly power off your controller with a shorter hold of the XBOX/PS button than usual, for wireless connection only)
+ Adaptive Triggers Config (gives control over what the DualSense Adaptive Triggers do)
+ No Rumble Fix (fix no vibration on the DualSense controller)
+ Crossover Mapping (proper mapping for unmatching controllers and consoles)
+ Game Input Layout Customisation (map the script to your game button layout)
  All other features with combos (or automated input sequences) have the "Input Interval" and "Dynamic VM Timing" to ensure you get faster combos with no added "input delay" (aka normally running at 100hz or 10ms intervals, currently always ensures a 125hz/8ms or 250hz/4ms polling rate regardless of input interval used)
 
 
 Version Notes:
-- 6.1.0 -
- [Adjusted] Increased 'Humanise Inputs' turbo limits to 13/sec from 10/sec (max presses per second allowed)
- [Added] Changing button remapping text based on type of controller has been added back, so it will show the inputs for the controller you're using
- [Added] Snaking border for highlight for editable mods
- [Added] Base scroll text time adjustable values
- [Added] Scroll text start and end pause time adjustable values
- [Added] Current slot number text when starting the script
- [Added] Presses per second conversion text to turbo adjustable values (Rapid Fire and Turbo Jump)
- [Added] Menu border display toggle option
- [Added] Many small optimisations
- [Fixed] Rapid fire quick toggle being mapped to SHARE instead of TOUCH on PS4/PS5 (it will now be TOUCH + RIGHT as intended (or TOUCH  + 'STREAK') by default)
- [Fixed] Slide cancel delay was using the Crouch Shot delay time instead of its own
- [Fixed] Characters appearing after the end of the text when the large font size is used
- [Removed] Quotes in both aim assist title text
-Version Code Changes: https://github.com/Fadexz/GPC-Scripts/commit/d09ab236b9707af931e76178aaefcc8d0c9ba9f2
-- 6.0.3 -
- [Fixed] Auto Sprint and Crouch Shot have also been added to the limited turbos so they will not press quicker than 10/sec
- [Fixed] Legacy Cancel Stand (Slide Cancel) will now prevent in-game auto sprint from interfering with it
- [Fixed] Some other minor changes and optimisations
- [Adjusted] Both Aim Assist titles to be easier to differentiate when glancing over by swapping the order of words
- [Adjusted] Some script information has been refined up slightly to make it easier to follow
-Version Code Changes: https://github.com/Fadexz/GPC-Scripts/commit/5a907eb0221394b5fd561754aa98f7470ef58e1d
-- 6.0.2 -
- [Fixed] Rapid Fire and Turbo Melee always applying the lower limit time even when you chose a longer time than it
-- 6.0.1 -
- [Adjusted] Added " (10/sec)" to Limit Turbos title to be more descriptive
- [Fixed] Rapid Fire and Turbo Melee not being limited to 10/sec max (forgot to do)
- [Fixed] "YY" Cancel "Wait Delay" and "Cancel Delay" not being rounded to an input interval (forgot to do)
-- 6.0.0 -
- [Added] Alternating scroll text in menu
- [Added] Full randomisation for input values to avoid potential detection of robotic/perfect inputs
- [Adjusted] Reload Cancel default value is now slightly lower
- [Adjusted] Mod and edit value names may have been changed to be longer or better described or corrected
- [Adjusted] Steady Aim value is now a little more descriptive of what they value results in
- [Adjusted] Changes to aim assist and steady aim angle calculation method (may switch back to constant computed values / lookup table in next version instead of calculating "on the go" if the CPU usage increase is not worth it)
- [Adjusted] Huge bytecode size optimisations
- [Adjusted] Big CPU usage reduction in menu IDLE
- [Adjusted] Many small things (don't remember all)
- [Fixed] Inverted-Y Anti-Recoil values (negative) now should work properly (I never made it properly)
- [Fixed] Many small bugs (too much to remember)
- [Removed] MWII Backwards Dive (glitch was fixed)
- [Removed] MWII Money Dupe (glitch was fixed)
+What's changed in this version?
+[Added] Multiple new screensaver options 
+[Added] Quick Scoper ADS + Lethal activation mode
+[Added] Menu Border highlight options
+[Added] More LED Config LED display options
+[Added] Controller Inactivity Timeout (turn off controller is wireless only)
+[Added] Fast Power Off mod which allows you to do a configurable hold of time to turn off your controller (can be turned off faster) (wireless only)
+[Added] Adaptive Triggers Config - Able to controller what the adaptive triggers do, gives full customisation of values (not dynamic currently)
+[Added] No Rumble Fix for DualSense (useful on PC to fix vibration breaking mostly with legacy games which need you to output as an XInput / Xbox 360 Controller instead)
+[Added] Visual notification for Rapid Fire Quick Toggle change
+[Added] Donation position in the 'mod' menu to easily know how you can support
+[Added] Now able to disable / turn off the LED customisations
+[Added] Rapid Fire Hold option - Should allow for shots to be ready to fire instantly more often and is most useful for when you match the speed of your weapon's fire rate or a little bit higher so that very little time is spent off the trigger and mostly holding, waiting for the weapon to be ready to fire
+[Removed] Steady Aim (reduces aim angles) - If you would like me to add this back in just send me a message, however I didn't find it useful
+[Adjusted] Values that were hidden within unrelated mods have now been moved into their own space in the 'mod' menu
+[Adjusted] Many default values adjusted to best suit use for MWIII (wow... it really has been that long)
+[Adjusted] The "AIM" button is now referred to as 'ADS' in the script to match the game's description
+[Adjusted] Scrolling Text default timing values and tweaked how it scales slightly
+[Adjusted] Title Screen Title now dismisses after 50 seconds of the script running
+[Adjusted] Changed the names of some mods
+[Adjusted] Display sleep time from 1 minute to 2 minutes
+[Adjusted] Script VM Timing will now default to 2ms instead of 1ms (before a controller is connected)
+[Adjusted] Splash Screen display and display timings
+[Adjusted] Value repeat on hold increment functionality changed, it will now change by multiples after holding for 3 seconds
+[Adjusted] Menu Rumble FX - A Rumble Motor value slightly increased
+[Adjusted] 'Main' Menu selected visual style changed
+[Fixed] CPU limit being reached when quickly changing options (holding), the screen will no longer flash and it won't hit the CPU limits
+[Fixed] Minor fixes to prevent wait times possibly being lower than intended on turbo related features
+[Fixed] Turbo related values with the limited values option enabled could cause the minimum value to not be correct when the Input Interval option was changed
+
+Current Known Minor Issues:
+- This script may not work great with controllers running at 100hz, this would include Xbox Bluetooth connection, PS3 Controllers, and possibly others with Bluetooth connections that max out at this polling rate. This script will run in intervals of 2ms from 8ms, 4ms, or 2ms. I will update the script later to automatically detect the real polling rate instead of per platform and support for handling controllers of 10ms, you can workaround this by setting the Input Interval to something like '22' or '18' for the time being which will set it to 2ms which is a divisor of 10ms (100hz).
+- When you use randomisation you should expect extra delay to be added to the speed you set for the input times, so it will be slightly slower than specified, I may change this later to be averaged
+- LED will not change back to full brightness when it is changing from "breathing" on the 'Battery Status' mode
