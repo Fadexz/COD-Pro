@@ -42,6 +42,7 @@ Features:
  Crouch Shot (automatically crouches when firing)
  "YY" Cancel (fun feature, cancel the swap animation constantly to jitter the animation for a visual effect, may cause delayed ads)
  Hair Triggers (removed trigger deadzone — any press is 100% input)
+ Custom Deadzone (used to add a deadzone to the physical right stick)
  Humanise Inputs (randomise values and limit turbo features to keep closer to human limitations)
  Display Config (configure what displays on the OLED Screen and how it does, such as screensaver options)
  LED Config (customise how the Zen's LED displays)
@@ -57,36 +58,34 @@ Features:
 
 Version Notes:
 What's changed in this version?
-[Added] Multiple new screensaver options 
-[Added] Quick Scoper ADS + Lethal activation mode
-[Added] Menu Border highlight options
-[Added] More LED Config LED display options
-[Added] Controller Inactivity Timeout (turn off controller is wireless only)
-[Added] Fast Power Off mod which allows you to do a configurable hold of time to turn off your controller (can be turned off faster) (wireless only)
-[Added] Adaptive Triggers Config - Able to controller what the adaptive triggers do, gives full customisation of values (not dynamic currently)
-[Added] No Rumble Fix for DualSense (useful on PC to fix vibration breaking mostly with legacy games which need you to output as an XInput / Xbox 360 Controller instead)
-[Added] Visual notification for Rapid Fire Quick Toggle change
-[Added] Donation position in the 'mod' menu to easily know how you can support
-[Added] Now able to disable / turn off the LED customisations
-[Added] Rapid Fire Hold option - Should allow for shots to be ready to fire instantly more often and is most useful for when you match the speed of your weapon's fire rate or a little bit higher so that very little time is spent off the trigger and mostly holding, waiting for the weapon to be ready to fire
-[Removed] Steady Aim (reduces aim angles) - If you would like me to add this back in just send me a message, however I didn't find it useful
-[Adjusted] Values that were hidden within unrelated mods have now been moved into their own space in the 'mod' menu
-[Adjusted] Many default values adjusted to best suit use for MWIII (wow... it really has been that long)
-[Adjusted] The "AIM" button is now referred to as 'ADS' in the script to match the game's description
-[Adjusted] Scrolling Text default timing values and tweaked how it scales slightly
-[Adjusted] Title Screen Title now dismisses after 50 seconds of the script running
-[Adjusted] Changed the names of some mods
-[Adjusted] Display sleep time from 1 minute to 2 minutes
-[Adjusted] Script VM Timing will now default to 2ms instead of 1ms (before a controller is connected)
-[Adjusted] Splash Screen display and display timings
-[Adjusted] Value repeat on hold increment functionality changed, it will now change by multiples after holding for 3 seconds
-[Adjusted] Menu Rumble FX - A Rumble Motor value slightly increased
-[Adjusted] 'Main' Menu selected visual style changed
-[Fixed] CPU limit being reached when quickly changing options (holding), the screen will no longer flash and it won't hit the CPU limits
-[Fixed] Minor fixes to prevent wait times possibly being lower than intended on turbo related features
-[Fixed] Turbo related values with the limited values option enabled could cause the minimum value to not be correct when the Input Interval option was changed
+[Added] Static menu border option
+[Added] "Vibration" Adaptive Triggers mode option
+[Added] Auto Close Controller Update Popup (Xbox) feature
+[Added] Quick Toggles for ALL features toggles
+[Added] Always On Display option
+[Added] Screen Timeout option now adjustable in the menu
+[Added] Hair Trigger adjustable points + Shift Start Point option
+[Added] Fire (no ADS) Jump Shot activation option
+[Added] Omni (any direction) game sprint option
+[Added] Auto Cook Frag feature
+[Added] Underbarrel Jitter (for MWII/DMZ)
+[Added] Debug info in the menu (Controller Battery Level, SPVAR Total Bits Used, Peak CPU Usage, Zen Uptime, and Script Uptime)
+[Added] Ability to change the interval at which the Input Interval (and VM Time) will be able to step by, so can now use 1ms steps or only 4ms steps for lower CPU Usage directly in the menu instead of inside the file
+[Adjusted] HSB LED options are now full resolution
+[Adjusted] Adaptive Triggers default values changed
+[Adjusted] VM Time does now not get set to 8ms and will lower like it does outside the menu
+[Adjusted] Requires the ADS input to be held less (25% from 75%) to enter the menu
+[Adjusted] Menu navigation hold interval/step is now slightly faster to update, so you'll move through it slightly faster
+[Adjusted] Edit values will speed up by a slightly larger multiple when you long hold
+[Adjusted] Turbo input limits are now at 15/sec instead of 13/sec max
+[Adjusted] Menu border is now on static by default (as all options pretty are enterable now so less useful)
+[Adjusted] Lowered Pickup Cancel delay after holding to pickup, will cancel earlier
+[Adjusted] Now have the ability to set most timings to 0ms instead of the lowest interval
+[Adjusted] Other minor stuff not worth mentioning
 
 Current Known Minor Issues:
-- This script may not work great with controllers running at 100hz, this would include Xbox Bluetooth connection, PS3 Controllers, and possibly others with Bluetooth connections that max out at this polling rate. This script will run in intervals of 2ms from 8ms, 4ms, or 2ms. I will update the script later to automatically detect the real polling rate instead of per platform and support for handling controllers of 10ms, you can workaround this by setting the Input Interval to something like '22' or '18' for the time being which will set it to 2ms which is a divisor of 10ms (100hz).
+- This script may not work great with controllers running at 100hz, this would include Xbox Bluetooth connection, PS3 Controllers, and possibly others with Bluetooth connections that max out at this polling rate. This script will run in intervals of 2ms from 8ms, 4ms, or 2ms. I will update the script later to automatically detect the real polling rate instead of per platform and support for handling controllers of 10ms, you can work around this by setting the Input Interval to something like '22' or '18' for the time being which will set it to 2ms which is a divisor of 10ms (100hz).
 - When you use randomisation you should expect extra delay to be added to the speed you set for the input times, so it will be slightly slower than specified, I may change this later to be averaged
 - LED will not change back to full brightness when it is changing from "breathing" on the 'Battery Status' mode
+- Script Uptime value will not show the correct value often (will probably fix in the next update)
+- None screensaver option does not clear the screen after a short time (do not use this option for now)
