@@ -10,9 +10,7 @@ Best place to contact me is on Discord, however you can use the forum as well
 https://discord.com/users/291872132898619392 (fadexz)
 
 If you would like to be generous, you can support my efforts to focus on putting out better and more scripts in the future and hopefully keep going 🥵
-https://revolut.me/Fadexz
 https://www.buymeacoffee.com/Fadexz (note: sent internationally)
-https://paypal.me/Fadexz
 
 Be sure to read the information near the top of the script file to help you get along smoothly.
 
