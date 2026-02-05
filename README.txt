@@ -1,3 +1,8 @@
+Note: No more open source versions will be released at this time.
+This code is outdated and should only be used for learning purposes.
+
+
+
 A script designed around making timings fast and precise so you can execute features at a fast pace.
 It also has lots of features made by myself, and is highly customisable for how you want to play.
 It also aims to be simple and easy to navigate!
